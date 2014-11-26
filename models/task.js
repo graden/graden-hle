@@ -43,10 +43,6 @@ schema.statics.allList = function(idGrp, idQuarter, idYear, idObj, radioObj, cal
 
 schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, percent, callback) {
     var Task = this;
-
-    console.log(typeof percent);
-
-
     var tsk = new Task({linkCriGroup:idGrp, valueQuarter:idQuarter,
                          valueYear:idYear, linkObject:idObject,
                          valueTask:value, percentTask:percent});

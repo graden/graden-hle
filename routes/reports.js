@@ -92,7 +92,6 @@ exports.report1 = function(err, res) {
 
     data.datasets = chartDataSets;
     chart.polar(config, data, function (err, buf){
-        console.log('test');
         fs.writeFile("./public/repo/report1.pdf", buf, function(err) {
             if(err) {
                 logs.warn(err);

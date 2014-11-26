@@ -140,13 +140,6 @@ schema.statics.allList = function(callback) {
         if (err) {
             callback(err, null);
         } else {
-            user.forEach(function(users) {
-                if (users.role) {
-                    console.log(users.role.name);
-                }
-
-            });
-
             callback(null, user);
         }
     });

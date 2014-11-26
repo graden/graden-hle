@@ -37,11 +37,6 @@ schema.statics.avgMark = function(yq, radioObj, callback) {
             mark: {$sum: "$valueMark"}, count: {$sum: 1}}},
         {$sort: {valueQuarter:1, valueYear:1}}
     ).exec(function(err, mark){
-
-            console.log('=================================================================');
-            for (var u = 0; u < 4; u++) {
-                console.log(yq[u].quarter + ', ' + yq[u].year);
-            }
             console.log('=================================================================');
             mark.forEach(function(vMark){
                 i++;
