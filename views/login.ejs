@@ -1,0 +1,43 @@
+<% layout('./layout/page') -%>
+<% block('title', '') -%>
+<% block('titleDlg', 'Проверка аунтификации') -%>
+<% script('js/wait-info.js') -%>
+<% script('js/login.js') -%>
+<% stylesheet('css/login.css') -%>
+
+<div id="header">
+    <div id="logo">
+        <% include ./layout/logo.ejs %>
+        <div id="logo-left">
+
+        </div>
+    </div>
+</div>
+
+<div id="content">
+    <div id="page-wrapper">
+        <div id="menu-office">
+            <div id="message-office">
+                <h3>Вход на сайт</h3>
+            </div>
+        </div>
+        <div id="login-content">
+            <label class='label-txt' for='login-user'>Логин:</label>
+            <input class='input-txt' type='text' id='login-user' value=''/>
+            <label class='label-txt' for='password-user'>Пароль:</label>
+            <input class='input-txt' type='password' id='password-user' value=''/>
+        </div>
+        <div id="btn-panel">
+            <div id="submit-btn">
+                <button id="button-submit" type="submit" class="btn btn-primary">Войти</button>
+            </div>
+        </div>
+    </div>
+</div>
+<% include ./layout/msgDialog.ejs %>
+
+
+
+
+
+

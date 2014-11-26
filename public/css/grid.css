@@ -1,0 +1,436 @@
+#tbl-cri-group-content .tbl-head, #tbl-cri-group-content .tbl-body, #tbl-cri-group-content .tbl-footer {
+  width: 470px; }
+
+#tbl-cri-group-content .tbl-body {
+  height: 275px; }
+
+#tbl-cri-group-content-body {
+  width: 100%;
+  border: none; }
+
+#tbl-cri-group .tbl-head, #tbl-cri-group .tbl-body, #tbl-cri-group .tbl-footer {
+  width: 470px; }
+
+#tbl-cri-group .tbl-body {
+  height: 275px; }
+
+#tbl-cri-group-body {
+  width: 100%;
+  border: none; }
+
+#tbl-cri-list .tbl-head, #tbl-cri-list .tbl-body, #tbl-cri-list .tbl-footer {
+  width: 330px; }
+
+#tbl-cri-list .tbl-body {
+  height: 240px; }
+
+#tbl-cri-list-body {
+  width: 100%;
+  border: none; }
+
+#tbl-cri .tbl-head, #tbl-cri .tbl-body, #tbl-cri .tbl-footer {
+  width: 945px; }
+
+#tbl-cri .tbl-body {
+  height: 310px; }
+
+#tbl-cri-body {
+  width: 100%;
+  border: none; }
+
+#tbl-object .tbl-head, #tbl-object .tbl-body, #tbl-object .tbl-footer {
+  width: 460px; }
+
+#tbl-object .tbl-body {
+  height: 310px; }
+
+#tbl-object-body {
+  width: 100%;
+  border: none; }
+
+#tbl-subject .tbl-head, #tbl-subject .tbl-body, #tbl-subject .tbl-footer {
+  width: 460px; }
+
+#tbl-subject .tbl-body {
+  height: 310px; }
+
+#tbl-subject-body {
+  width: 100%;
+  border: none; }
+
+#tbl-user .tbl-head, #tbl-user .tbl-body, #tbl-user .tbl-footer {
+  width: 945px; }
+
+#tbl-user .tbl-body {
+  height: 310px; }
+
+#tbl-user-body {
+  width: 100%;
+  border: none; }
+
+#tbl-mark .tbl-head, #tbl-mark .tbl-body, #tbl-mark .tbl-footer {
+  width: 460px; }
+
+#tbl-mark .tbl-body {
+  height: 310px; }
+
+#tbl-mark-body {
+  width: 100%;
+  border: none; }
+
+#tbl-task .tbl-head, #tbl-task .tbl-body, #tbl-task .tbl-footer {
+  width: 460px; }
+
+#tbl-task .tbl-body {
+  height: 310px; }
+
+#tbl-task-body {
+  width: 100%;
+  border: none; }
+
+#tbl-task-prev .tbl-head, #tbl-task-prev .tbl-body, #tbl-task-prev .tbl-footer {
+  width: 460px; }
+
+#tbl-task-prev .tbl-body {
+  height: 310px; }
+
+#tbl-task-prev-body {
+  width: 100%;
+  border: none; }
+
+#tbl-report .tbl-head, #tbl-report .tbl-body, #tbl-report .tbl-footer {
+  width: 460px; }
+
+#tbl-report .tbl-body {
+  height: 310px; }
+
+#tbl-report-body {
+  width: 100%;
+  border: none; }
+
+#tbl-sprav .tbl-head, #tbl-sprav .tbl-body, #tbl-sprav .tbl-footer {
+  width: 280px; }
+
+#tbl-sprav .tbl-body {
+  height: 220px; }
+
+#tbl-sprav-body {
+  width: 100%;
+  border: none; }
+
+#tbl-sprav-role .tbl-head, #tbl-sprav-role .tbl-body, #tbl-sprav-role .tbl-footer {
+  width: 280px; }
+
+#tbl-sprav-role .tbl-body {
+  height: 220px; }
+
+#tbl-sprav-role-body {
+  width: 100%;
+  border: none; }
+
+#tbl-role .tbl-head, #tbl-role .tbl-body, #tbl-role .tbl-footer {
+  width: 945px; }
+
+#tbl-role .tbl-body {
+  height: 310px; }
+
+#tbl-role-body {
+  width: 100%;
+  border: none; }
+
+#tbl-role-office .tbl-head, #tbl-role-office .tbl-body, #tbl-role-office .tbl-footer {
+  width: 250px; }
+
+#tbl-role-office .tbl-body {
+  height: 200px; }
+
+#tbl-role-office-body {
+  width: 100%;
+  border: none; }
+
+#tbl-role-group .tbl-head, #tbl-role-group .tbl-body, #tbl-role-group .tbl-footer {
+  width: 250px; }
+
+#tbl-role-group .tbl-body {
+  height: 200px; }
+
+#tbl-role-group-body {
+  width: 100%;
+  border: none; }
+
+#tbl-object .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-object .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-object .td-2 div {
+    width: 200px;
+    text-align: left; }
+#tbl-object th.td-2 {
+  border-right: none; }
+
+#tbl-subject .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-subject .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-subject .td-2 div {
+    width: 200px;
+    text-align: left; }
+#tbl-subject th.td-2 {
+  border-right: none; }
+
+#tbl-cri-group-content .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-cri-group-content .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-cri-group-content .td-2 div {
+    width: 320px;
+    text-align: left; }
+#tbl-cri-group-content th.td-2 {
+  border-right: none; }
+
+#tbl-cri-group .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-cri-group .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-cri-group .td-2 div {
+    width: 320px;
+    text-align: left; }
+#tbl-cri-group th.td-2 {
+  border-right: none; }
+
+#tbl-cri-list .td-1 div {
+  width: 30px;
+  text-align: center; }
+
+#tbl-cri-list .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-cri-list .td-2 div {
+    width: 280px;
+    text-align: left; }
+#tbl-cri-list th.td-2 {
+  border-right: none; }
+
+#tbl-sprav .td-1 div {
+  width: 30px;
+  text-align: center; }
+
+#tbl-sprav .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-sprav .td-2 div {
+    width: 200px;
+    text-align: left; }
+#tbl-sprav th.td-2 {
+  border-right: none; }
+
+#tbl-sprav-role .td-1 div {
+  width: 30px;
+  text-align: center; }
+
+#tbl-sprav-role .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-sprav-role .td-2 div {
+    width: 200px;
+    text-align: left; }
+#tbl-sprav-role th.td-2 {
+  border-right: none; }
+
+#tbl-cri .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-cri .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-cri .td-2 div {
+    width: 300px;
+    text-align: left; }
+#tbl-cri th.td-2 {
+  border-right: none; }
+
+#tbl-mark .td-1 div {
+  width: 25px;
+  text-align: center; }
+
+#tbl-mark .td-2 div {
+  width: 300px;
+  text-align: left; }
+
+#tbl-mark .td-3 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-mark .td-4 {
+  width: 100%;
+  border-right: none; }
+  #tbl-mark .td-4 div {
+    width: 30px;
+    text-align: center; }
+#tbl-mark th.td-4 {
+  border-right: none; }
+
+#tbl-task .td-1 div {
+  width: 25px;
+  text-align: center; }
+
+#tbl-task .td-2 div {
+  width: 340px;
+  text-align: left; }
+
+#tbl-task .td-3 {
+  width: 100%;
+  border-right: none; }
+  #tbl-task .td-3 div {
+    width: 30px;
+    text-align: center; }
+#tbl-task th.td-3 {
+  border-right: none; }
+
+#tbl-task-prev .td-1 div {
+  width: 25px;
+  text-align: center; }
+
+#tbl-task-prev .td-2 div {
+  width: 340px;
+  text-align: left; }
+
+#tbl-task-prev .td-3 {
+  width: 100%;
+  border-right: none; }
+  #tbl-task-prev .td-3 div {
+    width: 30px;
+    text-align: center; }
+#tbl-task-prev th.td-3 {
+  border-right: none; }
+
+#tbl-report .td-1 div {
+  width: 20px;
+  text-align: center; }
+
+#tbl-report .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-report .td-2 div {
+    width: 335px;
+    text-align: left; }
+#tbl-report th.td-2 {
+  border-right: none; }
+
+#tbl-user .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-user .td-2 div {
+  width: 250px;
+  text-align: left; }
+
+#tbl-user .td-3 div {
+  width: 200px;
+  text-align: left; }
+
+#tbl-user .td-4 {
+  width: 100%;
+  border-right: none; }
+  #tbl-user .td-4 div {
+    width: 200px;
+    text-align: left; }
+#tbl-user th.td-4 {
+  border-right: none; }
+
+#tbl-role .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-role .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-role .td-2 div {
+    width: 650px;
+    text-align: left; }
+#tbl-role th.td-2 {
+  border-right: none; }
+
+#tbl-role-office .td-1 div {
+  width: 20px;
+  text-align: center; }
+
+#tbl-role-office .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-role-office .td-2 div {
+    width: 230px;
+    text-align: left; }
+#tbl-role-office th.td-2 {
+  border-right: none; }
+
+#tbl-role-group .td-1 div {
+  width: 20px;
+  text-align: center; }
+
+#tbl-role-group .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-role-group .td-2 div {
+    width: 230px;
+    text-align: left; }
+#tbl-role-group th.td-2 {
+  border-right: none; }
+
+.tbl-body {
+  background-color: #eeefff; }
+
+.tbl-head, .tbl-body, .tbl-footer {
+  border-left: 0.1em solid #cccccc;
+  border-right: 0.1em solid #cccccc;
+  display: block;
+  margin: auto; }
+
+.tbl-footer, .tbl-head {
+  border-bottom: 0.1em solid #cccccc;
+  border-top: 0.1em solid #cccccc;
+  background-color: #dddddd; }
+
+.tbl-body {
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.hle-grid {
+  cursor: default; }
+  .hle-grid table {
+    border-collapse: separate; }
+    .hle-grid table td {
+      padding: 5px;
+      border-right: 0.1em solid #cccccc;
+      border-bottom: 0.1em solid #cccccc;
+      vertical-align: middle;
+      cursor: pointer; }
+    .hle-grid table th {
+      text-align: center;
+      padding: 5px;
+      font-weight: bold;
+      border-right: 0.1em solid #cccccc; }
+
+.hle-grid-highlight {
+  background: #ffe45c; }
+
+.tbl-row {
+  display: table-row; }
+
+.tbl-cell {
+  display: table-cell; }
+
+/*# sourceMappingURL=grid.css.map */

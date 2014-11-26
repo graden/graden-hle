@@ -1,0 +1,88 @@
+@import url('reset.css');
+@import url('typography.css');
+@import url('grid.css');
+@import url('dialog.css');
+@import url('header.css');
+
+#content {
+    margin: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    position: relative;
+    width: 990px;
+}
+
+#page-wrapper {
+    border: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    display: table;
+}
+
+.footer-grid {
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+#band {
+    display: table-cell;
+    width: 10px;
+}
+
+#grid {
+    display: table-cell;
+    width: 490px;
+}
+
+#chart {
+    display: table-cell;
+}
+
+.footer-grid button{
+    float: right;
+    margin-left: 3px;
+}
+
+#grid-tabs, #chart-tabs  {
+    height: 450px;
+}
+
+canvas {
+    display:block;
+    margin: auto;
+}
+
+#footer {
+    border-radius: 4px;
+    border: 1px solid #e78f08;
+    background-color: #f6a828;
+    color: #ffffff;
+    margin-top: 5px;
+    padding: 3px;
+}
+
+#radio-btn {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.ui-buttonset {
+    margin-right: 4px  !important;
+}
+
+#footer-menu {
+    display: table;
+    width: 100%;
+}
+
+#username {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+}
+
+
+
+

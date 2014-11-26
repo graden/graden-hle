@@ -1,0 +1,170 @@
+$grid-border-type: 0.1em solid #cccccc;
+$grid-head-bgr-color: #dddddd;
+$grid-body-bgr-color: #dddddd;
+$grid-foot-bgr-color: #dddddd;
+
+$grid-td-padding: 5px;
+$grid-th-padding: 5px;
+$grid-div-padding-left: 2px;
+
+
+@mixin table-body-height($name-tbl, $height-body-tbl, $width-tbl) {
+  #{$name-tbl} .tbl-head, #{$name-tbl} .tbl-body, #{$name-tbl} .tbl-footer {
+    width: $width-tbl;
+  }
+  #{$name-tbl} .tbl-body {
+    height: $height-body-tbl;
+  }
+  #{$name-tbl}-body {
+    width: 100%;
+    border: none;
+  }
+}
+
+@mixin table-td($name-tbl, $last-td-tbl, $width-div-tbl, $text-align-div-tbl, $id-td-tbl, $display-td-tbl) {
+  #{$name-tbl} {
+    .td-#{$id-td-tbl}{
+      @if $last-td-tbl {
+        width: 100%;
+        border-right: none;
+      }
+      div { width: $width-div-tbl; text-align: $text-align-div-tbl; }
+      @if $display-td-tbl {}
+      @else { display: none; }
+    }
+
+    th.td-#{$id-td-tbl} {
+      @if $last-td-tbl {
+        border-right: none;
+      }
+    }
+  }
+}
+
+@include table-body-height("#tbl-cri-group-content", 275px, 470px);
+@include table-body-height("#tbl-cri-group", 275px, 470px);
+@include table-body-height("#tbl-cri-list", 240px, 330px);
+@include table-body-height("#tbl-cri", 310px, 945px);
+@include table-body-height("#tbl-object", 310px, 460px);
+@include table-body-height("#tbl-subject", 310px, 460px);
+@include table-body-height("#tbl-user", 310px, 945px);
+@include table-body-height("#tbl-mark", 310px, 460px);
+@include table-body-height("#tbl-task", 310px, 460px);
+@include table-body-height("#tbl-task-prev", 310px, 460px);
+@include table-body-height("#tbl-report", 310px, 460px);
+@include table-body-height("#tbl-sprav", 220px, 280px);
+@include table-body-height("#tbl-sprav-role", 220px, 280px);
+@include table-body-height("#tbl-role", 310px, 945px);
+@include table-body-height("#tbl-role-office", 200px, 250px);
+@include table-body-height("#tbl-role-group", 200px, 250px);
+
+@include table-td("#tbl-object", false, 40px, center, 1, true);
+@include table-td("#tbl-object", true, 200px, left, 2, true);
+
+@include table-td("#tbl-subject", false, 40px, center, 1, true);
+@include table-td("#tbl-subject", true, 200px, left, 2, true);
+
+@include table-td("#tbl-cri-group-content", false, 40px, center, 1, true);
+@include table-td("#tbl-cri-group-content", true, 320px, left, 2, true);
+
+@include table-td("#tbl-cri-group", false, 40px, center, 1, true);
+@include table-td("#tbl-cri-group", true, 320px, left, 2, true);
+
+@include table-td("#tbl-cri-list", false, 30px, center, 1, true);
+@include table-td("#tbl-cri-list", true, 280px, left, 2, true);
+
+@include table-td("#tbl-sprav", false, 30px, center, 1, true);
+@include table-td("#tbl-sprav", true, 200px, left, 2, true);
+
+@include table-td("#tbl-sprav-role", false, 30px, center, 1, true);
+@include table-td("#tbl-sprav-role", true, 200px, left, 2, true);
+
+@include table-td("#tbl-cri", false, 40px, center, 1, true);
+@include table-td("#tbl-cri", true,  300px, left, 2, true);
+
+@include table-td("#tbl-mark", false, 25px, center, 1, true);
+@include table-td("#tbl-mark", false, 300px, left, 2, true);
+@include table-td("#tbl-mark", false, 40px, center, 3, true);
+@include table-td("#tbl-mark", true,  30px, center, 4, true);
+
+@include table-td("#tbl-task", false, 20px, center, 1, true);
+@include table-td("#tbl-task", false, 340px, left, 2, true);
+@include table-td("#tbl-task", true, 30px, center, 3, true);
+
+@include table-td("#tbl-task-prev", false, 25px, center, 1, true);
+@include table-td("#tbl-task-prev", false, 340px, left, 2, true);
+@include table-td("#tbl-task-prev", true, 30px, center, 3, true);
+
+@include table-td("#tbl-report", false, 20px, center, 1, true);
+@include table-td("#tbl-report", true, 335px, left, 2, true);
+
+@include table-td("#tbl-user", false, 40px, center, 1, true);
+@include table-td("#tbl-user", false, 250px, left, 2, true);
+@include table-td("#tbl-user", false, 200px, left, 3, true);
+@include table-td("#tbl-user", true, 200px, left, 4, true);
+
+@include table-td("#tbl-role", false, 40px, center, 1, true);
+@include table-td("#tbl-role", true, 650px, left, 2, true);
+
+@include table-td("#tbl-role-office", false, 20px, center, 1, true);
+@include table-td("#tbl-role-office", true, 230px, left, 2, true);
+
+@include table-td("#tbl-role-group", false, 20px, center, 1, true);
+@include table-td("#tbl-role-group", true, 230px, left, 2, true);
+
+.tbl-body {
+    background-color: #eeefff;
+}
+
+.tbl-head, .tbl-body, .tbl-footer {
+    border-left:  $grid-border-type;
+    border-right: $grid-border-type;
+    display:block;
+    margin: auto;
+}
+
+.tbl-footer, .tbl-head {
+    border-bottom: $grid-border-type;
+    border-top: $grid-border-type;
+    background-color: #dddddd;
+}
+
+.tbl-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.hle-grid {
+    cursor: default;
+    table {
+      border-collapse: separate;
+      td {
+          padding: $grid-td-padding;
+          border-right: $grid-border-type;
+          border-bottom: $grid-border-type;
+          vertical-align: middle;
+          cursor: pointer;
+      }
+      th {
+          text-align: center;
+          padding: $grid-th-padding;
+          font-weight: bold;
+          border-right: $grid-border-type;
+      }
+    }
+}
+
+//.hle-grid td:first-child, .hle-grid th:first-child {display:none;}
+
+.hle-grid-highlight {
+   background: #ffe45c;
+   //color: #363636;
+}
+
+.tbl-row {
+  display: table-row;
+}
+
+.tbl-cell {
+  display: table-cell;
+}

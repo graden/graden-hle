@@ -1,0 +1,80 @@
+@import url('reset.css');
+@import url('typography.css');
+@import url('grid.css');
+@import url('dialog.css');
+@import url('header.css');
+
+#content {
+    margin: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    position: relative;
+    width: 990px;
+}
+#page-wrapper {
+    height: 450px;
+}
+#rankings .list {
+    margin-right: 20px;
+}
+#controls {
+    clear: both;
+    padding-top: 20px;
+}
+.control-button {
+    margin-top: 10px;
+}
+#radio-block {
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    width: 180px;
+    border: 1px solid #bababa;
+    border-radius: 4px;
+}
+
+#radio-block label{
+    padding-left: 5px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 1em 1em;
+}
+
+.tbl-block {
+    display: table;
+    margin: 0 auto;
+}
+
+.tbl-block-cell {
+    display: table-cell;
+}
+
+.tbl-band {
+    display: table-cell;
+    width: 15px;
+}
+
+#dialog-role-edit input{
+    margin-bottom: 10px;
+}
+
+#check-block li {
+    padding-bottom: 15px;
+}
+
+#btn-role {
+    margin-top: 10px;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

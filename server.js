@@ -1,0 +1,132 @@
+var express = require('express');
+var session  = require('express-session');
+var cookieParser = require('cookie-parser');
+var favicon = require('serve-favicon');
+var log4js = require('log4js');
+var bodyParser = require('body-parser');
+var url = require('url');
+var config  = require('config');
+var logs  = require('libs/logs')(module);
+var HttpError = require('error').HttpError;
+var checkAuth = require('middleware/checkAuth');
+var checkSetting = require('middleware/checkSetting');
+var port = process.env.port || config.get('port');
+var app = express();
+
+app.listen(port, function(){
+    logs.info('запуск сервера на порту: ' + port);
+});
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(log4js.connectLogger(logs, { level: 'auto' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+var sessionStore = require('libs/sessionStore');
+var ejsTemplate  = require('ejs-locals');
+
+app.use(session({
+    secret: config.get('session:secret'),
+    key: config.get('session:key'),
+    cookie: config.get('session:cookie'),
+    store: sessionStore,
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(require('middleware/sendHttpError'));
+app.use(require('middleware/loadUser'));
+
+//app.use(app.router);
+
+app.engine('ejs', ejsTemplate);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/vendor'));
+
+
+app.get('/login', require('routes/logins').get);
+app.post('/login', require('routes/logins').post);
+app.get('/logout', require('routes/logouts').get);
+
+app.post('/user/create', require('routes/users').create);
+app.post('/user/update', require('routes/users').update);
+app.post('/user/remove', require('routes/users').remove);
+
+//app.post('/role/object/list', require('routes/objects').list);
+app.post('/role/object/add', require('routes/roles').addObj);
+app.post('/role/group/add', require('routes/roles').addGrp);
+app.post('/role/object/remove', require('routes/roles').removeObj);
+app.post('/role/group/remove', require('routes/roles').removeGrp);
+app.post('/role/create', require('routes/roles').create);
+app.post('/role/load', require('routes/roles').load);
+app.get('/role/list', require('routes/roles').list);
+app.post('/role/update', require('routes/roles').update);
+//app.post('/role/remove', require('routes/roles').remove);
+
+app.get('/setting',checkSetting, require('routes/settings').get);
+app.post('/reports/repo2', require('routes/reports').report2);
+app.get('/download', require('routes/reports').download);
+
+app.get('/home', checkAuth, require('routes/homes').first);
+app.get('/', checkAuth, require('routes/homes').redi);
+app.post('/home/update', checkAuth, require('routes/homes').update);
+app.post('/mark/update', require('routes/marks').update);
+
+app.get('/crigroup/list', require('routes/crigroups').list);
+app.get('/crigroup/listRole', require('routes/crigroups').listRole);
+app.post('/crigroup/create', require('routes/crigroups').create);
+app.post('/crigroup/update', require('routes/crigroups').update);
+app.post('/crigroup/remove', require('routes/crigroups').remove);
+
+app.get('/object/list', require('routes/objects').list);
+app.get('/object/listRole', require('routes/objects').listRole);
+
+app.post('/task/create', require('routes/tasks').create);
+app.post('/task/load', require('routes/tasks').load);
+app.post('/task/update', require('routes/tasks').update);
+app.post('/task/remove', require('routes/tasks').remove);
+
+app.post('/cri/create', require('routes/cris').create);
+app.post('/cri/update', require('routes/cris').update);
+app.post('/cri/remove', require('routes/cris').remove);
+
+app.post('/crigroupcontent/choice', require('routes/crigroupcontents').choice);
+app.post('/crigroupcontent/list', require('routes/crigroupcontents').list);
+app.post('/crigroupcontent/add', require('routes/crigroupcontents').addLinkCri);
+app.post('/crigroupcontent/remove', require('routes/crigroupcontents').removeLinkCri);
+
+
+/// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+} else {
+    app.use(function(err, req, res) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    });
+}
+

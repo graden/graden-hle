@@ -1,0 +1,102 @@
+<div id="dialog-role-edit" title="">
+    <label class='label-txt' for='name-role'>Имя роли:</label>
+    <input class='input-txt' type='text' id='name-role' value=''/>
+    <div class="tbl-block">
+        <div class="tbl-block-cell">
+            <ul id="check-block">
+                <li>
+                    <input id='edtMark-role' type='checkbox'/>
+                    <label for='edtMark-role'>Редактировать оценки</label>
+                </li>
+                <li>
+                    <input id='newTask-role' type='checkbox'/>
+                    <label for='newTask-role'>Создавать задачи</label>
+                </li>
+                <li>
+                    <input id='edtTask-role' type='checkbox'/>
+                    <label for='edtTask-role'>Редактировать задачи</label>
+                </li>
+                <li>
+                    <input id='delTask-role' type='checkbox'/>
+                    <label for='delTask-role'>Удалять задачи</label>
+                </li>
+                <li>
+                    <input id='perSettings-role' type='checkbox'/>
+                    <label for='perSettings-role'>Настройка системы</label>
+                </li>
+            </ul>
+        </div>
+        <div class="tbl-band"></div>
+        <div class="tbl-block-cell">
+            <div class="tbl-block-cell" id="nav-role-office">
+                <div id="tbl-role-office" class="hle-grid">
+                    <div class="tbl-head  ui-corner-top">
+                        <table class="tbl">
+                            <thead>
+                            <tr>
+                                <th class="td-1"><div>#</div></th>
+                                <th class="td-2"><div>Наименование объекта</div></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tbl-body">
+                        <table id="tbl-role-office-body" class="tbl">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tbl-footer ui-corner-bottom">
+                        <table class="tbl">
+                            <tfoot>
+                            <tr>
+                                <th class="td-1"><div><%= i %></div></th>
+                                <th class="td-2"><div></div></th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="control-button">
+                    <button id="button-add-role-office">Добавить</button>
+                    <button id="button-del-role-office">Удалить</button>
+                </div>
+            </div>
+        </div>
+        <div class="tbl-band"></div>
+        <div class="tbl-block-cell">
+            <div id="tbl-role-group" class="hle-grid">
+                <div class="tbl-head  ui-corner-top">
+                    <table class="tbl">
+                        <thead>
+                        <tr>
+                            <th class="td-1"><div>#</div></th>
+                            <th class="td-2"><div>Наименование группы</div></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-body">
+                    <table id="tbl-role-group-body" class="tbl">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tbl-footer ui-corner-bottom ">
+                    <table class="tbl">
+                        <tfoot>
+                        <tr>
+                            <th class="td-1"><div><%= i %></div></th>
+                            <th class="td-2"><div></div></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="control-button">
+                <button id="button-add-role-group">Добавить</button>
+                <button id="button-del-role-group">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>

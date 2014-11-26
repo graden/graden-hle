@@ -1,0 +1,229 @@
+<% layout('./layout/page') -%>
+<% stylesheet('css/home.css') -%>
+<% script('js/wait-info.js') -%>
+<% script('js/chart.js') -%>
+<% script('js/home.js') -%>
+<% block('title', 'Rating system') -%>
+<% block('titleDlg', 'Уведомление об ошибке...') -%>
+
+<div id="header">
+    <div id="logo">
+        <% include ./layout/logo.ejs %>
+        <div id="logo-left">
+            <div class="clr">
+                <h4 class="lft" id="name-quarter">Квартал:</h4>
+                <h4 class="lft">&nbsp;</h4>
+                <h4 class="lft" id="value-quarter"></h4>
+            </div>
+            <div class="clr">
+                <h4 class="lft" id="name-object">Объект:</h4>
+                <h4 class="lft">&nbsp;</h4>
+                <h4 class="lft" id="value-object"><%= txtObject %></h4>
+            </div>
+            <div class="clr">
+                <h4 class="lft" id="name-group">Направление:</h4>
+                <h4 class="lft">&nbsp;</h4>
+                <h4 class="lft" id="value-group"><%= txtGroup %></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="content">
+    <div id="header-menu-office">
+        <div id="menu-office">
+            <button id="button-object">Объекты</button>
+            <button id="button-groups">Направления</button>
+            <button id="button-quarter-minus">Пред.период</button>
+            <button id="button-quarter-plus">След.период</button>
+            <button id="btn-setting">Настройка</button>
+            <div id="radio-btn">
+                <div id="radio">
+                    <input type="radio" id="radio1" name="radio" checked="checked" /><label for="radio1">Объекты</label>
+                    <input type="radio" id="radio2" name="radio" /><label for="radio2">Субъекты</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="page-wrapper">
+        <div id="grid">
+            <div id="grid-tabs">
+                <ul>
+                    <li><a href="#grid-tabs-1">Оценки</a></li>
+                    <li><a href="#grid-tabs-2">Задачи</a></li>
+                </ul>
+                <div id="grid-tabs-1">
+                    <div id="tbl-mark" class="hle-grid">
+                        <div  class="tbl-head ui-corner-top">
+                            <table class="tbl">
+                                <thead>
+                                <tr>
+                                    <th class="td-1"><div>#</div></th>
+                                    <th class="td-2"><div>Критерий оценки</div></th>
+                                    <th class="td-3"><div>Тек</div></th>
+                                    <th class="td-4"><div>Пред</div></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-body">
+                            <table id="tbl-mark-body" class="tbl">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tbl-footer ui-corner-bottom">
+                            <table class="tbl">
+                                <tfoot>
+                                <tr>
+                                    <th class="td-1"><div></div></th>
+                                    <th class="td-2"><div></div></th>
+                                    <th class="td-3"><div></div></th>
+                                    <th class="td-4"><div></div></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="footer-grid">
+                        <button id="btn-chg-mark">Изменить</button>
+                    </div>
+                </div>
+                <div id="grid-tabs-2">
+                    <div id="tbl-task" class="hle-grid">
+                        <div  class="tbl-head ui-corner-top">
+                            <table class="tbl">
+                                <thead>
+                                <tr>
+                                    <th class="td-1"><div>#</div></th>
+                                    <th class="td-2"><div>Наименование задачи</div></th>
+                                    <th class="td-3"><div>%</div></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-body">
+                            <table id="tbl-task-body" class="tbl">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tbl-footer ui-corner-bottom">
+                            <table class="tbl">
+                                <tfoot>
+                                <tr>
+                                    <th class="td-1"><div></div></th>
+                                    <th class="td-2"><div></div></th>
+                                    <th class="td-3"><div></div></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="footer-grid">
+                        <button id="btn-del-task">Удалить</button>
+                        <button id="btn-chg-task">Изменить</button>
+                        <button id="btn-add-task">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="band"></div>
+        <div id="chart">
+            <div id="chart-tabs">
+                <ul>
+                    <li><a href="#chart-tabs-1">Мишень</a></li>
+                    <li><a href="#chart-tabs-2">Отчеты</a></li>
+                    <li><a href="#chart-tabs-3">Пред.задачи</a></li>
+                </ul>
+                <div id="chart-tabs-1">
+                    <canvas id="canvas-radar" height="400" width="400"></canvas>
+                </div>
+                <div id="chart-tabs-2">
+                    <div id="tbl-report" class="hle-grid">
+                        <div  class="tbl-head ui-corner-top">
+                            <table class="tbl">
+                                <thead>
+                                <tr>
+                                    <th class="td-1"><div>#</div></th>
+                                    <th class="td-2"><div>Наименование отчета</div></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-body">
+                            <table id="tbl-report-body" class="tbl">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tbl-footer ui-corner-bottom">
+                            <table class="tbl">
+                                <tfoot>
+                                <tr>
+                                    <th class="td-1"><div></div></th>
+                                    <th class="td-2"><div></div></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="footer-grid">
+                        <button id="btn-exe-report">Запустить</button>
+                    </div>
+                </div>
+                <div id="chart-tabs-3">
+                    <div id="tbl-task-prev" class="hle-grid">
+                        <div  class="tbl-head ui-corner-top">
+                            <table class="tbl">
+                                <thead>
+                                    <tr>
+                                        <th class="td-1"><div>#</div></th>
+                                        <th class="td-2"><div>Наименование задачи</div></th>
+                                        <th class="td-3"><div>%</div></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-body">
+                            <table id="tbl-task-prev-body" class="tbl">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tbl-footer ui-corner-bottom">
+                            <table class="tbl">
+                                <tfoot>
+                                    <tr>
+                                        <th class="td-1"><div></div></th>
+                                        <th class="td-2"><div></div></th>
+                                        <th class="td-3"><div></div></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer-menu">
+            <button id="button-logout">Выход</button>
+            <h5 id="username"><%= username%></h5>
+        </div>
+    </div>
+
+</div>
+
+<% include ./layout/tblDialog.ejs %>
+<% include ./layout/markDialog.ejs %>
+<% include ./layout/taskDialog.ejs %>
+<% include ./layout/msgDialog.ejs %>
+<% include ./layout/rmDialog.ejs %>
+<% include ./layout/waitInfo.ejs %>
+<% script('js/grid.js') -%>
+<!--
+<img id="animation" src="img/ajax-loading.gif"/>
+-->
+
