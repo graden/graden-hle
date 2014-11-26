@@ -19,7 +19,12 @@ exports.post = function(req, res, next) {
     } else {
         req.session.user = user._id;
         req.session.role = user.role;
-        res.json(200, 'OK');
+        if (user.mustChgPassword) {
+            res.status(201).json(user._id);
+        } else {
+            res.status(200).json('OK');
+        }
+
     }
   });
 

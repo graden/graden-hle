@@ -438,7 +438,6 @@ $(function () {
         var $dialog     = $('#dialog-user');
         var $id         = $highlight.attr('data-id');
         var $idRole     = $highlight.attr('data-id-role');
-        //var $password   = $content.find('tr.hle-grid-highlight td:eq(1) div').text();
         var $fullName   = $highlight.find('td:eq(1) div').text();
         var $username   = $highlight.find('td:eq(2) div').text();
         var $rolename   = $highlight.find('td:eq(3) div').text();
@@ -468,6 +467,18 @@ $(function () {
         $dialog.dialog('option', 'url', "/user/remove");
         $dialog.dialog('option', 'data', {'id': $id});
         $dialog.dialog('option', 'fsuccess', $fsuccess);
+        $dialog.dialog('open');
+    });
+
+    $('#button-password-user').click(function() {
+        var $content    = $('#tbl-user-body');
+        var $highlight  = $content.find('tr.hle-grid-highlight');
+        var $id         = $highlight.attr('data-id');
+        var $dialog     = $('#dialog-password');
+        $dialog.find('#password-new-user').val('');
+        $dialog.find('#password-retry-user').val('');
+        $dialog.dialog('option', 'title', 'Изменение пароля текущего пользователя');
+        $dialog.dialog('option', 'id', $id);
         $dialog.dialog('open');
     });
 
@@ -568,6 +579,39 @@ $(function () {
         ajaxData('GET', '/crigroup/list', {}, fsuccess);
     });
 
+    $('#dialog-password').dialog({
+        autoOpen: false, width: 400, modal: true, resizable: false,
+        buttons: {
+            'Ok': function() {
+                var $id         = $(this).dialog('option', 'id');
+                var $password1  = $(this).find('#password-new-user').val();
+                var $password2  = $(this).find('#password-retry-user').val();
+                var fsuccess    = null;
+                var $dt         = {};
+                var $msgBox     = $('#dialog-message');
+                if ($password1 == $password2) {
+                    if ($id) {
+                        fsuccess = function(data) {
+                        };
+                        $dt = {'id':$id, 'password': $password1};
+                        ajaxData('POST','/user/update/password', $dt, fsuccess);
+                    } else {
+                        $('#txt-message').text('У данной записи отсутствует ID');
+                        $msgBox.dialog('open');
+                    }
+                } else {
+                    $('#txt-message').text('Пароли не совпадают, повторите ввод');
+                    $msgBox.dialog('open');
+                }
+                $(this).dialog('close');
+            },
+            'Отмена': function() {
+                $(this).dialog('close');
+            }
+        },
+        close: function() {$(this).dialog('close');}
+    });
+
 
     $('#dialog-user').dialog({
         autoOpen: false, width: 400, modal: true, resizable: false,
@@ -580,6 +624,7 @@ $(function () {
                 var $password   = $(this).find('#password-user').val();
                 var $fullname   = $(this).find('#name-user').val();
                 var $role       = $highlight.attr('data-id-role');
+                var $mustPass   = $("#mustPassword").prop('checked');
                 var $email      = '';
                 var $username   = $(this).find('#login-user').val();
                 var $i          = $content.find('tr:last-child td:eq(0) div').text();
@@ -610,7 +655,7 @@ $(function () {
                             $highlight.find('td:eq(3) div').text(data.role.name);
                         };
                         $dt = {'id':$id,'fullname':$fullname,
-                               'username':$username,'email':$email,'role':$role};
+                               'username':$username,'email':$email,'role':$role, 'mustPassword':$mustPass};
                         ajaxData('POST','/user/update', $dt, fsuccess);
                     } else {
                         var $msgBox = $('#dialog-message');
@@ -665,10 +710,9 @@ $(function () {
                 var $tBody      = $content.find('tbody:last');
                 var $i          = $content.find('tr:last-child td:eq(0) div').text();
                 var $name       = $(this).find('#name-role').val();
-                var fsuccess    = null;
                 parseInt($i); $i++;
 
-                fsuccess = function(data) {
+                 var fsuccess = function(data) {
                     AddTrTable($content);
                     $tBody.append('<tr data-id="'+ data._id +'">' +
                             '<td class="td-1"><div>' + $i + '</div></td>'+

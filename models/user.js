@@ -26,7 +26,9 @@ schema.virtual('password')
     this.salt = Math.random() + '';
     this.hashedPassword = this.encryptPassword(password);
   })
-  .get(function() { return this._plainPassword; });
+  .get(function() {
+        return this._plainPassword;
+  });
 
 
 schema.methods.checkPassword = function(password) {
@@ -89,15 +91,36 @@ schema.statics.idList = function (id, callback) {
     });
 };
 
-schema.statics.update = function (id, username, fullname, email, role, callback) {
+schema.statics.update = function (id, username, fullname, email, role, mustPassword, callback) {
     var User = this;
-    User.findByIdAndUpdate(id, { $set: {username: username, fullname: fullname, email: email, role: role}}, function (err, user) {
+    User.findByIdAndUpdate(id, { $set: {username: username, fullname: fullname, email: email, role: role, mustChgPassword: mustPassword}}, function (err, user) {
         if (err) {
             callback(err, null);
         } else {
             callback(null, user);
         }
     });
+};
+
+schema.statics.updatePassword = function (id, password, callback) {
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            User.findOne({_id: id}, callback);
+        },
+        function(user, callback) {
+            user.password = password;
+            user.mustChgPassword = false;
+            user.save(function(err) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, user);
+                }
+            });
+        }
+    ], callback);
 };
 
 schema.statics.remove = function (id, callback) {

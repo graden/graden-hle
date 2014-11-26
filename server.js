@@ -56,6 +56,7 @@ app.get('/logout', require('routes/logouts').get);
 app.post('/user/create', require('routes/users').create);
 app.post('/user/update', require('routes/users').update);
 app.post('/user/remove', require('routes/users').remove);
+app.post('/user/update/password', require('routes/users').updatePassword);
 
 //app.post('/role/object/list', require('routes/objects').list);
 app.post('/role/object/add', require('routes/roles').addObj);
@@ -75,7 +76,7 @@ app.get('/download', require('routes/reports').download);
 app.get('/home', checkAuth, require('routes/homes').first);
 app.get('/', checkAuth, require('routes/homes').redi);
 app.post('/home/update', checkAuth, require('routes/homes').update);
-app.post('/mark/update', require('routes/marks').update);
+app.post('/mark/update',checkSetting, require('routes/marks').update);
 
 app.get('/crigroup/list', require('routes/crigroups').list);
 app.get('/crigroup/listRole', require('routes/crigroups').listRole);
@@ -101,32 +102,16 @@ app.post('/crigroupcontent/add', require('routes/crigroupcontents').addLinkCri);
 app.post('/crigroupcontent/remove', require('routes/crigroupcontents').removeLinkCri);
 
 
-/// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.use(function(err, req, res, next) {
+    if (typeof err == 'number') {
+        err = new HttpError(err);
+    }
+    if (err instanceof HttpError) {
+        logs.error(err);
+        res.sendHttpError(err);
+    } else {
+        logs.error(err);
+        err = new HttpError(500);
+        res.sendHttpError(err);
+    }
 });
-
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-} else {
-    app.use(function(err, req, res) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: {}
-        });
-    });
-}
-

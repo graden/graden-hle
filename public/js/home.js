@@ -157,7 +157,13 @@ $(function () {
     });
 
     $( "#btn-setting").click(function() {
-        document.location.href = "/setting";
+        var fsuccess = function(data){
+            if (data) {
+                location.href = '/setting';
+            }
+        };
+        ajaxData('GET', '/setting',{}, fsuccess);
+
     });
 
     $( "#btn-chg-mark").click(function() {
@@ -171,6 +177,14 @@ $(function () {
             $msgBox.dialog('open');
             return;
         }
+        var fsuccess = function(data){
+            if (data) {
+                location.href = '/download';
+            }
+        };
+        ajaxData('GET', '/reports/repo2', {'idGrp': $idGrp, 'idObj': $idObj,
+            'idYear': $idYear, 'idQuarter': $idQuarter, 'radioObj':$radioObj}, fsuccess);
+
         var $idMark = $highlight.attr('data-id-mark');
         var $vMark  = $highlight.find('td:eq(2) div').text();
         $('#name-mark').val($vMark);

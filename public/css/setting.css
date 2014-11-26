@@ -62,6 +62,17 @@
     padding-bottom: 15px;
 }
 
+#check-block-user li {
+    padding-top: 10px;
+    padding-bottom: 6px;
+}
+
+#check-block-user label{
+    padding-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 #btn-role {
     margin-top: 10px;
     width: 100%;

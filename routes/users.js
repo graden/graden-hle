@@ -22,18 +22,17 @@ exports.create = function(req, res, next) {
 };
 
 exports.update = function(req, res) {
-    var id       = req.body.id;
-    var fullname = req.body.fullname;
-    var username = req.body.username;
-    var role     = req.body.role;
-
-    //var password = req.body.password;
-    var email = req.body.email;
-    User.update(id, username, fullname, email, role, function(err, user) {
+    var id        = req.body.id;
+    var fullname  = req.body.fullname;
+    var username  = req.body.username;
+    var role      = req.body.role;
+    var email     = req.body.email;
+    var mustPass  = req.body.mustPassword;
+    User.update(id, username, fullname, email, role, mustPass, function(err, user) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, user);
+            res.status(200).json(user);
         }
     });
 };
@@ -42,9 +41,21 @@ exports.remove = function(req, res) {
     var id = req.body.id;
     User.remove(id, function(err, user) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, user);
+            res.status(200).json(user);
+        }
+    });
+};
+
+exports.updatePassword = function(req, res) {
+    var id       = req.body.id;
+    var password = req.body.password;
+    User.updatePassword(id, password, function(err, user) {
+        if (err) {
+            res.status(403).json(err);
+        } else {
+            res.status(200).json(user);
         }
     });
 };
@@ -54,7 +65,7 @@ exports.list = function(req, res, next) {
         if (err) {
             next(err);
         } else {
-            res.json(200, user);
+            res.status(200).json(user);
         }
     });
 };
