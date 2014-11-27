@@ -49,3 +49,35 @@ exports.editTask = function(req, res, next) {
         });
     }
 };
+
+exports.createTask = function(req, res, next) {
+    var reqPath = url.parse(req.url).pathname;
+    if (!req.session.user) {
+        res.redirect('/login');
+    } else {
+        var idRole = req.session.role;
+        Role.idList(idRole, function(err, role) {
+            if (reqPath == '/task/create' && !role.newTasks) {
+                next(new HttpError(401, "Вам закрыт доступ к созданию задачи. Обратитесь к администратору!"));
+            } else {
+                next();
+            }
+        });
+    }
+};
+
+exports.removeTask = function(req, res, next) {
+    var reqPath = url.parse(req.url).pathname;
+    if (!req.session.user) {
+        res.redirect('/login');
+    } else {
+        var idRole = req.session.role;
+        Role.idList(idRole, function(err, role) {
+            if (reqPath == '/task/remove' && !role.delTasks) {
+                next(new HttpError(401, "Вам закрыт доступ к удалению задачи. Обратитесь к администратору!"));
+            } else {
+                next();
+            }
+        });
+    }
+};

@@ -88,10 +88,10 @@ app.post('/object/create', require('routes/objects').create);
 app.post('/object/update', require('routes/objects').update);
 app.post('/object/remove', require('routes/objects').remove);
 
-app.post('/task/create', require('routes/tasks').create);
-app.post('/task/load', require('routes/tasks').load);
+app.post('/task/create',checkSetting.createTask, require('routes/tasks').create);
+app.post('/task/load',checkAuth, require('routes/tasks').load);
 app.post('/task/update', checkSetting.editTask, require('routes/tasks').update);
-app.post('/task/remove', require('routes/tasks').remove);
+app.post('/task/remove', checkSetting.removeTask, require('routes/tasks').remove);
 
 app.post('/cri/create', require('routes/cris').create);
 app.post('/cri/update', require('routes/cris').update);
