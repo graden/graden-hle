@@ -7,9 +7,9 @@ exports.update = function(req, res) {
     var permit  = true;
     Cri.update(id, name, permit, function(err, cri){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, cri);
+            res.status(200).json(cri);
         }
     });
 };
@@ -19,9 +19,9 @@ exports.create = function(req, res) {
     var permit  = true;
     Cri.create(name, permit, function(err, cri){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, cri);
+            res.status(200).json(cri);
         }
     });
 };
@@ -30,13 +30,13 @@ exports.remove = function(req, res) {
     var id = req.body.id;
     CriGroup.verif(id, function(error){
         if (error) {
-            res.json(403, error);
+            res.status(403).json(error);
         } else {
             Cri.remove(id, function(err, cri){
                 if (err) {
-                    res.json(403, err);
+                    res.status(403).json(err);
                 } else {
-                    res.json(200, cri);
+                    res.status(200).json(cri);
                 }
             });
         }

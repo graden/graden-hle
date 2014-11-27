@@ -4,7 +4,7 @@ var async = require('async');
 exports.list = function(req, res) {
     Role.allList(function(err, role) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             var count = 0;
             var out = {};
@@ -18,7 +18,7 @@ exports.list = function(req, res) {
             });
             out.list  = txtList;
             out.count = count;
-            res.json(200, out);
+            res.status(200).json(out);
         }
     });
 };
@@ -40,11 +40,11 @@ exports.load = function(req, res) {
             Role.idList(id, function(err, role) {
                 callback(null, role);
             });
-        },
+        }
     ],
         function(error, result){
             if (error) {
-                res.json(403, error);
+                res.status(403).json(error);
             } else {
                 var count = 0;
                 var out = {};
@@ -70,40 +70,15 @@ exports.load = function(req, res) {
                         '<td class="td-2"><div>' + val.name + '</div></td>' +
                         '</tr>';
                 });
-                out.listGrp = txtList;
-                out.countGrp = count;
+                out.listGrp      = txtList;
+                out.countGrp     = count;
+                out.btnMarks     = (result[2].btnMarks) ? 'check' : 'uncheck';
+                out.newTasks     = (result[2].newTasks) ? 'check' : 'uncheck';
+                out.edtTasks     = (result[2].edtTasks) ? 'check' : 'uncheck';
+                out.delTasks     = (result[2].delTasks) ? 'check' : 'uncheck';
+                out.perSettings  = (result[2].perSettings) ? 'check' : 'uncheck';
 
-                if (result[2].btnMarks) {
-                    out.btnMarks = 'check';
-                } else {
-                    out.btnMarks = 'uncheck';
-                }
-
-                if (result[2].newTasks) {
-                    out.newTasks = 'check';
-                } else {
-                    out.newTasks = 'uncheck';
-                }
-
-                if (result[2].edtTasks) {
-                    out.edtTasks = 'check';
-                } else {
-                    out.edtTasks = 'uncheck';
-                }
-
-                if (result[2].delTasks) {
-                    out.delTasks = 'check';
-                } else {
-                    out.delTasks = 'uncheck';
-                }
-
-                if (result[2].perSettings) {
-                    out.perSettings = 'check';
-                } else {
-                    out.perSettings = 'uncheck';
-                }
-
-                res.json(200, out);
+                res.status(200).json(out);
             }
         }
     );
@@ -113,9 +88,9 @@ exports.create = function(req, res) {
     var name = req.body.name;
     Role.create(name, function(err, role) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, role);
+            res.status(200).json(role);
         }
     });
 };
@@ -125,11 +100,11 @@ exports.addObj = function(req, res) {
     var idObj   = req.body.idObj;
     Role.addObj(id, idObj, function(err) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             Role.allListObj(id, function(err, roleObj) {
                 if (err) {
-                    res.json(403, err);
+                    res.status(403).json(err);
                 } else {
                     var count = 0;
                     var out = {};
@@ -144,7 +119,7 @@ exports.addObj = function(req, res) {
                     });
                     out.listObj = txtList;
                     out.countObj = count;
-                    res.json(200, out);
+                    res.status(200).json(out);
                 }
             });
         }
@@ -156,9 +131,9 @@ exports.removeObj = function(req, res) {
     var idObj   = req.body.idObj;
     Role.delObj(id, idObj, function(err, roleGrp){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, roleGrp);
+            res.status(200).json(roleGrp);
         }
     });
 };
@@ -169,11 +144,11 @@ exports.addGrp = function(req, res) {
     var idObj   = req.body.idObj;
     Role.addGrp(id, idObj, function(err) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             Role.allListGroups(id, function(err, roleGrp) {
                 if (err) {
-                    res.json(403, err);
+                    res.status(403).json(err);
                 } else {
                     var count = 0;
                     var out = {};
@@ -188,7 +163,7 @@ exports.addGrp = function(req, res) {
                     });
                     out.listObj = txtList;
                     out.countObj = count;
-                    res.json(200, out);
+                    res.status(200).json(out);
                 }
             });
         }
@@ -200,13 +175,12 @@ exports.removeGrp = function(req, res) {
     var idObj   = req.body.idObj;
     Role.delGrp(id, idObj, function(err, roleGrp){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, roleGrp);
+            res.status(200).json(roleGrp);
         }
     });
 };
-
 
 exports.update = function(req, res) {
     var name    = req.body.name;
@@ -218,9 +192,9 @@ exports.update = function(req, res) {
     var perSet  = req.body.perSettings;
     Role.update(id, btnMark, newTask, edtTask, delTask, name, perSet, function(err, role) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, role);
+            res.status(200).json(role);
         }
     });
 };

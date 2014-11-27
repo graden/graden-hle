@@ -16,7 +16,7 @@ exports.update = function(req, res) {
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
     Mark.update(vMark, idMark, idGrp, idCri, idQuarter, idYear, idObj, radioObj, function(err, data){
         if (err) {
-            res.send(403, err);
+            res.status(403).send(err);
         } else {
             if (data) {
                 async.parallel([
@@ -34,7 +34,7 @@ exports.update = function(req, res) {
                         Mark.allList(idGrp, prevQY.quarter, prevQY.year, idObj, radioObj, function(err, markPrev){
                             callback(null, markPrev);
                         });
-                    },
+                    }
                 ],
                     function(error, result){
                         HleFunc.markObj(result[0], result[1], result[2], function (tblMark){
@@ -59,12 +59,12 @@ exports.update = function(req, res) {
                             outMark.count   = count;
                             a.mark          = outMark;
                             a.radar         = JSON.stringify(HleFunc.chartRadar(tblMark));
-                            res.send(200, a);
+                            res.status(200).send(a);
                         });
                     }
                 );
             } else {
-                res.send(403, new AuthError("Ничего не добавлено!"));
+                res.status(403).send(new AuthError("Ничего не добавлено!"));
             }
         }
     });

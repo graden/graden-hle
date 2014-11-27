@@ -39,9 +39,9 @@ exports.remove = function(req, res) {
 
     Task.remove(idTask, function(err, task){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, task);
+            res.status(200).json(task);
         }
     });
 };
@@ -54,7 +54,7 @@ exports.load = function(req, res) {
     var radioObj    = req.body.radioObj;
     Task.allList(idGrp, idQuarter, idYear, idObj, radioObj, function(err, task){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             var i = 0;
             var out = {};
@@ -69,7 +69,7 @@ exports.load = function(req, res) {
             });
             out.list  = txtBody;
             out.count = i;
-            res.json(200, out);
+            res.status(200).json(out);
         }
     });
 };

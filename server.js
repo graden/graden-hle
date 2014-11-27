@@ -39,8 +39,6 @@ app.use(session({
 app.use(require('middleware/sendHttpError'));
 app.use(require('middleware/loadUser'));
 
-//app.use(app.router);
-
 app.engine('ejs', ejsTemplate);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -69,14 +67,14 @@ app.get('/role/list', require('routes/roles').list);
 app.post('/role/update', require('routes/roles').update);
 //app.post('/role/remove', require('routes/roles').remove);
 
-app.get('/setting',checkSetting, require('routes/settings').get);
+app.get('/setting',checkSetting.setting, require('routes/settings').get);
 app.post('/reports/repo2', require('routes/reports').report2);
 app.get('/download', require('routes/reports').download);
 
 app.get('/home', checkAuth, require('routes/homes').first);
 app.get('/', checkAuth, require('routes/homes').redi);
 app.post('/home/update', checkAuth, require('routes/homes').update);
-app.post('/mark/update',checkSetting, require('routes/marks').update);
+app.post('/mark/update',checkSetting.permitMark, require('routes/marks').update);
 
 app.get('/crigroup/list', require('routes/crigroups').list);
 app.get('/crigroup/listRole', require('routes/crigroups').listRole);
@@ -86,6 +84,9 @@ app.post('/crigroup/remove', require('routes/crigroups').remove);
 
 app.get('/object/list', require('routes/objects').list);
 app.get('/object/listRole', require('routes/objects').listRole);
+app.post('/object/create', require('routes/objects').create);
+app.post('/object/update', require('routes/objects').update);
+app.post('/object/remove', require('routes/objects').remove);
 
 app.post('/task/create', require('routes/tasks').create);
 app.post('/task/load', require('routes/tasks').load);

@@ -16,7 +16,7 @@ exports.create = function(req, res, next) {
                 next(err);
             }
         } else {
-            res.json(200, user);
+            res.status(200).json(user);
         }
     });
 };

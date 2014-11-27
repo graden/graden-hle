@@ -46,9 +46,9 @@ exports.addLinkCri = function(req, res) {
     var typeObj = req.body.typeObj;
     CriGroup.addLinkCri(idGrp, idCri, typeObj, function(err, crigroup){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, crigroup);
+            res.status(200).json(crigroup);
         }
     });
 };
@@ -59,9 +59,9 @@ exports.removeLinkCri = function(req, res) {
     var typeObj = req.body.typeObj;
     CriGroup.removeLinkCri(idGrp, idCri, typeObj, function(err, crigroup){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, crigroup);
+            res.status(200).json(crigroup);
         }
     });
 };
@@ -72,9 +72,9 @@ exports.list = function(req, res) {
     var lstGrp = [];
     CriGroup.idList(lstGrp, idGrp, typeObj, function(err, crigroup){
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, crigroup);
+            res.status(200).json(crigroup);
         }
     });
 };

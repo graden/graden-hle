@@ -4,7 +4,7 @@ var Role     = require('models/role').Role;
 exports.list = function(req, res) {
     CriGroup.allList(function(err, crigroup) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
 
             var count = 0;
@@ -19,7 +19,7 @@ exports.list = function(req, res) {
             });
             out.list  = txtList;
             out.count = count;
-            res.json(200, out);
+            res.status(200).json(out);
         }
     });
 };
@@ -28,7 +28,7 @@ exports.listRole = function(req, res) {
     var idRole = req.session.role;
     Role.listGroups(idRole, function(err, crigroup) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             var count = 0;
             var out = {};
@@ -42,7 +42,7 @@ exports.listRole = function(req, res) {
             });
             out.list  = txtList;
             out.count = count;
-            res.json(200, out);
+            res.status(200).json(out);
         }
     });
 };
@@ -52,9 +52,9 @@ exports.create = function(req, res) {
     var permit = true;
     CriGroup.create(name, permit, function(err, crigroup) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, crigroup);
+            res.status(200).json(crigroup);
         }
     });
 };
@@ -65,9 +65,9 @@ exports.update = function(req, res) {
     var permit = true;
     CriGroup.update(id, name, permit, function(err, crigroup) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, crigroup);
+            res.status(200).json(crigroup);
         }
     });
 };
@@ -76,9 +76,9 @@ exports.remove = function(req, res) {
     var id   = req.body.id;
     CriGroup.remove(id, function(err, crigroup) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
-            res.json(200, crigroup);
+            res.status(200).json(crigroup);
         }
     });
 };

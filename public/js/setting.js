@@ -186,7 +186,7 @@ $(function () {
         var $dialog    = $('#dialog-cri');
         $dialog.find('#name-cri').val('');
         $dialog.dialog('option', 'title', 'Добавить объект');
-        $dialog.dialog('option', 'url', 'obj');
+        $dialog.dialog('option', 'url', 'object');
         $dialog.dialog('option', 'type', 'create');
         $dialog.dialog('option', 'content', $content);
         $dialog.dialog('option', 'table', $table);
@@ -203,7 +203,7 @@ $(function () {
         $dialog.find('#name-cri').val($name);
         $dialog.dialog('option', 'title', 'Изменить объект');
         $dialog.dialog('option', 'id', $id);
-        $dialog.dialog('option', 'url', 'obj');
+        $dialog.dialog('option', 'url', 'object');
         $dialog.dialog('option', 'type', 'update');
         $dialog.dialog('option', 'content', $content);
         $dialog.dialog('option', 'table', $table);
@@ -250,7 +250,7 @@ $(function () {
         var $dialog    = $('#dialog-remove');
         $dialog.find('#txt-message').text("Вы хотите удалить данный объект?");
         $dialog.dialog('option', 'title', 'Подтверждение удаления');
-        $dialog.dialog('option', 'url', "/obj/remove");
+        $dialog.dialog('option', 'url', "/object/remove");
         $dialog.dialog('option', 'data', {'id':$id});
         $dialog.dialog('option', 'fsuccess', $fsuccess);
         $dialog.dialog('open');

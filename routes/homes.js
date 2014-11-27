@@ -99,7 +99,7 @@ exports.update = function(req, res) {
     ],
         function(error, result){
             if (error) {
-                res.json(403, error);
+                res.status(403).json(error);
             } else {
                 HleFunc.markObj(result[0], result[1], result[2], function (tblMark){
                     var countDef = 0;

@@ -17,7 +17,7 @@
     overflow: hidden;
     padding: 0;
     width: 100%;
-    display: table;
+    margin: 0 auto;
 }
 
 .footer-grid {
@@ -26,17 +26,17 @@
 }
 
 #band {
-    display: table-cell;
     width: 10px;
 }
 
 #grid {
-    display: table-cell;
-    width: 490px;
+    float: left;
+    width: 49.5%;
 }
 
 #chart {
-    display: table-cell;
+    float: right;
+    width: 49.5%;
 }
 
 .footer-grid button{
@@ -44,13 +44,17 @@
     margin-left: 3px;
 }
 
-#grid-tabs, #chart-tabs  {
+#grid-tabs, #chart-tabs {
     height: 450px;
 }
 
+#graphics {
+    width: 100%;
+    text-align:center;
+}
+
 canvas {
-    display:block;
-    margin: auto;
+    display: inline;
 }
 
 #footer {

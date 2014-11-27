@@ -1,10 +1,49 @@
 var Object = require('models/object').Obj;
 var Role   = require('models/role').Role;
 
+exports.create = function(req, res) {
+    var name    = req.body.name;
+    var permit  = true; //req.body.name;
+    var type    = 'object'; //req.body.type;
+    Object.create(name, type, permit, function(err, object) {
+        if (err) {
+            res.status(403).json(err);
+        } else {
+            res.status(200).json(object);
+        }
+    });
+};
+
+exports.update = function(req, res) {
+    var id      = req.body.id;
+    var name    = req.body.name;
+    var permit  = true; //req.body.name;
+    var type    = 'object'; //req.body.type;
+    Object.update(id, name, type, permit, function(err, object) {
+        if (err) {
+            res.status(403).json(err);
+        } else {
+            res.status(200).json(object);
+        }
+    });
+};
+
+exports.remove = function(req, res) {
+    var id      = req.body.id;
+    Object.remove(id, function(err, object) {
+        if (err) {
+            res.status(403).json(err);
+        } else {
+            res.status(200).json(object);
+        }
+    });
+};
+
+
 exports.list = function(req, res) {
     Object.allList(function(err, obj) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             var count = 0;
             var out = {};
@@ -18,7 +57,7 @@ exports.list = function(req, res) {
             });
             out.list  = txtList;
             out.count = count;
-            res.json(200, out);
+            res.status(200).json(out);
         }
     });
 };
@@ -27,7 +66,7 @@ exports.listRole = function(req, res) {
     var idRole = req.session.role;
     Role.listObjects(idRole, function(err, obj) {
         if (err) {
-            res.json(403, err);
+            res.status(403).json(err);
         } else {
             var count = 0;
             var out = {};
@@ -41,7 +80,7 @@ exports.listRole = function(req, res) {
             });
             out.list  = txtList;
             out.count = count;
-            res.json(200, out);
+            res.status(200).json(out);
         }
     });
 };
