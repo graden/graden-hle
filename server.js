@@ -90,7 +90,7 @@ app.post('/object/remove', require('routes/objects').remove);
 
 app.post('/task/create', require('routes/tasks').create);
 app.post('/task/load', require('routes/tasks').load);
-app.post('/task/update', require('routes/tasks').update);
+app.post('/task/update', checkSetting.editTask, require('routes/tasks').update);
 app.post('/task/remove', require('routes/tasks').remove);
 
 app.post('/cri/create', require('routes/cris').create);

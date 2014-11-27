@@ -33,3 +33,19 @@ exports.permitMark = function(req, res, next) {
         });
     }
 };
+
+exports.editTask = function(req, res, next) {
+    var reqPath = url.parse(req.url).pathname;
+    if (!req.session.user) {
+        res.redirect('/login');
+    } else {
+        var idRole = req.session.role;
+        Role.idList(idRole, function(err, role) {
+            if (reqPath == '/task/update' && !role.edtTasks) {
+                next(new HttpError(401, "Вам закрыт доступ к изменению задачи. Обратитесь к администратору!"));
+            } else {
+                next();
+            }
+        });
+    }
+};
