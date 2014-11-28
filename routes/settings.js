@@ -57,3 +57,7 @@ exports.get = function(req, res, next) {
         }
     );
 };
+
+exports.permit = function(req, res) {
+    res.status(200).json({url:'/setting'});
+};

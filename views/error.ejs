@@ -1,5 +1,9 @@
-<% block('title', "Ошибка приложения") -%>
+<% layout('./layout/page') -%>
+<% block('title', '') -%>
+<% block('titleDlg', 'Доступ закрыт') -%>
+<% script('js/error.js') -%>
+<% stylesheet('css/error.css') -%>
 
-<p>Произошла ошибка</p>
-
-<p><%=error.message%></p>
+<div id="dialog-permit" title="<%=blocks.titleDlg%>">
+    <h4 id="txt-message"><%=error.message%> <%=error.url%></h4>
+</div>

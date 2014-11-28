@@ -9,8 +9,8 @@ exports.setting = function(req, res, next) {
     } else {
         var idRole = req.session.role;
         Role.idList(idRole, function(err, role) {
-            if (reqPath == '/setting' && !role.perSettings) {
-                next(new HttpError(401, "Вам закрыт доступ к настройкам. Обратитесь к администратору!"));
+            if ((reqPath == '/setting/permit' || reqPath == '/setting') && !role.perSettings) {
+                next(new HttpError(401, "Вам закрыт доступ к настройкам. Обратитесь к администратору!",reqPath));
             } else {
                 next();
             }
@@ -25,7 +25,7 @@ exports.permitMark = function(req, res, next) {
     } else {
         var idRole = req.session.role;
         Role.idList(idRole, function(err, role) {
-            if (reqPath == '/mark/update' && !role.btnMarks) {
+            if ((reqPath == '/mark/update' || reqPath == '/mark/update/permit') && !role.btnMarks) {
                 next(new HttpError(401, "Вам закрыт доступ к изменению оценки. Обратитесь к администратору!"));
             } else {
                 next();
@@ -42,7 +42,7 @@ exports.editTask = function(req, res, next) {
         var idRole = req.session.role;
         Role.idList(idRole, function(err, role) {
             if (reqPath == '/task/update' && !role.edtTasks) {
-                next(new HttpError(401, "Вам закрыт доступ к изменению задачи. Обратитесь к администратору!"));
+                next(new HttpError(401, "Вам закрыт доступ к изменению задачи. Обратитесь к администраору!"));
             } else {
                 next();
             }

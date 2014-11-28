@@ -42,9 +42,18 @@ exports.update = function(req, res) {
                             var count   = 0;
                             var avgDef  = 0;
                             var avgPrev = 0;
+                            var countDef  = 0;
+                            var countPrev = 0;
                             var outMark = {};
                             tblMark.forEach(function(val) {
                                 count++;
+                                if (val.markDef !== 0) {
+                                    countDef++;
+                                }
+                                if (val.markPrev !== 0) {
+                                    countPrev++;
+                                }
+
                                 avgDef   += val.markDef;
                                 avgPrev  += val.markPrev;
                                 outMark.list += '<tr data-id=' + val._id + ' data-id-mark=' + val.idMark + '>' +
@@ -54,8 +63,8 @@ exports.update = function(req, res) {
                                     '<td class="td-4"><div>' + val.markPrev.toFixed(2) + '</div></td>' +
                                     '</tr>';
                             });
-                            outMark.avgDef  = (count === 0) ? 0 : (avgDef/count).toFixed(2);
-                            outMark.avgPrev = (count === 0) ? 0 : (avgPrev/count).toFixed(2);
+                            outMark.avgDef  = (countDef === 0) ? 0 : (avgDef/countDef).toFixed(2);
+                            outMark.avgPrev = (countPrev === 0) ? 0 : (avgPrev/countPrev).toFixed(2);
                             outMark.count   = count;
                             a.mark          = outMark;
                             a.radar         = JSON.stringify(HleFunc.chartRadar(tblMark));

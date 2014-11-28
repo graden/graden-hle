@@ -159,10 +159,10 @@ $(function () {
     $( "#btn-setting").click(function() {
         var fsuccess = function(data){
             if (data) {
-                location.href = '/setting';
+                location.href = data.url;
             }
         };
-        ajaxData('GET', '/setting',{}, fsuccess);
+        ajaxData('GET', '/setting/permit',{}, fsuccess);
 
     });
 

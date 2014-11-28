@@ -18,6 +18,7 @@ exports.post = function(req, res, next) {
       }
     } else {
         req.session.user = user._id;
+        req.session.username = user.username;
         req.session.role = user.role;
         if (user.mustChgPassword) {
             res.status(201).json(user._id);

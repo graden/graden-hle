@@ -19,7 +19,8 @@
     "mongoose": "https://registry.npmjs.org/mongoose/-/mongoose-3.8.19.tgz",
     "nconf": "^0.6.9",
     "pdfkit": "^0.7.0",
-    "serve-favicon": "^2.1.6"
+    "serve-favicon": "^2.1.6",
+    "winston": "^0.8.3"
   },
   "repository": {
     "type": "git",

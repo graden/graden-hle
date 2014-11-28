@@ -1,6 +1,6 @@
 var async = require('async');
 var chart = require('libs/chart-pdf');
-var logs  = require('libs/logs')(module);
+var logs  = require('libs/logs');
 var fs    = require('fs');
 var Obj   = require('models/object').Obj;
 var Mark  = require('models/mark').Mark;

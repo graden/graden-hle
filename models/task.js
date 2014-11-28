@@ -58,7 +58,7 @@ schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, perc
 schema.statics.update = function(idTask, idGrp, idQuarter, idYear, idObject, value, percent, callback) {
     var Task = this;
     Task.findByIdAndUpdate(idTask,{$set: {linkCriGroup:idGrp, valueQuarter:idQuarter, valueYear:idYear,
-        linkObject:idObject, valueTask:value, percentTask:percent}}).exec(function(err, task){
+        linkObject:idObject, valueTask:value, percentTask:percent, modifyDate: new Date()}}).exec(function(err, task){
             if (err) {
                 callback(err, null);
             } else {
