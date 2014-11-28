@@ -10,7 +10,7 @@ exports.setting = function(req, res, next) {
         var idRole = req.session.role;
         Role.idList(idRole, function(err, role) {
             if ((reqPath == '/setting/permit' || reqPath == '/setting') && !role.perSettings) {
-                next(new HttpError(401, "Вам закрыт доступ к настройкам. Обратитесь к администратору!",reqPath));
+                next(new HttpError(401, "Вам закрыт доступ к настройкам. Обратитесь к администратору!"));
             } else {
                 next();
             }
