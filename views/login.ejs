@@ -7,30 +7,40 @@
 
 <div id="header">
     <div id="logo">
-        <% include ./layout/logo.ejs %>
         <div id="logo-left">
-
         </div>
     </div>
 </div>
 
+<div id="login-logo">
+    <img src="img/logo.png" width="107" height="65">
+    <h6>Rating System</h6>
+</div>
 <div id="content">
     <div id="page-wrapper">
         <div id="menu-office">
             <div id="message-office">
-                <h3>Вход на сайт</h3>
+                <h3>Вход в систему:</h3>
             </div>
         </div>
         <div id="login-content">
-            <label class='label-txt' for='login-user'>Логин:</label>
-            <input class='input-txt' type='text' id='login-user' value=''/>
-            <label class='label-txt' for='password-user'>Пароль:</label>
-            <input class='input-txt' type='password' id='password-user' value=''/>
-        </div>
-        <div id="btn-panel">
-            <div id="submit-btn">
-                <button id="button-submit" type="submit" class="btn btn-primary">Войти</button>
-            </div>
+            <table id = "login-tbl">
+                <colgroup>
+                    <col style="width: 17%;">
+                    <col style="width: 258px;">
+                    <col style="">
+                </colgroup>
+                <tr>
+                    <td style="text-align: right;"><label>Логин:</label></td>
+                    <td><input type='text' id='login-user' value=''/></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><label>Пароль:</label></td>
+                    <td><input type='password' id='password-user' value=''/></td>
+                    <td><button id="button-submit" type="submit" class="btn btn-primary">Войти</button></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

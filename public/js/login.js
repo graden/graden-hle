@@ -1,5 +1,5 @@
 $(function() {
-    $('#button-submit').click(function() {
+    function goUser(){
         var $username = $('#login-user').val();
         var $password = $('#password-user').val();
         $.ajax({url: "/login", method: "POST",
@@ -7,6 +7,7 @@ $(function() {
             success: function(data, textStatus, xhr){
                 if (xhr.status == 201) {
                     var $id         = data;
+                    $('#password-user').val('');
                     var $dialog     = $('#dialog-password');
                     $dialog.find('#password-new-user').val('');
                     $dialog.find('#password-retry-user').val('');
@@ -27,6 +28,10 @@ $(function() {
                 $msgBox.dialog('open');
             }
         });
+    };
+
+    $('#button-submit').click(function() {
+        goUser();
     });
 
     $('#dialog-password').dialog({
@@ -64,6 +69,18 @@ $(function() {
 
     $( "input[type=submit], button" ).button().click(function(event) {
         event.preventDefault();
+    });
+
+    $("#login-user").keypress(function(e){
+        if(e.keyCode==13){
+            goUser();
+        }
+    });
+
+    $("#password-user").keypress(function(e){
+        if(e.keyCode==13){
+            goUser();
+        }
     });
 
 });

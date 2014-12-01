@@ -1,43 +1,85 @@
 @import url('reset.css');
 @import url('typography.css');
 @import url('dialog.css');
-@import url('header.css');
+
+#header {
+    height: 105px;
+    position: relative;
+    width: 100%;
+}
 
 #message-office {
-    padding-top: 5px;
+    padding-left: 17%;
+    padding-top: 48px;
+    position: relative;
+}
+
+#login-logo {
+    position: relative;
+    float: left;
+    width: 32%;
     text-align: center;
+    padding-top: 40px;
 }
 
 #content {
-    margin: auto;
+    float: left;
     position: relative;
-    width: 400px;
+    width: 65%;
 }
 
 #page-wrapper {
+    position: relative;
+    width: 100%;
     clear: both;
     overflow: hidden;
-    margin-top: 40px;
+    margin-top: 10px;
     padding: 1px;
-    border: 1px solid #bababa;
+    background: none repeat scroll 0 0 #f6a828;
+    height: 250px;
+    border: 1px solid #e78f08;
     border-radius: 4px;
-    background: #eeeeee;
-    /*url(./ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;*/
+    color: #ffffff;
 }
 
 #login-content {
-    margin: 20px;
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+}
+
+#login-tbl td {
+    vertical-align: middle;
+    padding: 1px;
+}
+#login-tbl td label {
+    color: white;
+    font-size: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+    margin-right: 5px;
+}
+
+#login-tbl td input {
+    border: 1px solid #e78f08;
+    border-radius: 4px;
+    color: #646464;
+    font-size: 12px;
+    height: 25px;
+    padding-top: 5px;
+    width: 258px;
 }
 
 #btn-panel {
-    border-top: 1px solid #bababa;
     width: 100%;
     height: 40px;
 }
 
-#submit-btn {
-    padding: 5px;
-    float: right;
+#button-submit {
+    height: 25px;
+    width: 106px;
+    margin-left: 10px;
 }
 
 

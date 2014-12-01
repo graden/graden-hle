@@ -50,7 +50,8 @@ app.use(express.static(__dirname + '/vendor'));
 
 app.use(function (req, res, next) {
     var user = (!req.session.username) ? 'nouser': req.session.username;
-    logs.info('%s - %s', user, req.url);
+    var ipAddr = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
+    logs.info('%s - %s - %s', user, ipAddr, req.url);
     next();
 });
 
