@@ -5,10 +5,10 @@ var AuthError = require('models/user').AuthError;
 exports.create = function(req, res, next) {
     var fullname = req.body.fullname;
     var username = req.body.username;
-    var password = req.body.password;
+    var password = req.body.username;
     var role     = req.body.role;
     var email = '';//req.body.email;
-    User.create(fullname, email, username, password, role, function(err, user) {
+    User.create(fullname, email, role, username, password, function(err, user) {
         if (err) {
             if (err instanceof AuthError) {
                 next(new HttpError(403, err.message));

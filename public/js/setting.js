@@ -621,7 +621,6 @@ $(function () {
                 var $content    = $(this).dialog('option', 'content');
                 var $highlight  = $content.find('tr.hle-grid-highlight');
                 var $tBody      = $content.find('tbody:last');
-                var $password   = $(this).find('#password-user').val();
                 var $fullname   = $(this).find('#name-user').val();
                 var $role       = $highlight.attr('data-id-role');
                 var $mustPass   = $("#mustPassword").prop('checked');
@@ -642,8 +641,7 @@ $(function () {
                         );
                         FixTable($content);
                     };
-                    $dt = {'fullname':$fullname,'username':$username,
-                           'password':$password,'email':$email};
+                    $dt = {'fullname':$fullname,'username':$username,'role':$role,'email':$email};
                     ajaxData('POST','/user/create', $dt, fsuccess);
                 }
                 if ($type == 'update') {

@@ -56,7 +56,7 @@ schema.statics.authorize = function(username, password, callback) {
   ], callback);
 };
 
-schema.statics.create = function (fullname, email, username, password, callback) {
+schema.statics.create = function (fullname, email, role, username, password,  callback) {
     var User = this;
     async.waterfall([
         function(callback) {
@@ -66,7 +66,7 @@ schema.statics.create = function (fullname, email, username, password, callback)
             if (user) {
                     callback(new AuthError("Такой пользователь уже существует!"));
             } else {
-                user = new User({fullname: fullname, email: email, username: username,
+                user = new User({fullname: fullname, email: email, role: role, username: username,
                                  password: password});
                 user.save(function(err) {
                     if (err) {
