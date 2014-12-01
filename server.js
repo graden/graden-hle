@@ -14,7 +14,7 @@ var port = process.env.port || config.get('port');
 var app = express();
 
 app.listen(port, function(){
-    logs.info('%s - %s: %s','Robot','Запуск сервера на порту',port);
+    logs.warn('%s - %s: %s','robot','Starting the server on port',port);
 });
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -49,7 +49,7 @@ app.use(express.static(__dirname + '/vendor'));
 
 
 app.use(function (req, res, next) {
-    var user = (!req.session.username) ? 'nouser': req.session.username;
+    var user = (!req.session.username) ? 'robot': req.session.username;
     var ipAddr = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
     logs.info('%s - %s - %s', user, ipAddr, req.url);
     next();
