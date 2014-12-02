@@ -39,6 +39,28 @@ $(function () {
 
     /* погрузка данных в 'data-cri-group-content' при изменение фокуса 'data-cri-group'  */
 
+    function SubjectContentLoad(id) {
+        var fsuccess = function(data){
+            var $content = $('#tbl-subject-body');
+            var $i=0;
+            var $tBody = $content.find('tbody:last');
+            $content.find('tr').remove();
+            $.each(data, function(key, val){
+                $i++;
+                $tBody.append('<tr data-id=' + val._id + ' data-id-obj=' + val.idObj + '>' +
+                    '<td class="td-1"><div>' + $i + '</div></td>'+
+                    '<td class="td-2"><div>' + val.fName+ '</div></td>' +
+                    '</tr>'
+                );
+            });
+            FixTable($content);
+            $content = $('#tbl-subject-footer');
+            $content.find('th:eq(0) div').text($i);
+        };
+        ajaxData('POST', '/subject/list', {'id':id}, fsuccess);
+    }
+
+
     $('#radio-obj').on('ifChanged',function(){
         var $content = $('#tbl-cri-group-body').find('tr.hle-grid-highlight');
         var $id = $content.attr('data-id');
@@ -50,6 +72,11 @@ $(function () {
         var $id = $(this).attr('data-id');
         var $radioObj = $('#radio-obj').prop('checked');
         GroupContentLoad($id, $radioObj);
+    });
+
+    $('#tbl-object-body').on('click', 'tr', function(){
+        var $id = $(this).attr('data-id');
+        SubjectContentLoad($id);
     });
 
     $('#dialog-cri-list').dialog({
@@ -147,11 +174,11 @@ $(function () {
         var $highlight = $content.find('tr.hle-grid-highlight');
         var $id        = $highlight.attr('data-id');
         var $dialog    = $('#dialog-subject');
-        $dialog.find('#input-fName-subject').val('');
-        $dialog.find('#input-sName-subject').val('');
-        $dialog.find('#input-tName-subject').val('');
+        $dialog.find('#fName-subject').val('');
+        $dialog.find('#sName-subject').val('');
+        $dialog.find('#tName-subject').val('');
         $dialog.dialog('option', 'title', 'Добавить нового субъекта');
-        $dialog.dialog('option', 'type', 'insert');
+        $dialog.dialog('option', 'type', 'create');
         $dialog.dialog('option', 'idObj', $id);
         $content = $('#tbl-subject-body');
         $dialog.dialog('option', 'content', $content);
@@ -674,23 +701,26 @@ $(function () {
         autoOpen: false, height: 400, width: 400, modal: true, resizable: false,
         buttons: {
             'Сохранить': function() {
-                var $content = $('#tbl-subject-body');
-                var $idSbj = $(this).dialog('option', 'idSbj');
-                var $idObj = $(this).dialog('option', 'idObj');
-                var $fName = $(this).find('#fName-subject').val();
-                var $sName = $(this).find('#sName-subject').val();
-                var $tName = $(this).find('#tName-subject').val();
-                var $type  = $(this).dialog('option', 'type');
+                var $content = $(this).dialog('option', 'content');
+                var $tBody   = $content.find('tbody:last');
+                var $idSbj   = $(this).dialog('option', 'idSbj');
+                var $idObj   = $(this).dialog('option', 'idObj');
+                var $fName   = $(this).find('#fName-subject').val();
+                var $sName   = $(this).find('#sName-subject').val();
+                var $tName   = $(this).find('#tName-subject').val();
+                var $type    = $(this).dialog('option', 'type');
 
-                if ($idObj && $type == 'insert') {
-                    $.getJSON('/subject/create', {'type':$type, 'idObj':$idObj, 'fName':$fName, 'sName':$sName, 'tName':$tName}).done(function(res){
-                        if (res) {
-
-                        }
-                    });
+                if ($type == 'create') {
+                        var fsuccess = function(data) {
+                        AddTrTable($content);
+                        $tBody.append('<tr data-id=' + data._id + ' data-id-obj=' + data.idObj + '>' +
+                            '<td class="td-1"><div>' + $i + '</div></td>'+
+                            '<td class="td-2"><div>' + data.fName + '</div></td>'+'</tr>'
+                        );
+                        FixTable($content);
+                    };
+                    ajaxData('POST', '/subject/create', {'idObj':$idObj, 'fName':$fName}, fsuccess);
                     $(this).dialog('close');
-                } else {
-                    alert('Error '+$idObj+' '+$idSbj);
                 }
             },
             'Отмена': function() {
@@ -710,7 +740,7 @@ $(function () {
                 var $name       = $(this).find('#name-role').val();
                 parseInt($i); $i++;
 
-                 var fsuccess = function(data) {
+                var fsuccess = function(data) {
                     AddTrTable($content);
                     $tBody.append('<tr data-id="'+ data._id +'">' +
                             '<td class="td-1"><div>' + $i + '</div></td>'+
@@ -719,6 +749,7 @@ $(function () {
                     FixTable($content);
                 };
                 ajaxData('POST','/role/create', {'name':$name}, fsuccess);
+                $(this).dialog('close');
             },
             'Отмена': function() {
                 $(this).dialog('close');

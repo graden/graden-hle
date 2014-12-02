@@ -2,7 +2,7 @@ var express = require('express');
 var session  = require('express-session');
 var cookieParser = require('cookie-parser');
 var favicon = require('serve-favicon');
-//var log4js = require('log4js');
+var log4js = require('log4js');
 var bodyParser = require('body-parser');
 var url = require('url');
 var config  = require('config');
@@ -18,7 +18,7 @@ app.listen(port, function(){
 });
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(log4js.connectLogger(logs, { level: 'auto' }));
+app.use(log4js.connectLogger(logs, { level: 'auto' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -96,6 +96,8 @@ app.get('/object/listRole', require('routes/objects').listRole);
 app.post('/object/create', require('routes/objects').create);
 app.post('/object/update', require('routes/objects').update);
 app.post('/object/remove', require('routes/objects').remove);
+
+app.post('/subject/create', require('routes/subjects').create);
 
 app.post('/task/create',checkPermit.createTask, require('routes/tasks').create);
 app.post('/task/load',checkAuth, require('routes/tasks').load);

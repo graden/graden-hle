@@ -79,5 +79,16 @@ schema.statics.remove  = function(id, callback) {
         }
     });
 };
+schema.statics.addSubject = function(id, idSbj, callback) {
+    var Obj = this;
+    Obj.findByIdAndUpdate(id, { $pushAll: { linkSubject: [idSbj]} }, function (err, obj) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, obj);
+        }
+    });
+};
+
 
 exports.Obj = mongoose.model('dsObjects', schema);
