@@ -77,6 +77,7 @@ exports.prevQY = function(radioObj, defQuarter, defYear) {
 
 exports.markObj = function(req1, req2, req3, callback) {
     var a = [];
+    //console.log('--------------------------------------------------------------------------------------------------------------');
     for (var i = 0; i < req1.length; i++) {
         var obj = {};
         var x = 0;
@@ -91,9 +92,11 @@ exports.markObj = function(req1, req2, req3, callback) {
                 x++;
                 obj.idMark    = req2[j]._id.toString();
                 obj.markDef   += req2[j].valueMark;
+                //console.log(req2[j]._id.toString(), req2[j].linkCri.toString(),' == ', x, ' == ', req2[j].valueYear, req2[j].valueQuarter,  req2[j].createDate.toUTCString(), req2[j].valueMark );
             }
         }
         obj.markDef = (x === 0) ? 0 : (obj.markDef/x);
+
         x = 0;
         for(j = 0; j < req3.length; j++) {
             if (req1[i]._id.toString() === req3[j].linkCri.toString()) {

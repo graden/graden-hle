@@ -41,11 +41,11 @@ schema.statics.allList = function(idGrp, idQuarter, idYear, idObj, radioObj, cal
     });
 };
 
-schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, percent, callback) {
+schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, percent, radioObj, callback) {
     var Task = this;
     var tsk = new Task({linkCriGroup:idGrp, valueQuarter:idQuarter,
                          valueYear:idYear, linkObject:idObject,
-                         valueTask:value, percentTask:percent});
+                         valueTask:value, percentTask:percent, linkType: radioObj});
         tsk.save(function(err){
             if (err) {
                 callback(err, null);
@@ -55,10 +55,10 @@ schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, perc
         });
 };
 
-schema.statics.update = function(idTask, idGrp, idQuarter, idYear, idObject, value, percent, callback) {
+schema.statics.update = function(idTask, idGrp, idQuarter, idYear, idObject, value, percent, radioObj, callback) {
     var Task = this;
     Task.findByIdAndUpdate(idTask,{$set: {linkCriGroup:idGrp, valueQuarter:idQuarter, valueYear:idYear,
-        linkObject:idObject, valueTask:value, percentTask:percent, modifyDate: new Date()}}).exec(function(err, task){
+        linkObject:idObject, valueTask:value, percentTask:percent, modifyDate: new Date(), linkType: radioObj}}).exec(function(err, task){
             if (err) {
                 callback(err, null);
             } else {

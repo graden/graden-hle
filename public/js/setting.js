@@ -719,7 +719,7 @@ $(function () {
                         );
                         FixTable($content);
                     };
-                    ajaxData('POST', '/subject/create', {'idObj':$idObj, 'fName':$fName}, fsuccess);
+                    ajaxData('POST', '/subject/create', {'idObj':$idObj, 'fName':$fName, 'sName':$sName, 'tName':$tName}, fsuccess);
                     $(this).dialog('close');
                 }
             },

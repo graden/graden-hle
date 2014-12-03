@@ -3,6 +3,7 @@ var Mark      = require('models/mark').Mark;
 var CriGroup  = require('models/crigroup').CriGroup;
 var HleFunc   = require('libs/func-hle');
 var AuthError = require('error').AuthError;
+var HttpError = require('error').HttpError;
 
 exports.update = function(req, res) {
     var idObj      = req.body.idObj;
@@ -13,6 +14,10 @@ exports.update = function(req, res) {
     var idMark     = req.body.idMark;
     var vMark      = req.body.vMark;
     var radioObj   = req.body.radioObj;
+    if (idGrp === '100000000000000000000001' || idObj === '100000000000000000000001') {
+        res.send(new HttpError(403, "Изменение усредненых значений не возможно!"));
+        return;
+    }
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
     Mark.update(vMark, idMark, idGrp, idCri, idQuarter, idYear, idObj, radioObj, function(err, data){
         if (err) {

@@ -15,6 +15,8 @@ $(function () {
         var q = 0;
         var $quarter   = $.cookie('idQuarter');
         var $year      = $.cookie('idYear');
+        var $idGrp     = $.cookie('idGrp');
+        var $idObj     = $.cookie('idObj');
         var $radio     = $('#radio1').prop('checked');
         var txtPeriod  = ($radio) ? 'Квартал:': 'Полугодие:';
         var txtGroup   = ($radio) ? 'Объект:': 'Субъект:';
@@ -28,7 +30,7 @@ $(function () {
         $('#name-quarter').text(txtPeriod);
         $('#name-object').text(txtGroup);
         $('#value-quarter').text(QuarterRome(q) + ', ' + $year + ' года.');
-        UpdateHome($.cookie('idGrp'), $.cookie('idObj'), $year, $quarter, $radio);
+        UpdateHome($idGrp, $idObj, $year, $quarter, $radio);
     }
 
     function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj) {
@@ -36,6 +38,17 @@ $(function () {
             MarkContentLoad(data);
             TaskContentLoad(data);
             RptContentLoad(data);
+            if (idGrp == '100000000000000000000001' || idObj == '100000000000000000000001') {
+                $('#btn-chg-mark').button('disable');
+                $('#btn-add-task').button('disable');
+                $('#btn-chg-task').button('disable');
+                $('#btn-del-task').button('disable');
+            } else {
+                $('#btn-chg-mark').button('enable');
+                $('#btn-add-task').button('enable');
+                $('#btn-chg-task').button('enable');
+                $('#btn-del-task').button('enable');
+            }
         };
         ajaxData('POST', '/home/update', {'idGrp':idGrp, 'idObj':idObj, 'idYear':idYear,
                  'idQuarter':idQuarter, 'radioObj':radioObj}, fsuccess);
@@ -140,12 +153,6 @@ $(function () {
                     var $nameObj = $highlight.find('td:eq(1)').text();
                     $.cookie('idObj', $idObj);
                     $('#value-object').text($nameObj);
-                }
-
-                if ($idGrp == '100000000000000000000001' || $idObj == '100000000000000000000001') {
-                    $('#btn-chg-mark').button('disable');
-                } else {
-                    $('#btn-chg-mark').button('enable');
                 }
 
                 UpdateHome($idGrp, $idObj, $idYear, $idQuarter, $radioObj);
@@ -331,7 +338,6 @@ $(function () {
                 var $highlight  = $content.find('tr.hle-grid-highlight');
                 var $type       = $(this).dialog('option', 'type');
                 var $radioObj   = $('#radio1').prop('checked');
-                var $fsuccess   = null;
                 var $data       = {};
                 var $value      = $.trim($(this).find('#task-value').val());
                 var $percent    = $.trim($(this).find('#task-percent').val());
@@ -342,7 +348,7 @@ $(function () {
                             'idObj': $idObj, 'idGrp': $idGrp, 'taskValue': $value,
                             'taskPercent': $percent, 'radioObj': $radioObj
                         };
-                        $fsuccess = function (data) {
+                        var $fsuccess = function (data) {
                             AddTrTable($content);
                             var $i = $content.find('tr:last-child td:eq(0) div').text();
                             var $tBody = $content.find('tbody:last');

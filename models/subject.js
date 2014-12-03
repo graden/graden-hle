@@ -22,6 +22,7 @@ schema.statics.create = function(fName, sName, tName, dateEnd, callback) {
                 sbj.dateEnd = Date.now();
                 sbj.save();
             }
+            console.log(sbj, fName, sName, tName);
             sbj = new Sbj({fName: fName, sName: sName, tName: tName});
             sbj.save(function(err) {
                 if (err) {

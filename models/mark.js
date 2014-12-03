@@ -18,7 +18,7 @@ var schema = new Schema ({
 
 schema.statics.avgMark = function(yq, radioObj, callback) {
     var Mark  = this;
-    //var i = 0;
+    var i = 0;
     Mark.aggregate(
         {$match:{$or:[{valueYear:yq[0].year, valueQuarter:yq[0].quarter},
             {valueYear:yq[1].year, valueQuarter:yq[1].quarter},
@@ -37,13 +37,13 @@ schema.statics.avgMark = function(yq, radioObj, callback) {
             mark: {$sum: "$valueMark"}, count: {$sum: 1}}},
         {$sort: {valueQuarter:1, valueYear:1}}
     ).exec(function(err, mark){
-            /*
+
             mark.forEach(function(vMark){
                 i++;
                 console.log(i + ', '+ vMark.quarter + ', '+ vMark.year + ', '
                 + vMark.count + ', ' + vMark.obj + ', ' + vMark.mark/vMark.count);
             });
-            */
+
             if (err) {
                 callback(err, null);
             } else {
