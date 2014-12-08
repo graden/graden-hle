@@ -9,6 +9,7 @@ var schema = new Schema({
   fullname: {type: String},
   email: {type: String},
   role: {type: ObjectId, ref: 'dsRoles'},
+  roleSec: {type: ObjectId, ref: 'dsRoles'},
   username: {type: String, unique: true, required: true},
   hashedPassword: {type: String, required: true},
   salt: {type: String, required: true},
@@ -82,7 +83,7 @@ schema.statics.create = function (fullname, email, role, username, password,  ca
 
 schema.statics.idList = function (id, callback) {
     var User = this;
-    User.findById(id).populate('role').exec( function (err, user) {
+    User.findById(id).populate('role').populate('roleSec').exec( function (err, user) {
         if (err) {
             callback(err, null);
         } else {
@@ -136,7 +137,7 @@ schema.statics.remove = function (id, callback) {
 
 schema.statics.allList = function(callback) {
     var User = this;
-    User.find({}).populate('role').exec(function(err, user){
+    User.find({}).populate('role').populate('roleSec').exec(function(err, user){
         if (err) {
             callback(err, null);
         } else {

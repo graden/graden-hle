@@ -278,13 +278,13 @@
                     <table id="tbl-user-body" class="tbl">
                         <tbody>
                         <% var i = 0; %>
+                        <% var rPri = null; %>
+                        <% var rSec = null; %>
                         <% lstUser.forEach(function(val) { %>
                         <% i++; %>
-                        <% if (val.role) { %>
-                        <tr data-id="<%= val._id %>" data-id-role="<%= val.role._id %>">
-                        <%} else { %>
-                        <tr data-id="<%= val._id %>" data-id-role="0">
-                        <%}%>
+                        <% if (val.role) { rPri = val.role._id} else {rPri = "0"}%>
+                        <% if (val.roleSec) { rSec = val.roleSec._id} else {rSec = "0"}%>
+                        <tr data-id="<%= val._id %>" data-id-role="<%= rPri %>" data-id-role-sec="<%= rSec %>">
                             <td class="td-1"><div><%= i %></div></td>
                             <td class="td-2"><div><%= val.fullname %></div></td>
                             <td class="td-3"><div><%= val.username %></div></td>
