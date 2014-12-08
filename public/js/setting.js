@@ -1,6 +1,5 @@
 $(function () {
     $('#page-wrapper').tabs();
-    $('#role-master').selectmenu();
 
     $(document).ready(function(){
         $('input').iCheck({
@@ -452,6 +451,7 @@ $(function () {
         $dialog.dialog('option', 'id', $id);
         $dialog.dialog('option', 'idRole', $idRole);
         $dialog.dialog('open');
+
     });
 
     $('#button-del-user').click(function() {
@@ -892,5 +892,10 @@ $(function () {
     $("button").focus(function () {
         $(this).removeClass("ui-state-focus");
     });
-
+    $('#role-master').selectmenu({
+        width: 180
+    });
+    $('#role-pupil').selectmenu({
+        width: 180
+    });
 });

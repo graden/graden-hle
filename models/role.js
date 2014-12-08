@@ -80,7 +80,6 @@ schema.statics.listObjects = function(id, vQuarter, vYear, callback) {
 
 };
 
-
 schema.statics.allListGroups = function(id, callback) {
     var Role = this;
     Role.findOne({_id: id}).populate('crigroups').exec(function(err, role){

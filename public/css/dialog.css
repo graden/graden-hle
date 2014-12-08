@@ -3,6 +3,10 @@
     padding: 12px 6px 6px 6px;
 }
 
+.ui-dialog {
+    overflow: visible;
+}
+
 .ui-dialog .ui-dialog-buttonpanel {
     margin: 2px;
     padding: 0;

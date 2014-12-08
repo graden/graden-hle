@@ -78,6 +78,25 @@
     width: 100%;
 }
 
+#select-twise {
+    margin: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    width: 100%;
+    display: table;
+}
+
+#select-master{
+    text-align: left;
+    display: table-cell;
+}
+
+#select-pupil{
+    text-align: right;
+    display: table-cell;
+}
+
+
 
 
 
