@@ -1,6 +1,6 @@
 $(function () {
     $('#page-wrapper').tabs();
-
+    $('#role-master').selectmenu();
 
     $(document).ready(function(){
         $('input').iCheck({

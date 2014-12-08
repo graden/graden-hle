@@ -3,6 +3,7 @@ var Schema     = mongoose.Schema;
 var ObjectId   = Schema.Types.ObjectId;
 var async      = require('async');
 var AuthError  = require('error').AuthError;
+var df         = require('libs/libDate');
 
 var schema = new Schema ({
     idObj:        {type: ObjectId},
@@ -79,11 +80,11 @@ schema.statics.list = function(idObj, callback) {
 
 schema.statics.idList = function(vQuarter, vYear, callback) {
     var Sbj = this;
-    var fromDate = new Date(vYear,(vQuarter*3)-3 ,1);
-    var toDate   = new Date(vYear,(vQuarter*3)-1,31);
-    console.log('q= ', vQuarter , vYear);
-    console.log('date= ',fromDate, toDate);
-    Sbj.aggregate({$match:{dateBegin:{$gte: fromDate, $lt: toDate}}},
+    //var fromDate = new Date(vYear,(vQuarter*3)-3, 1);
+    //var toDate   = new Date(vYear,(vQuarter*3)-1, df.getLastDayInMonth(vYear,(vQuarter*3)-1));
+    //console.log('q= ', vQuarter , vYear, df.getLastDayInMonth(2014,11));
+    //console.log('date= ',fromDate, toDate);
+    Sbj.aggregate(/*{$match:{dateBegin:{$gte: fromDate, $lt: toDate}}},*/
         {$project: {fName:1, sName:1, tName:1, idObj:1, dateBegin:1, dateEnd:1}
         },
         {$group: {_id: "$idObj",
