@@ -64,7 +64,7 @@ exports.update = function(req, res) {
                                 outMark.list += '<tr data-id=' + val._id + ' data-id-mark=' + val.idMark + '>' +
                                     '<td class="td-1"><div>' + count + '</div></td>' +
                                     '<td class="td-2"><div>' + val.name + '</div></td>' +
-                                    '<td class="td-3"><div>' + val.markDef.toFixed(2) + '</div></td>' +
+                                    '<td class="td-3 td-bold"><div>' + val.markDef.toFixed(2) + '</div></td>' +
                                     '<td class="td-4"><div>' + val.markPrev.toFixed(2) + '</div></td>' +
                                     '</tr>';
                             });

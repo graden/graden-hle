@@ -1,8 +1,8 @@
-var async    = require('async');
-var mongoose = require('libs/mongoose');
-var HleFunc  = require('libs/func-hle');
-var Schema   = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+var async        = require('async');
+var mongoose     = require('libs/mongoose');
+var Schema       = mongoose.Schema;
+var ObjectId     = Schema.Types.ObjectId;
+var Subject    = require('models/subject').Subject;
 
 var schema = new Schema({
     name:           {type: String},
@@ -13,6 +13,8 @@ var schema = new Schema({
     edtTasks:       {type: Boolean, default: true},
     delTasks:       {type: Boolean, default: true},
     perSettings:    {type: Boolean, default: false},
+    setAllGroup:    {type: Boolean, default: false},
+    setAllObject:   {type: Boolean, default: false},
     modified:       {type: Date, default: Date.now},
     created:        {type: Date, default: Date.now}
 });
@@ -26,7 +28,7 @@ schema.statics.listGroups = function(id, callback) {
         } else {
             if (role.crigroups) {
                 a._id    = '100000000000000000000001';
-                a.name   = 'Все направления';
+                a.name   = 'Все';
                 a.permit = true;
                 role.crigroups.push(a);
                 callback(null, role.crigroups);
@@ -37,25 +39,45 @@ schema.statics.listGroups = function(id, callback) {
     });
 };
 
-schema.statics.listObjects = function(id, callback) {
+schema.statics.listObjects = function(id, vQuarter, vYear, callback) {
     var Role = this;
     var a = {};
-    Role.findOne({_id:id}).populate('objects').exec(function(err, role){
+
+    async.waterfall([
+        function(callback){
+            Role.findOne({_id:id}).populate('objects').exec(function(err, role){
+                if (err) {
+                    callback(err, null);
+                } else {
+                    a._id = '100000000000000000000001';
+                    a.name = 'Все';
+                    a.permit = true;
+                    a.type = 'object';
+                    role.objects.push(a);
+                    callback(null, role.objects);
+                }
+            });
+        },
+        function(obj, callback){
+            Subject.idList(vQuarter, vYear, function(err, sbj){
+                for(var i = 0; i < obj.length; i++) {
+                    for(var j = 0; j < sbj.length; j++) {
+                        if (obj[i]._id.toString() === sbj[j]._id.toString()) {
+                            obj[i].name = obj[i].name + '/' + sbj[j].fName + ' ' + sbj[j].sName.charAt(0) + '.' + sbj[j].tName.charAt(0) + '.';
+                        }
+                    }
+                }
+                callback(null, obj);
+            });
+        }
+    ], function (err, result) {
         if (err) {
             callback(err, null);
         } else {
-            if (role.objects) {
-                a._id = '100000000000000000000001';
-                a.name = 'Все объекты';
-                a.permit = true;
-                a.type = 'object';
-                role.objects.push(a);
-                callback(null, role.objects);
-            } else {
-                callback(null, null);
-            }
+            callback(null, result);
         }
     });
+
 };
 
 
@@ -116,10 +138,10 @@ schema.statics.create = function(name, callback) {
 
 };
 
-schema.statics.update = function(id, btnMark, newTask, edtTask, delTask, name, perSettings, callback) {
+schema.statics.update = function(id, btnMark, newTask, edtTask, delTask, name, perSettings, setAllGroup, setAllObject, callback) {
     var Role = this;
     Role.findByIdAndUpdate(id,{$set: {btnMarks:btnMark, newTasks:newTask, edtTasks:edtTask,
-        delTasks:delTask, name:name, perSettings:perSettings}}).exec(function(err, role){
+        delTasks:delTask, name:name, perSettings:perSettings, setAllGroup:setAllGroup, setAllObject:setAllObject}}).exec(function(err, role){
         if (err) {
             callback(err, null);
         } else {

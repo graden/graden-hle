@@ -5,12 +5,19 @@ var Task = require('models/task').Task;
 var Role = require('models/role').Role;
 var User = require('models/user').User;
 var CriGroup = require('models/crigroup').CriGroup;
-var Obj = require('models/object').Obj;
 var HleFunc = require('libs/func-hle');
 
 exports.update = function(req, res) {
-    var idObj      = req.body.idObj;
-    var idGrp      = req.body.idGrp;
+    var setAllGroup  = (!req.session.setAllGroup) ? 'false' : req.session.setAllGroup;
+    var setAllObject = (!req.session.setAllObject) ? 'false' : req.session.setAllObject;
+    var idGrp = '100000000000000000000001';
+    var idObj = '100000000000000000000001';
+    if (setAllGroup == 'false') {
+        idGrp = req.body.idGrp;
+    }
+    if (setAllObject == 'false') {
+        idObj = req.body.idObj;
+    }
     var idQuarter  = parseInt(req.body.idQuarter);
     var idYear     = parseInt(req.body.idYear);
     var radioObj   = req.body.radioObj;
@@ -121,7 +128,7 @@ exports.update = function(req, res) {
                         outMark.list += '<tr data-id=' + val._id + ' data-id-mark=' + val.idMark + '>' +
                             '<td class="td-1"><div>' + count + '</div></td>' +
                             '<td class="td-2"><div>' + val.name + '</div></td>' +
-                            '<td class="td-3"><div>' + val.markDef.toFixed(2) + '</div></td>' +
+                            '<td class="td-3 td-bold"><div>' + val.markDef.toFixed(2) + '</div></td>' +
                             '<td class="td-4"><div>' + val.markPrev.toFixed(2) + '</div></td>' +
                             '</tr>';
 
@@ -140,6 +147,7 @@ exports.update = function(req, res) {
                     a.taskPrev = result[4];
                     a.reports  = result[5];
                     a.radar    = JSON.stringify(HleFunc.chartRadar(tblMark));
+
                     res.status(200).json(a);
                 });
             }
@@ -148,9 +156,10 @@ exports.update = function(req, res) {
 };
 
 exports.first = function(req, res) {
-    var idGrp       = (!req.session.idGroups) ? null : req.session.idGroups;
+
+    var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
+    var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;
     var idRole      = (!req.session.role) ? null : req.session.role;
-    var idObj       = (!req.session.idObjects) ? null : req.session.idObjects;
     var defYear     = (!req.session.idYears) ? HleFunc.nowQY().year : req.session.idYears;
     var defQuarter  = (!req.session.idQuarters) ? HleFunc.nowQY().quarter : req.session.idQuarters;
     var radioObj    = (!req.session.radioObjs) ? 'true' : req.session.radioObjs;
@@ -159,14 +168,25 @@ exports.first = function(req, res) {
     var lstGroup    = [];
     var nameObj     = '';
     var nameGrp     = '';
-
     async.series([
+        function(callback) {
+            Role.idList(idRole, function(err, lstRole) {
+                perSet = lstRole.perSettings;
+                if (lstRole.setAllGroup) {
+                    idGrp = '100000000000000000000001';
+                }
+                if (lstRole.setAllObject) {
+                    idObj = '100000000000000000000001';
+                }
+                callback(null, lstRole);
+            });
+        },
         function(callback) {
             Role.listGroups(idRole, function(err, crigroup) {
                 if (idGrp) {
                     crigroup.forEach(function(val){
                         lstGroup.push(val._id);
-                        if (val._id === idGrp) {
+                        if (val._id.toString() === idGrp.toString()) {
                             nameGrp = val.name;
                         }
                     });
@@ -182,10 +202,10 @@ exports.first = function(req, res) {
             });
         },
         function(callback) {
-            Role.listObjects(idRole, function(err, obj) {
+            Role.listObjects(idRole, defQuarter, defYear, function(err, obj) {
                 if (idObj) {
                     obj.forEach(function(val){
-                        if (val._id === idObj) {
+                        if (val._id.toString() === idObj.toString()) {
                             nameObj = val.name;
                         }
                     });
@@ -209,12 +229,6 @@ exports.first = function(req, res) {
             User.idList(req.session.user, function(err, result){
                 callback(null, result);
             });
-        },
-        function(callback) {
-            Role.idList(idRole, function(err, lstRole) {
-                perSet = lstRole.perSettings;
-                callback(null, lstRole);
-            });
         }
     ],
         function(error, result){
@@ -224,6 +238,8 @@ exports.first = function(req, res) {
             req.session.idQuarters      = defQuarter;
             req.session.radioObjs       = radioObj;
             req.session.permitSettings  = perSet;
+            req.session.setAllGroup     = result[0].setAllGroup;
+            req.session.setAllObject    = result[0].setAllObject;
 
             res.cookie('idGrp', idGrp);
             res.cookie('idObj', idObj);
@@ -231,9 +247,12 @@ exports.first = function(req, res) {
             res.cookie('idQuarter', defQuarter);
             res.cookie('radioObj', radioObj);
             res.cookie('permitSettings', perSet);
+            res.cookie('setAllGroup', result[0].setAllGroup);
+            res.cookie('setAllObject', result[0].setAllObject);
 
+            console.log('name= ', nameGrp, nameObj);
             res.render('home.ejs', {
-                username:    'Пользователь: ' + result[3].fullname,
+                username:    'Пользователь: ' + result[4].fullname,
                 txtObject:   nameObj,
                 txtGroup:    nameGrp
             });

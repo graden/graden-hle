@@ -1,17 +1,15 @@
 var async = require('async');
-var mongoose = require('libs/mongoose'),
-    Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+var mongoose = require('libs/mongoose');
+var Schema = mongoose.Schema;
 var schema = new Schema ({
     name:         {type: String, required: true},
     type:         {type: String, default: 'object'},
-    permit:       {type: Boolean, default: true},
-    linkSubject:  [{type: ObjectId, ref: 'dsSubject'}]
+    permit:       {type: Boolean, default: true}
 });
 
 schema.statics.allList = function(callback) {
     var Obj = this;
-    Obj.find({}).populate('linkSubject').exec(function(err, obj){
+    Obj.find({}).exec(function(err, obj){
         if (err) {
             callback(err, null);
         } else {
@@ -20,10 +18,27 @@ schema.statics.allList = function(callback) {
     });
 };
 
+schema.statics.allListPlus = function(callback) {
+    var Obj = this;
+    var a = {};
+    Obj.find({}).exec(function(err, obj){
+        if (err) {
+            callback(err, null);
+        } else {
+            a._id = '100000000000000000000001';
+            a.name = 'Все';
+            a.permit = true;
+            a.type = 'object';
+            obj.push(a);
+            callback(null, obj);
+        }
+    });
+};
+
 schema.statics.idList = function(id, callback) {
     var Obj = this;
     if (id === '100000000000000000000001') {
-        callback(null, 'Все объекты');
+        callback(null, 'Все');
     } else {
         Obj.findById(id).exec(function(err, obj){
             if (err) {
@@ -79,16 +94,5 @@ schema.statics.remove  = function(id, callback) {
         }
     });
 };
-schema.statics.addSubject = function(id, idSbj, callback) {
-    var Obj = this;
-    Obj.findByIdAndUpdate(id, { $pushAll: { linkSubject: [idSbj]} }, function (err, obj) {
-        if (err) {
-            callback(err, null);
-        } else {
-            callback(null, obj);
-        }
-    });
-};
-
 
 exports.Obj = mongoose.model('dsObjects', schema);

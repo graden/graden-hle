@@ -227,6 +227,8 @@
                                 <tr>
                                     <th class="td-1"><div>#</div></th>
                                     <th class="td-2"><div>ФИО субъекта</div></th>
+                                    <th class="td-3"><div>Дата 1</div></th>
+                                    <th class="td-4"><div>Дата 2</div></th>
                                 </tr>
                                 </thead>
                             </table>
@@ -234,24 +236,17 @@
                         <div class="tbl-body">
                             <table id="tbl-subject-body" class="tbl">
                                 <tbody>
-                                <% var i=0; %>
-                                <% lstSbj.forEach(function(val) { %>
-                                <% i++; %>
-                                <% var name = val.fName + ' ' + charAt(val.sName) + '.' + charAt(val.tName) + '.'%>
-                                <tr data-id="<%= val._id %>" data-id-obj="<%= val.linkObj %>">
-                                    <td class="td-1"><div><%= i %></div></td>
-                                    <td class="td-2"><div><%= name %></div></td>
-                                </tr>
-                                <% }); %>
                                 </tbody>
                             </table>
                         </div>
                         <div class="tbl-footer ui-corner-bottom">
-                            <table class="tbl">
+                            <table id="tbl-subject-footer" class="tbl">
                                 <tfoot>
                                 <tr>
-                                    <th class="td-1"><div><%= i %></div></th>
+                                    <th class="td-1"><div>0</div></th>
                                     <th class="td-2"><div></div></th>
+                                    <th class="td-3"><div></div></th>
+                                    <th class="td-3"><div></div></th>
                                 </tr>
                                 </tfoot>
                             </table>

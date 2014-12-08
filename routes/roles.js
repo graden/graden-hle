@@ -77,6 +77,8 @@ exports.load = function(req, res) {
                 out.edtTasks     = (result[2].edtTasks) ? 'check' : 'uncheck';
                 out.delTasks     = (result[2].delTasks) ? 'check' : 'uncheck';
                 out.perSettings  = (result[2].perSettings) ? 'check' : 'uncheck';
+                out.setAllGroup  = (result[2].setAllGroup) ? 'check' : 'uncheck';
+                out.setAllObject = (result[2].setAllObject) ? 'check' : 'uncheck';
 
                 res.status(200).json(out);
             }
@@ -183,14 +185,17 @@ exports.removeGrp = function(req, res) {
 };
 
 exports.update = function(req, res) {
-    var name    = req.body.name;
-    var id      = req.body.id;
-    var btnMark = req.body.btnMarks;
-    var newTask = req.body.newTasks;
-    var edtTask = req.body.edtTasks;
-    var delTask = req.body.delTasks;
-    var perSet  = req.body.perSettings;
-    Role.update(id, btnMark, newTask, edtTask, delTask, name, perSet, function(err, role) {
+    var name         = req.body.name;
+    var id           = req.body.id;
+    var btnMark      = req.body.btnMarks;
+    var newTask      = req.body.newTasks;
+    var edtTask      = req.body.edtTasks;
+    var delTask      = req.body.delTasks;
+    var perSet       = req.body.perSettings;
+    var setAllGroup  = req.body.setAllGroup;
+    var setAllObject = req.body.setAllObject;
+
+    Role.update(id, btnMark, newTask, edtTask, delTask, name, perSet, setAllGroup, setAllObject, function(err, role) {
         if (err) {
             res.status(403).json(err);
         } else {

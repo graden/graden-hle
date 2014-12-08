@@ -202,10 +202,10 @@ window.Chart = function(context){
 	
 		chart.Radar.defaults = {
 			scaleOverlay : false,
-			scaleOverride : false,
-			scaleSteps : null,
-			scaleStepWidth : null,
-			scaleStartValue : null,
+			scaleOverride : true,
+			scaleSteps : 7, //null,
+			scaleStepWidth : 1, //null,
+			scaleStartValue : 0, //null,
 			scaleShowLine : true,
 			scaleLineColor : "rgba(0,0,0,.1)",
 			scaleLineWidth : 1,
@@ -220,7 +220,7 @@ window.Chart = function(context){
 			scaleBackdropPaddingY : 2,
 			scaleBackdropPaddingX : 2,
 			angleShowLineOut : true,
-			angleLineColor : "rgba(0,0,0,.1)",
+			angleLineColor : "rgba(0,0,0,0.1)",
 			angleLineWidth : 1,			
 			pointLabelFontFamily : "'Arial'",
 			pointLabelFontStyle : "normal",
@@ -586,18 +586,42 @@ window.Chart = function(context){
 				}
 			}
 
-			for (var i=0; i<calculatedScale.steps; i++){
+			if(config.scaleShowLine){
+
 				ctx.beginPath();
-				
+				ctx.arc(0,0, (scaleHop*2), 0, 2*Math.PI, false);
+				ctx.arc(0,0, 0, 0, -2*Math.PI, true);
+				ctx.closePath();
+				ctx.fillStyle = "rgba(0,250,0,0.2)";
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.arc(0,0, (scaleHop*5), 0, 2*Math.PI, false);
+				ctx.arc(0,0, (scaleHop*2), 0, -2*Math.PI, true);
+				ctx.closePath();
+				ctx.fillStyle = "rgba(250,250,0,0.2)";
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.arc(0,0, (scaleHop*7), 0, 2*Math.PI, false);
+				ctx.arc(0,0, (scaleHop*5), 0, -2*Math.PI, true);
+				ctx.closePath();
+				ctx.fillStyle = "rgba(250,0,0,0.2)";
+				ctx.fill();
+			}
+
+			for (var i=0; i<calculatedScale.steps; i++){
+
+				ctx.beginPath();
 				if(config.scaleShowLine){
 					ctx.strokeStyle = config.scaleLineColor;
 					ctx.lineWidth = config.scaleLineWidth;
 		            ctx.arc(0, 0, scaleHop * (i+1), 0, Math.PI*2, false);
 					ctx.closePath();
-					ctx.stroke();			
+					ctx.stroke();
 				}
-				
-				if (config.scaleShowLabels){				
+
+				if (config.scaleShowLabels){
 					ctx.textAlign = 'center';
 					ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily; 
 					ctx.textBaseline = "middle";

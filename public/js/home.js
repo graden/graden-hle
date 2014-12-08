@@ -13,13 +13,14 @@ $(function () {
 
     function FirstLoadHome() {
         var q = 0;
-        var $quarter   = $.cookie('idQuarter');
-        var $year      = $.cookie('idYear');
-        var $idGrp     = $.cookie('idGrp');
-        var $idObj     = $.cookie('idObj');
-        var $radio     = $('#radio1').prop('checked');
-        var txtPeriod  = ($radio) ? 'Квартал:': 'Полугодие:';
-        var txtGroup   = ($radio) ? 'Объект:': 'Субъект:';
+        var $quarter     = $.cookie('idQuarter');
+        var $year        = $.cookie('idYear');
+        var $idGrp       = $.cookie('idGrp');
+        var $idObj       = $.cookie('idObj');
+
+        var $radio       = $('#radio1').prop('checked');
+        var txtPeriod    = ($radio) ? 'Квартал:': 'Полугодие:';
+        var txtGroup     = ($radio) ? 'Объект:': 'Объект:';
         if (!$radio) {
             $quarter = ($quarter == 1 || $quarter == 2) ? 1 : 3;
             $.cookie('idQuarter', $quarter);
@@ -35,9 +36,25 @@ $(function () {
 
     function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj) {
         var fsuccess = function(data){
+            //$('#name-group').text(data.nameGrp);
+            //$('#name-object').text(data.nameObj);
             MarkContentLoad(data);
             TaskContentLoad(data);
             RptContentLoad(data);
+            var setAllGroup  = $.cookie('setAllGroup');
+            var setAllObject = $.cookie('setAllObject');
+
+            if (setAllGroup == 'true') {
+                $('#button-groups').button('disable');
+            } else {
+                $('#button-groups').button('enable');
+            }
+            if (setAllObject == 'true') {
+                $('#button-object').button('disable');
+            } else {
+                $('#button-object').button('enable');
+            }
+
             if (idGrp == '100000000000000000000001' || idObj == '100000000000000000000001') {
                 $('#btn-chg-mark').button('disable');
                 $('#btn-add-task').button('disable');
@@ -128,7 +145,7 @@ $(function () {
     });
 
     $( "#dialog-form-tbl" ).dialog({
-        autoOpen: false, //height: 400, width: 300,
+        autoOpen: false, width: 360, //height: 400,
         modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {

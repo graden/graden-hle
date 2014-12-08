@@ -1,7 +1,6 @@
 var async    = require('async');
-var HleFunc  = require('libs/func-hle');
-var mongoose = require('libs/mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('libs/mongoose');
+var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var schema = new Schema ({
     createDate:   {type: Date, default: Date.now},

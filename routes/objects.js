@@ -1,5 +1,7 @@
-var Object = require('models/object').Obj;
-var Role   = require('models/role').Role;
+var Object  = require('models/object').Obj;
+var Role    = require('models/role').Role;
+var async   = require('async');
+var HleFunc = require('libs/func-hle');
 
 exports.create = function(req, res) {
     var name    = req.body.name;
@@ -39,7 +41,6 @@ exports.remove = function(req, res) {
     });
 };
 
-
 exports.list = function(req, res) {
     Object.allList(function(err, obj) {
         if (err) {
@@ -63,8 +64,10 @@ exports.list = function(req, res) {
 };
 
 exports.listRole = function(req, res) {
-    var idRole = req.session.role;
-    Role.listObjects(idRole, function(err, obj) {
+    var idRole      = req.session.role;
+    var defYear     = (!req.session.idYears) ? HleFunc.nowQY().year : req.session.idYears;
+    var defQuarter  = (!req.session.idQuarters) ? HleFunc.nowQY().quarter : req.session.idQuarters;
+    Role.listObjects(idRole, defQuarter, defYear, function(err, obj) {
         if (err) {
             res.status(403).json(err);
         } else {

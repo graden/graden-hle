@@ -97,7 +97,10 @@ app.post('/object/create', require('routes/objects').create);
 app.post('/object/update', require('routes/objects').update);
 app.post('/object/remove', require('routes/objects').remove);
 
+app.get('/subject/list', require('routes/subjects').list);
 app.post('/subject/create', require('routes/subjects').create);
+app.post('/subject/update', require('routes/subjects').update);
+app.post('/subject/remove', require('routes/subjects').remove);
 
 app.post('/task/create',checkPermit.createTask, require('routes/tasks').create);
 app.post('/task/load',checkAuth, require('routes/tasks').load);

@@ -52,17 +52,19 @@ $grid-div-padding-left: 2px;
 @include table-body-height("#tbl-task", 310px, 460px);
 @include table-body-height("#tbl-task-prev", 310px, 460px);
 @include table-body-height("#tbl-report", 310px, 460px);
-@include table-body-height("#tbl-sprav", 220px, 280px);
+@include table-body-height("#tbl-sprav", 220px, 350px);
 @include table-body-height("#tbl-sprav-role", 220px, 280px);
 @include table-body-height("#tbl-role", 310px, 945px);
 @include table-body-height("#tbl-role-office", 200px, 250px);
 @include table-body-height("#tbl-role-group", 200px, 250px);
 
 @include table-td("#tbl-object", false, 40px, center, 1, true);
-@include table-td("#tbl-object", true, 200px, left, 2, true);
+@include table-td("#tbl-object", true, 300px, left, 2, true);
 
-@include table-td("#tbl-subject", false, 40px, center, 1, true);
-@include table-td("#tbl-subject", true, 200px, left, 2, true);
+@include table-td("#tbl-subject", false, 20px, center, 1, true);
+@include table-td("#tbl-subject", false, 240px, left, 2, true);
+@include table-td("#tbl-subject", false, 70px, center, 3, true);
+@include table-td("#tbl-subject", true, 70px, center, 4, true);
 
 @include table-td("#tbl-cri-group-content", false, 40px, center, 1, true);
 @include table-td("#tbl-cri-group-content", true, 320px, left, 2, true);
@@ -154,6 +156,10 @@ $grid-div-padding-left: 2px;
     }
 }
 
+.td-bold {
+    font-weight: bold;
+    color: #ff2222;
+}
 //.hle-grid td:first-child, .hle-grid th:first-child {display:none;}
 
 .hle-grid-highlight {

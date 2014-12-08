@@ -114,7 +114,6 @@ Array.prototype.max = function(){
     return Math.max.apply( Math, this);
 };
 
-
 exports.chartRadar = function(markData) {
 
     var chartDataSets = [];
@@ -136,13 +135,13 @@ exports.chartRadar = function(markData) {
     for(i = 0; i < 2; i++) {
         var chartDataSet = {};
         if (i === 1) {
-            chartDataSet.fillColor = 'rgba(220,0,0,0.3)';
+            chartDataSet.fillColor = 'rgba(220,0,0,0)';
             chartDataSet.strokeColor = 'rgba(220,0,0,1)';
             chartDataSet.pointColor = 'rgba(220,0,0,1)';
             chartDataSet.pointStrokeColor = '#fff';
         }
         if (i === 0) {
-            chartDataSet.fillColor = 'rgba(0,220,0,0.3)';
+            chartDataSet.fillColor = 'rgba(0,220,0,0)';
             chartDataSet.strokeColor = 'rgba(0,220,0,1)';
             chartDataSet.pointColor = 'rgba(0,220,0,1))';
             chartDataSet.pointStrokeColor = '#fff';

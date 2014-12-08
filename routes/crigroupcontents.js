@@ -21,11 +21,11 @@ exports.choice = function(req, res) {
                 }
                 callback(null, cri);
             });
-        },
+        }
     ],
         function(error, result){
             if (error) {
-                res.send(403, error);
+                res.status(403).send(error);
             } else {
                 for (var i = 0; i < result[0].length; i++) {
                     for(var j = 0; j < a.length; j++) {
@@ -34,7 +34,7 @@ exports.choice = function(req, res) {
                         }
                     }
                 }
-                res.send(200, a);
+                res.status(200).send(a);
             }
         }
     );

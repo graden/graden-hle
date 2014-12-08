@@ -23,10 +23,26 @@ schema.statics.allList = function(callback) {
     });
 };
 
+schema.statics.allListPlus = function(callback) {
+    var CriGroup = this;
+    var a = {};
+    CriGroup.find({}).sort({name: 1}).populate('linkCri').exec(function(err, crigroup){
+        if (err) {
+            callback(err, null);
+        } else {
+            a._id = '100000000000000000000001';
+            a.name = 'Все';
+            a.permit = true;
+            crigroup.push(a);
+            callback(null, crigroup);
+        }
+    });
+};
+
 schema.statics.allLinkCri= function(callback) {
     var CriGroup = this;
     var linkCri = {};
-    CriGroup.find({}).populate('linkCri').populate('linkSbj').exec(function(err, crigroup){
+    CriGroup.find({}).sort({name: 1}).populate('linkCri').populate('linkSbj').exec(function(err, crigroup){
         if (err) {
             callback(err, null);
         } else {
@@ -39,7 +55,7 @@ schema.statics.idList = function(arrayGrp, id, typeObj, callback) {
     var CriGroup = this;
     if (typeObj === 'true') {
         if (id === '100000000000000000000001') {
-            CriGroup.find({_id: {$in:arrayGrp}}).populate('linkCri').exec(function(err, crigroup){
+            CriGroup.find({_id: {$in:arrayGrp}}).sort({name: 1}).populate('linkCri').exec(function(err, crigroup){
                 var obj = [];
                 if (err) {
                     callback(err, null);
@@ -53,7 +69,7 @@ schema.statics.idList = function(arrayGrp, id, typeObj, callback) {
                 }
             });
         } else {
-            CriGroup.findOne({_id: id}).populate('linkCri').exec(function(err, crigroup){
+            CriGroup.findOne({_id: id}).sort({name: 1}).populate('linkCri').exec(function(err, crigroup){
                 if (crigroup) {
                     callback(null, crigroup.linkCri);
                 } else {
@@ -63,7 +79,7 @@ schema.statics.idList = function(arrayGrp, id, typeObj, callback) {
         }
     } else {
         if (id === '100000000000000000000001') {
-            CriGroup.find({_id: {$in:arrayGrp}}).populate('linkSbj').exec(function(err, crigroup){
+            CriGroup.find({_id: {$in:arrayGrp}}).sort({name: 1}).populate('linkSbj').exec(function(err, crigroup){
                 var obj = [];
                 if (err) {
                     callback(err, null);
@@ -77,7 +93,7 @@ schema.statics.idList = function(arrayGrp, id, typeObj, callback) {
                 }
             });
         } else {
-            CriGroup.findOne({_id: id}).populate('linkSbj').exec(function(err, crigroup){
+            CriGroup.findOne({_id: id}).sort({name: 1}).populate('linkSbj').exec(function(err, crigroup){
                 if (crigroup) {
                     callback(null, crigroup.linkSbj);
                 } else {

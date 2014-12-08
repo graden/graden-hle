@@ -4,10 +4,10 @@ $(function () {
 
     $(document).ready(function(){
         $('input').iCheck({
-            checkboxClass: 'icheckbox_minimal-orange',
-            radioClass: 'iradio_minimal-orange',
-            increaseArea: '20%' // optional
+            checkboxClass: 'icheckbox_flat-orange',
+            radioClass: 'iradio_flat-orange'
         });
+        SubjectContentLoad($('#tbl-object-body').find('tr:first').attr('data-id'));
     });
 
     $.ajaxSetup({cache: false});
@@ -42,24 +42,15 @@ $(function () {
     function SubjectContentLoad(id) {
         var fsuccess = function(data){
             var $content = $('#tbl-subject-body');
-            var $i=0;
             var $tBody = $content.find('tbody:last');
             $content.find('tr').remove();
-            $.each(data, function(key, val){
-                $i++;
-                $tBody.append('<tr data-id=' + val._id + ' data-id-obj=' + val.idObj + '>' +
-                    '<td class="td-1"><div>' + $i + '</div></td>'+
-                    '<td class="td-2"><div>' + val.fName+ '</div></td>' +
-                    '</tr>'
-                );
-            });
+            $tBody.html(data.list);
             FixTable($content);
             $content = $('#tbl-subject-footer');
-            $content.find('th:eq(0) div').text($i);
+            $content.find('tfoot th:eq(0) div').text(data.count);
         };
-        ajaxData('POST', '/subject/list', {'id':id}, fsuccess);
+        ajaxData('GET', '/subject/list', {'id':id}, fsuccess);
     }
-
 
     $('#radio-obj').on('ifChanged',function(){
         var $content = $('#tbl-cri-group-body').find('tr.hle-grid-highlight');
@@ -185,27 +176,6 @@ $(function () {
         $dialog.dialog('open');
     });
 
-    $('#button-edit-subject').click(function() {
-        var $content = $('#tbl-subject-body');
-        var $highlight  = $content.find('tr.hle-grid-highlight');
-        var $idSbj = $highlight.attr('data-id');
-        var $idObj = $highlight.attr('data-id-obj');
-        var $dialog = $('#dialog-subject');
-        var $fName = $highlight.find('td:eq(2) div').text();
-        var $sName = $highlight.find('td:eq(3) div').text();
-        var $tName = $highlight.find('td:eq(4) div').text();
-        $dialog.find('#fName-subject').val($fName);
-        $dialog.find('#sName-subject').val($sName);
-        $dialog.find('#tName-subject').val($tName);
-        var $name = $fName + ' ' + $sName.charAt(0) + '.' + $tName.charAt(0) + '.';
-        $dialog.dialog('option', 'title', 'Изменить субъекта');
-        $dialog.dialog('option', 'idObj', $idObj);
-        $dialog.dialog('option', 'idSbj', $idSbj);
-        $dialog.dialog('option', 'type', 'update');
-        $dialog.dialog('option', 'content', $content);
-        $dialog.dialog('option', 'name', $name);
-        $dialog.dialog('open');
-    });
 
     $('#button-add-object').click(function() {
         var $table     = $('#tbl-object');
@@ -270,6 +240,7 @@ $(function () {
         var $content   = $('#tbl-object-body');
         var $highlight = $content.find('tr.hle-grid-highlight');
         var $id        = $highlight.attr('data-id');
+        var $idObj     = $highlight.attr('data-idObj');
         var $fsuccess  = function() {
             $highlight.remove();
             FixTable($content);
@@ -278,7 +249,7 @@ $(function () {
         $dialog.find('#txt-message').text("Вы хотите удалить данный объект?");
         $dialog.dialog('option', 'title', 'Подтверждение удаления');
         $dialog.dialog('option', 'url', "/object/remove");
-        $dialog.dialog('option', 'data', {'id':$id});
+        $dialog.dialog('option', 'data', {'id':$id, 'idObj':$idObj});
         $dialog.dialog('option', 'fsuccess', $fsuccess);
         $dialog.dialog('open');
     });
@@ -418,6 +389,9 @@ $(function () {
                 $("#edtTask-role").iCheck(data.edtTasks);
                 $("#delTask-role").iCheck(data.delTasks);
                 $("#perSettings-role").iCheck(data.perSettings);
+                $("#allGroups-role").iCheck(data.setAllGroup);
+                $("#allObjects-role").iCheck(data.setAllObject);
+
                 $content = $('#tbl-role-office-body');
                 $tBody = $content.find('tbody:last');
                 $content.find('tr').remove();
@@ -697,31 +671,70 @@ $(function () {
         close: function() {$(this).dialog('close');}
     });
 
+    $('#button-edit-subject').click(function() {
+        var $content = $('#tbl-subject-body');
+        var $highlight  = $content.find('tr.hle-grid-highlight');
+        var $id = $highlight.attr('data-id');
+        var $dialog = $('#dialog-subject');
+        var $fName = $highlight.attr('data-fName');
+        var $sName = $highlight.attr('data-sName');
+        var $tName = $highlight.attr('data-tName');
+        $dialog.find('#fName-subject').val($fName);
+        $dialog.find('#sName-subject').val($sName);
+        $dialog.find('#tName-subject').val($tName);
+        $dialog.dialog('option', 'title', 'Изменить субъекта');
+        $dialog.dialog('option', 'id', $id);
+        $dialog.dialog('option', 'type', 'update');
+        $dialog.dialog('option', 'content', $content);
+        $dialog.dialog('open');
+    });
+
+    $('#button-del-subject').click(function() {
+        var $content   = $('#tbl-subject-body');
+        var $highlight = $content.find('tr.hle-grid-highlight');
+        var $id        = $highlight.attr('data-id');
+        var $fsuccess  = function(data) {
+            if (data) {
+                SubjectContentLoad(data);
+            }
+        };
+        var $dialog    = $('#dialog-remove');
+        $dialog.find('#txt-message').text("Вы хотите удалить данный субъект?");
+        $dialog.dialog('option', 'title', 'Подтверждение удаления');
+        $dialog.dialog('option', 'url', "/subject/remove");
+        $dialog.dialog('option', 'data', {'id':$id});
+        $dialog.dialog('option', 'fsuccess', $fsuccess);
+        $dialog.dialog('open');
+    });
+
     $('#dialog-subject').dialog({
         autoOpen: false, height: 400, width: 400, modal: true, resizable: false,
         buttons: {
             'Сохранить': function() {
-                var $content = $(this).dialog('option', 'content');
-                var $tBody   = $content.find('tbody:last');
-                var $idSbj   = $(this).dialog('option', 'idSbj');
                 var $idObj   = $(this).dialog('option', 'idObj');
+                var $id      = $(this).dialog('option', 'id');
                 var $fName   = $(this).find('#fName-subject').val();
                 var $sName   = $(this).find('#sName-subject').val();
                 var $tName   = $(this).find('#tName-subject').val();
                 var $type    = $(this).dialog('option', 'type');
-
+                var fsuccess = null;
                 if ($type == 'create') {
-                        var fsuccess = function(data) {
-                        AddTrTable($content);
-                        $tBody.append('<tr data-id=' + data._id + ' data-id-obj=' + data.idObj + '>' +
-                            '<td class="td-1"><div>' + $i + '</div></td>'+
-                            '<td class="td-2"><div>' + data.fName + '</div></td>'+'</tr>'
-                        );
-                        FixTable($content);
+                    fsuccess = function(data) {
+                        if (data) {
+                            SubjectContentLoad(data);
+                        }
                     };
                     ajaxData('POST', '/subject/create', {'idObj':$idObj, 'fName':$fName, 'sName':$sName, 'tName':$tName}, fsuccess);
-                    $(this).dialog('close');
                 }
+                if ($type == 'update') {
+                    fsuccess = function(data) {
+                        if (data) {
+                            SubjectContentLoad(data);
+                        }
+                    };
+                    ajaxData('POST', '/subject/update', {'id':$id, 'fName':$fName, 'sName':$sName, 'tName':$tName}, fsuccess);
+                }
+                $(this).dialog('close');
             },
             'Отмена': function() {
                 $(this).dialog('close');
@@ -762,16 +775,18 @@ $(function () {
         autoOpen: false, height: 450, width: 750, modal: true, resizable: false,
         buttons: {
             'Сохранить': function() {
-                var $content     = $(this).dialog('option', 'content');
-                var $highlight   = $content.find('tr.hle-grid-highlight');
-                var $name        = $(this).find('#name-role').val();
-                var $btnMarks    = $("#edtMark-role").prop('checked');
-                var $newTasks    = $("#newTask-role").prop('checked');
-                var $edtTasks    = $("#edtTask-role").prop('checked');
-                var $delTasks    = $("#delTask-role").prop('checked');
-                var $perSettings = $("#perSettings-role").prop('checked');
-                var fsuccess     = null;
-                var $dt          = {};
+                var $content      = $(this).dialog('option', 'content');
+                var $highlight    = $content.find('tr.hle-grid-highlight');
+                var $name         = $(this).find('#name-role').val();
+                var $btnMarks     = $("#edtMark-role").prop('checked');
+                var $newTasks     = $("#newTask-role").prop('checked');
+                var $edtTasks     = $("#edtTask-role").prop('checked');
+                var $delTasks     = $("#delTask-role").prop('checked');
+                var $perSettings  = $("#perSettings-role").prop('checked');
+                var $setAllGroup  = $("#allGroups-role").prop('checked');
+                var $setAllObject = $("#allObjects-role").prop('checked');
+                var fsuccess      = null;
+                var $dt           = {};
                 var $id = $(this).dialog('option', 'id');
                 if ($id) {
                     fsuccess = function(data) {
@@ -779,7 +794,8 @@ $(function () {
                     };
                     $dt = {'id':$id, 'btnMarks':$btnMarks,
                            'newTasks':$newTasks, 'edtTasks':$edtTasks,
-                           'delTasks':$delTasks, 'name':$name, 'perSettings':$perSettings};
+                           'delTasks':$delTasks, 'name':$name, 'perSettings':$perSettings,
+                           'setAllGroup': $setAllGroup, 'setAllObject': $setAllObject};
                     ajaxData('POST','/role/update', $dt, fsuccess);
                     $(this).dialog('close');
                 } else {
@@ -796,7 +812,7 @@ $(function () {
     });
 
     $( "#dialog-form-tbl" ).dialog({
-        autoOpen: false, //height: 400, width: 300,
+        autoOpen: false, width: 360, //height: 400,
         modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {
@@ -845,7 +861,7 @@ $(function () {
     });
 
     $( "#dialog-form-role" ).dialog({
-        autoOpen: false, //height: 400, width: 300,
+        autoOpen: false, //height: 400, width: 500,
         modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {
@@ -876,6 +892,5 @@ $(function () {
     $("button").focus(function () {
         $(this).removeClass("ui-state-focus");
     });
-
 
 });
