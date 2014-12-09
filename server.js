@@ -18,7 +18,7 @@ app.listen(port, function(){
 });
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(log4js.connectLogger(logs, { level: 'auto' }));
+//app.use(log4js.connectLogger(logs, { level: 'auto' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());

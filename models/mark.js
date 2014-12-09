@@ -39,8 +39,8 @@ schema.statics.avgMark = function(yq, radioObj, callback) {
 
             mark.forEach(function(vMark){
                 i++;
-                console.log(i + ', '+ vMark.quarter + ', '+ vMark.year + ', '
-                + vMark.count + ', ' + vMark.obj + ', ' + vMark.mark/vMark.count);
+                //console.log(i + ', '+ vMark.quarter + ', '+ vMark.year + ', '
+                //+ vMark.count + ', ' + vMark.obj + ', ' + vMark.mark/vMark.count);
             });
 
             if (err) {

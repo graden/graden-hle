@@ -186,12 +186,12 @@ exports.polar = function(config, data, callback) {
     doc.rect(startX+240, startY, 80, doc.y - startY);
     doc.stroke('#000');
     doc.pipe(fs.createWriteStream('./test.pdf'));
-    console.log(config.scaleFontColor);
+    //console.log(config.scaleFontColor);
     doc.text('Generate PDF!');
     doc.end();
 
     stream.on('finish', function() {
-        console.log('to pdf');
+        //console.log('to pdf');
         var buf = stream.toBlob('application/pdf');
         callback(null, buf);
         //iframe.src = stream.toBlobURL('application/pdf');

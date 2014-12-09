@@ -157,6 +157,10 @@ exports.update = function(req, res) {
 
 exports.first = function(req, res) {
 
+    req.session.user = '52e68a1f14ffacf446cf3390';
+    req.session.username = 'Test';
+    req.session.role = '5406a263f6f2fb960e242314';
+
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;
     var idRole      = (!req.session.role) ? null : req.session.role;
@@ -250,7 +254,7 @@ exports.first = function(req, res) {
             res.cookie('setAllGroup', result[0].setAllGroup);
             res.cookie('setAllObject', result[0].setAllObject);
 
-            console.log('name= ', nameGrp, nameObj);
+            //console.log('name= ', nameGrp, nameObj);
             res.render('home.ejs', {
                 username:    'Пользователь: ' + result[4].fullname,
                 txtObject:   nameObj,
