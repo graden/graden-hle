@@ -156,10 +156,9 @@ exports.update = function(req, res) {
 };
 
 exports.first = function(req, res) {
-
-    req.session.user = '52e68a1f14ffacf446cf3390';
-    req.session.username = 'Test';
-    req.session.role = '5406a263f6f2fb960e242314';
+    //req.session.user = '52e68a1f14ffacf446cf3390';
+    //req.session.username = 'Test';
+    //req.session.role = '5406a263f6f2fb960e242314';
 
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;

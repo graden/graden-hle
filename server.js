@@ -18,7 +18,7 @@ app.listen(port, function(){
 });
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(log4js.connectLogger(logs, { level: 'auto' }));
+app.use(log4js.connectLogger(logs, { level: 'auto' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -49,7 +49,7 @@ app.use(express.static(__dirname + '/vendor'));
 
 
 app.use(function (req, res, next) {
-    var user = (!req.session.username) ? 'robot': req.session.username;
+    var user = (!req.session.username) ? 'SYS': req.session.username;
     var ipAddr = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
     logs.info('%s - %s - %s', user, ipAddr, req.url);
     next();
@@ -83,7 +83,7 @@ app.get('/download', require('routes/reports').download);
 app.get('/home', checkAuth, require('routes/homes').first);
 app.get('/', checkAuth, require('routes/homes').redi);
 app.post('/home/update', checkAuth, require('routes/homes').update);
-app.post('/mark/update',checkPermit.permitMark, require('routes/marks').update);
+app.post('/mark/update', checkPermit.permitMark, require('routes/marks').update);
 
 app.get('/crigroup/list', require('routes/crigroups').list);
 app.get('/crigroup/listRole', require('routes/crigroups').listRole);
