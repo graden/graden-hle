@@ -93,7 +93,7 @@ exports.update = function(req, res) {
                 var txtList = '';
                 rpt.forEach(function(val) {
                     count++;
-                    txtList += '<tr data-id="' + val._id + '">' +
+                    txtList += '<tr data-id="' + val._id + '" data-url="' + val.path + '">' +
                     '<td class="td-1"><div>' + count + '</div></td>' +
                     '<td class="td-2"><div>' + val.name + '</div></td>' +
                     '</tr>';

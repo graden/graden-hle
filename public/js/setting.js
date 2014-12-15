@@ -892,10 +892,13 @@ $(function () {
     $("button").focus(function () {
         $(this).removeClass("ui-state-focus");
     });
+
     $('#role-master').selectmenu({
         width: 180
     });
+
     $('#role-pupil').selectmenu({
         width: 180
     });
+
 });

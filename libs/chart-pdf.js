@@ -201,16 +201,89 @@ exports.polar = function(config, data, callback) {
     //});
 };
 
-
-exports.bar = function(config, data, callback) {
-    var doc = new pdfDoc;//({encoding: 'UTF-8', size:'A4'});
+exports.bar = function(data, callback){
+    var docs = new pdfDoc;
     var pathPDF = './public/repo/report2.pdf';
+
+    var config1 = {
+        width : 450,
+        height : 300,
+        xPos : 0,
+        yPos : 90,
+        scaleOverlay : true,
+        scaleOverride : false,
+        scaleSteps : 5,
+        scaleStepWidth : 1,
+        scaleStartValue : 0,
+        scaleLineColor : "gray",
+        scaleLineWidth : 1,
+        scaleShowLabels : true,
+        scaleLabel : "Легенда",
+        scaleFont : "fonts/FreeMono.ttf",
+        scaleFontSize : 9,
+        scaleFontColor : "black",
+        scaleShowGridLines : true,
+        scaleGridLineColor : "gray",
+        scaleGridLineWidth : 0.1,
+        barShowStroke : false,
+        barStrokeWidth : 0,
+        barValueSpacing : 2,
+        barDatasetSpacing : 1
+    };
+
+    docs.font(config1.scaleFont);
+    docs.fontSize(20);
+    docs.text('Оценка работы РЦ по POS',config1.xPos, 20, {align: 'center', width: config1.width});
+    docs.moveDown(0.2);
+
+    barDiag(docs, config1, data);
+
+    var config2 = {
+        width : 450,
+        height : 300,
+        xPos : 0,
+        yPos : 400,
+        scaleOverlay : true,
+        scaleOverride : false,
+        scaleSteps : 5,
+        scaleStepWidth : 1,
+        scaleStartValue : 0,
+        scaleLineColor : "gray",
+        scaleLineWidth : 1,
+        scaleShowLabels : true,
+        scaleLabel : "Легенда",
+        scaleFont : "fonts/FreeMono.ttf",
+        scaleFontSize : 9,
+        scaleFontColor : "black",
+        scaleShowGridLines : true,
+        scaleGridLineColor : "gray",
+        scaleGridLineWidth : 0.1,
+        barShowStroke : false,
+        barStrokeWidth : 0,
+        barValueSpacing : 2,
+        barDatasetSpacing : 1
+    };
+
+    barDiag(docs, config2, data);
+
+
+    docs.end();
+    var ws = fs.createWriteStream(pathPDF);
+    ws.on('open', function(){
+        docs.pipe(ws);
+    });
+
+    ws.on('finish', function(){
+        callback(null, 'success');
+    });
+
+};
+
+function barDiag(doc, config, data) {
     var maxSize = config.height;
     var i = 0;
     var j = 0;
     doc.font(config.scaleFont);
-    doc.fontSize(20);
-    doc.text('Оценка работы РЦ по POS',config.xPos, 20, {align: 'center', width: config.width});
     doc.fontSize(config.scaleFontSize);
     //Need to check the X axis first - measure the length of each text metric, and figure out if we need to rotate by 45 degrees.
     var widestXLabel = 0;
@@ -404,32 +477,20 @@ exports.bar = function(config, data, callback) {
     }
 
     //Show legend
-    doc.fontSize(10);
+    doc.fontSize(config.scaleFontSize);
     doc.fill(config.scaleFontColor);
     doc.fillOpacity(1);
     doc.strokeOpacity(1);
     doc.text(config.scaleLabel, config.xPos+config.width+10, config.yPos);
-    doc.fontSize(9);
+    doc.fontSize(config.scaleFontSize);
     for (j=0; j<data.datasets.length; j++){
         doc.moveDown(0.3);
         doc.fill(config.scaleFontColor);
-        doc.text(data.legends[j].quarter + ' квартал ' + data.legends[j].year ,{align:'right', width:90});
+        doc.text(data.legends[j].periodNum  + ' ' + data.legends[j].periodLeg  + ' ' + data.legends[j].year ,{align:'right', width: 100});
         doc.rect(config.xPos+config.width+10, doc.y-7,5,5);
         doc.fill(data.datasets[j].fillColor);
     }
-
-    doc.end();
-
-    var ws = fs.createWriteStream(pathPDF);
-    ws.on('open', function(){
-        doc.pipe(ws);
-    });
-
-    ws.on('finish', function(){
-        callback(null, 'success');
-    });
-
-};
+}
 
 //Populate an array of all the labels by interpolating the string.
 function populateLabels(labelTemplateString, labels, numberOfSteps, graphMin, stepValue) {

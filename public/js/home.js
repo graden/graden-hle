@@ -217,12 +217,15 @@ $(function () {
         var $idYear       = $.cookie('idYear');
         var $idQuarter    = $.cookie('idQuarter');
         var $radioObj     = $('#radio1').prop('checked');
+        var $content      = $('#tbl-report-body');
+        var $highlight    = $content.find('tr.hle-grid-highlight');
+        var $url          = $highlight.attr('data-url');
         var fsuccess = function(data){
             if (data) {
                 location.href = '/download';
             }
         };
-        ajaxData('POST', '/reports/repo2', {'idGrp': $idGrp, 'idObj': $idObj,
+        ajaxData('POST', $url, {'idGrp': $idGrp, 'idObj': $idObj,
             'idYear': $idYear, 'idQuarter': $idQuarter, 'radioObj':$radioObj}, fsuccess);
     });
 

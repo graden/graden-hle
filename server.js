@@ -78,6 +78,7 @@ app.post('/role/update', require('routes/roles').update);
 app.get('/setting',checkPermit.setting, require('routes/settings').get);
 app.get('/setting/permit',checkPermit.setting, require('routes/settings').permit);
 app.post('/reports/repo2', require('routes/reports').report2);
+app.post('/reports/repo3', require('routes/reports').report3);
 app.get('/download', require('routes/reports').download);
 
 app.get('/home', checkAuth, require('routes/homes').first);

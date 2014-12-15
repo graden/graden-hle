@@ -53,6 +53,16 @@ exports.nowQY = function() {
     return a;
 };
 
+exports.periodQY = function(radioObj, defQuarter) {
+    var a = 0;
+    if (radioObj == "false") {
+        a = (defQuarter == 1) ? 1 : 2;
+    } else {
+        a = defQuarter;
+    }
+    return a;
+};
+
 exports.prevQY = function(radioObj, defQuarter, defYear) {
     var a = {};
     a.quarter = defQuarter;
