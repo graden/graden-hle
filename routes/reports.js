@@ -4,7 +4,7 @@ var logs     = require('libs/logs')('CON');
 var fs       = require('fs');
 var Obj      = require('models/object').Obj;
 var CriGrp   = require('models/crigroup').CriGroup;
-var Cri      = require('models/cri').Cri;
+var Sbj      = require('models/subject').Subject;
 var Role     = require('models/role').Role;
 var Mark     = require('models/mark').Mark;
 var HleFunc  = require('libs/func-hle');
@@ -362,6 +362,15 @@ exports.report3 = function(req, res) {
             Obj.idList(idObj, function(err, obj) {
                 cb(null, obj);
             });
+        },
+        function(cb) {
+            Sbj.idLast(idObj, function(err, sbj) {
+                var nameSubject = '';
+                if (sbj[0]) {
+                    nameSubject =  sbj[0].fName + ' ' + sbj[0].sName.charAt(0) + '.' + sbj[0].tName.charAt(0) + '.';
+                }
+                cb(null, nameSubject);
+            });
         }
     ],
         function(error, result){
@@ -382,12 +391,16 @@ exports.report3 = function(req, res) {
 
 exports.download = function(req, res) {
     var file = req.query["path"];
-    res.status(200).download(file);
+    res.status(200).download(file, function(err) {
+        if (!err) {
+            fs.unlinkSync(file);
+        }
+    });
 };
 
 exports.loaddy = function(req, res) {
     res.status(200).send('47422ecc835fa505cf200a490a759994d9d811a8ee63d1dc09f2e0f8');
-}
+};
 
 
 

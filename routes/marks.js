@@ -83,3 +83,7 @@ exports.update = function(req, res) {
         }
     });
 };
+
+exports.access = function(req, res) {
+    res.status(200).json('OK');
+};

@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="NodeJS" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="server.js" working-dir="$PROJECT_DIR$">
+    <envs>
+      <env name="Node_Path" value="." />
+    </envs>
+    <RunnerSettings RunnerId="Basic" />
+    <ConfigurationWrapper RunnerId="Basic" />
+    <method />
+  </configuration>
+</component>

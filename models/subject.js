@@ -78,6 +78,17 @@ schema.statics.list = function(idObj, callback) {
     });
 };
 
+schema.statics.idLast = function(idObj, callback) {
+    var Sbj = this;
+    Sbj.find({idObj:idObj}).limit(1).sort({ 'dateBegin': -1 }).exec(function(err, sbj){
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, sbj);
+        }
+    });
+};
+
 schema.statics.idList = function(vQuarter, vYear, callback) {
     var Sbj = this;
     //var fromDate = new Date(vYear,(vQuarter*3)-3, 1);

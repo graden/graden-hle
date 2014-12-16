@@ -202,7 +202,16 @@ exports.polar = function(config, data, callback) {
 };
 
 exports.kitRepo2 = function(pathPDF, data, callback){
-    var docs = new pdfDoc;
+    var docOptions = {
+        size: "A4",
+        layout: "portrait",
+        info: {
+            Title: "Оценка объектов",
+            Author: "Denis Grankin"
+        }
+    };
+
+    var docs = new pdfDoc(docOptions);
 
     var config = {
         width : 450,
@@ -291,12 +300,9 @@ exports.kitRepo3 = function(pathPDF, data, callback){
     };
 
     docs.font(config1.scaleFont);
-    docs.fontSize(20);
+    docs.fontSize(14);
 
-    var headerText = 'Оценка работы ' + data[2];
-    var widthText = docs.widthOfString(headerText);
-    console.log(docs.x, docs.y, widthText);
-    docs.text(headerText, config1.xPos, 20, {align: 'right', width: 600});
+    docs.text('Оценка работы ' + data[2] + ' / ' + data[3], config1.xPos, 20, {align: 'center', width: 590});
     docs.moveDown(0.2);
 
     barDiag(docs, config1, data[0]);
