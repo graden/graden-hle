@@ -201,11 +201,10 @@ exports.polar = function(config, data, callback) {
     //});
 };
 
-exports.bar = function(data, callback){
+exports.kitRepo2 = function(pathPDF, data, callback){
     var docs = new pdfDoc;
-    var pathPDF = './public/repo/report2.pdf';
 
-    var config1 = {
+    var config = {
         width : 450,
         height : 300,
         xPos : 0,
@@ -228,15 +227,79 @@ exports.bar = function(data, callback){
         barShowStroke : false,
         barStrokeWidth : 0,
         barValueSpacing : 2,
-        barDatasetSpacing : 1
+        barDatasetSpacing : 1,
+        ManualFirstLabel : 0
+    };
+
+    docs.font(config.scaleFont);
+    docs.fontSize(20);
+    docs.text('Оценка работы РЦ по POS',config.xPos, 20, {align: 'center', width: config.width});
+    docs.moveDown(0.2);
+
+    barDiag(docs, config, data);
+
+    docs.end();
+    var ws = fs.createWriteStream(pathPDF);
+    ws.on('open', function(){
+        docs.pipe(ws);
+    });
+
+    ws.on('finish', function(){
+        callback(null, pathPDF);
+    });
+
+};
+
+exports.kitRepo3 = function(pathPDF, data, callback){
+    var docOptions = {
+        size: "A4",
+        layout: "portrait",
+        info: {
+            Title: "Оценка объекта",
+            Author: "Denis Grankin"
+        }
+    };
+
+
+    var docs = new pdfDoc(docOptions);
+
+    var config1 = {
+        width : 450,
+        height : 200,
+        xPos : 0,
+        yPos : 90,
+        scaleOverlay : true,
+        scaleOverride : false,
+        scaleSteps : 5,
+        scaleStepWidth : 1,
+        scaleStartValue : 0,
+        scaleLineColor : "gray",
+        scaleLineWidth : 1,
+        scaleShowLabels : true,
+        scaleLabel : "Легенда",
+        scaleFont : "fonts/FreeMono.ttf",
+        scaleFontSize : 9,
+        scaleFontColor : "black",
+        scaleShowGridLines : true,
+        scaleGridLineColor : "gray",
+        scaleGridLineWidth : 0.1,
+        barShowStroke : false,
+        barStrokeWidth : 0,
+        barValueSpacing : 5,
+        barDatasetSpacing : 3,
+        ManualFirstLabel : 110
     };
 
     docs.font(config1.scaleFont);
     docs.fontSize(20);
-    docs.text('Оценка работы РЦ по POS',config1.xPos, 20, {align: 'center', width: config1.width});
+
+    var headerText = 'Оценка работы ' + data[2];
+    var widthText = docs.widthOfString(headerText);
+    console.log(docs.x, docs.y, widthText);
+    docs.text(headerText, config1.xPos, 20, {align: 'right', width: 600});
     docs.moveDown(0.2);
 
-    barDiag(docs, config1, data);
+    barDiag(docs, config1, data[0]);
 
     var config2 = {
         width : 450,
@@ -261,10 +324,11 @@ exports.bar = function(data, callback){
         barShowStroke : false,
         barStrokeWidth : 0,
         barValueSpacing : 2,
-        barDatasetSpacing : 1
+        barDatasetSpacing : 1,
+        ManualFirstLabel : 0
     };
 
-    barDiag(docs, config2, data);
+    barDiag(docs, config2, data[1]);
 
 
     docs.end();
@@ -274,7 +338,7 @@ exports.bar = function(data, callback){
     });
 
     ws.on('finish', function(){
-        callback(null, 'success');
+        callback(null, pathPDF);
     });
 
 };
@@ -373,8 +437,12 @@ function barDiag(doc, config, data) {
         //Add a little extra padding from the y axis
         longestText +=10;
     }
+
     var wFirstLabel= Math.sin(rotateLabelsDegree)*doc.widthOfString(data.labels[0].toString());
-    var hBottonLabel= Math.cos(rotateLabelsDegree)*widestXLabel;
+    if (config.ManualFirstLabel > 0){
+        wFirstLabel= config.ManualFirstLabel;
+    }
+    //var hBottonLabel= Math.cos(rotateLabelsDegree)*widestXLabel;
 
     var xAxisLength = config.width - ((wFirstLabel > longestText) ? wFirstLabel : longestText);
 
@@ -386,6 +454,8 @@ function barDiag(doc, config, data) {
 
     var yAxisPosX = config.xPos + (config.width - xAxisLength);
     var xAxisPosY = config.yPos + (scaleHeight + config.scaleFontSize/2);
+
+    //console.log('x= %d y= %d xLen= %d firstLabel= %d barWidth= %d maxSize= %d', yAxisPosX,xAxisPosY,xAxisLength,wFirstLabel,barWidth, maxSize);
     //end function calculateXAxisSize
 
     doc.lineWidth(config.barStrokeWidth);
@@ -429,16 +499,17 @@ function barDiag(doc, config, data) {
     for (i=0; i<data.labels.length; i++){
         if (rotateLabels > 0){
             doc.save();
-            var wLabel = doc.widthOfString(data.labels[i].toString()+config.scaleFontSize);
-            var zx = yAxisPosX + i*valueHop + valueHop/2 - Math.sin(rotateLabelsDegree)*wLabel;
-            var zy = xAxisPosY + Math.cos(rotateLabelsDegree)*wLabel;
+            var wLabel45 = doc.widthOfString(data.labels[i].toString()+config.scaleFontSize);
+            var zx = yAxisPosX + i*valueHop + valueHop/2 - Math.sin(rotateLabelsDegree)*wLabel45;
+            var zy = xAxisPosY + Math.cos(rotateLabelsDegree)*wLabel45;
             doc.translate(zx, zy);
             doc.rotate(-(rotateLabels),{origin: [0,0]});
-            doc.text(data.labels[i], 0, 0, {align: 'left', width: wLabel});
+            doc.text(data.labels[i], 0, 0, {align: 'left', width: wLabel45});
             doc.restore();
         }
         else {
-            doc.text(data.labels[i], yAxisPosX + i*valueHop + valueHop/2,xAxisPosY + config.scaleFontSize+3, {align: 'center', width: longestText});
+            var wLabel180 = doc.widthOfString(data.labels[i].toString());
+            doc.text(data.labels[i], yAxisPosX + i*valueHop + valueHop/2 - wLabel180/2,xAxisPosY + config.scaleFontSize+3, {align: 'center', width: wLabel180});
         }
         doc.moveTo(yAxisPosX + (i+1) * valueHop, xAxisPosY+3);
         //Check i isnt 0, so we dont go over the Y axis twice.

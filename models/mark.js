@@ -40,27 +40,24 @@ schema.statics.avgMark = function(yq, radioObj, callback) {
         if (err) {
             callback(err, null);
         } else {
-
             callback(null, mark);
         }
     });
 };
 
-schema.statics.avgMarkObj = function(yq, idObj, radioObj, callback) {
+schema.statics.avgMarkCri = function(yq, idObj, radioObj, callback) {
     var Mark  = this;
-    var i = 0;
-    console.log('idObj=', idObj, yq, radioObj);
     Mark.aggregate(
         {$match:{$or:[{valueYear:yq[0].year, valueQuarter:yq[0].quarter},
             {valueYear:yq[1].year, valueQuarter:yq[1].quarter},
             {valueYear:yq[2].year, valueQuarter:yq[2].quarter},
             {valueYear:yq[3].year, valueQuarter:yq[3].quarter}],
-            linkType: radioObj, linkCriGroup: new ObjectId("51ecc584aca1b6826c000004"), valueMark: { $gt : 0}}},
+            linkType: radioObj, linkObject: mongoose.Types.ObjectId(idObj), valueMark: { $gt : 0}}},
         {$project: {valueMark:1, linkCri:1, linkCriGroup:1, valueQuarter:1, valueYear:1, linkObject: 1, linkType: 1}},
-        {$group: {_id: {linkCriGroup: "$linkCriGroup",
+        {$group: {_id: {linkCri: "$linkCri",
                         valueQuarter: "$valueQuarter",
                         valueYear: "$valueYear"},
-                group: {$first: "$linkCriGroup"},
+                cri: {$first: "$linkCri"},
                 obj: {$first: "$linkObject"},
                 quarter: {$first: "$valueQuarter"},
                 year: {$first: "$valueYear"},
@@ -70,21 +67,43 @@ schema.statics.avgMarkObj = function(yq, idObj, radioObj, callback) {
         }},
         {$sort: {linkCriGroup:1, valueQuarter:1, valueYear:1}}
     ).exec(function(err, mark){
-            if (err) {
-                callback(err, null);
-            } else {
-                mark.forEach(function(vMark){
-                    i++;
-                    console.log(i + ', '+ vMark.quarter + ', '+ vMark.year + ', '
-                    + vMark.count + ', ' + vMark.group + ', -' + vMark.obj);
-                });
-
-
-                callback(null, mark);
-            }
-        });
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, mark);
+        }
+    });
 };
 
+schema.statics.avgMarkObj = function(yq, idObj, radioObj, callback) {
+    var Mark  = this;
+    Mark.aggregate(
+        {$match:{$or:[{valueYear:yq[0].year, valueQuarter:yq[0].quarter},
+            {valueYear:yq[1].year, valueQuarter:yq[1].quarter},
+            {valueYear:yq[2].year, valueQuarter:yq[2].quarter},
+            {valueYear:yq[3].year, valueQuarter:yq[3].quarter}],
+            linkType: radioObj, linkObject: mongoose.Types.ObjectId(idObj), valueMark: { $gt : 0}}},
+        {$project: {valueMark:1, linkCri:1, linkCriGroup:1, valueQuarter:1, valueYear:1, linkObject: 1, linkType: 1}},
+        {$group: {_id: {linkCriGroup: "$linkCriGroup",
+            valueQuarter: "$valueQuarter",
+            valueYear: "$valueYear"},
+            group: {$first: "$linkCriGroup"},
+            obj: {$first: "$linkObject"},
+            quarter: {$first: "$valueQuarter"},
+            year: {$first: "$valueYear"},
+            mark: {$sum: "$valueMark"},
+            count: {$sum: 1},
+            type: {$first: "$linkType"}
+        }},
+        {$sort: {linkCriGroup:1, valueQuarter:1, valueYear:1}}
+    ).exec(function(err, mark){
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, mark);
+        }
+    });
+};
 
 schema.statics.allList = function(idGrp, idQuarter, idYear, idObj, radioObj, callback) {
     var Mark = this;

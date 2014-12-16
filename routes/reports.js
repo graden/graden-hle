@@ -4,6 +4,8 @@ var logs     = require('libs/logs')('CON');
 var fs       = require('fs');
 var Obj      = require('models/object').Obj;
 var CriGrp   = require('models/crigroup').CriGroup;
+var Cri      = require('models/cri').Cri;
+var Role     = require('models/role').Role;
 var Mark     = require('models/mark').Mark;
 var HleFunc  = require('libs/func-hle');
 
@@ -93,6 +95,7 @@ exports.report1 = function(err, res) {
 
     data.datasets = chartDataSets;
     chart.polar(config, data, function (err, buf){
+
         fs.writeFile("./public/repo/report1.pdf", buf, function(err) {
             if(err) {
                 logs.warn(err);
@@ -186,13 +189,15 @@ exports.report2 = function(req, res) {
 
             data.datasets = chartDataSets;
             data.legends = qy;
-            chart.bar(data, function (err){
+            var pathRepo = './public/repo/repo2-' + req.session.user + '.pdf';
+            chart.kitRepo2(pathRepo, data, function (err, path){
+                console.log(req.session);
                 if(err) {
                     logs.warn(err);
                     res.status(403).json(err.message);
                 } else {
-                    logs.info("Файл сохранен в report2.pdf.");
-                    res.status(200).json('success');
+                    logs.info("Файл сохранен в " + pathRepo);
+                    res.status(200).json(path);
                 }
             });
         }
@@ -200,14 +205,8 @@ exports.report2 = function(req, res) {
 };
 
 exports.report3 = function(req, res) {
-
-    var chartDataSets = [];
-    var chartData = [];
-    var chartLabel = [];
-    var data = {};
     var i = 0;
     var j =0;
-    for (i = 0; i < 4; i++) {chartData[i] = [];}
     var qy = [];
     var a = {};
     var radioObj = req.body.radioObj;
@@ -223,78 +222,166 @@ exports.report3 = function(req, res) {
     qy[1] = HleFunc.prevQY(radioObj, qy[0].quarter, qy[0].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter);
     qy[2] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter);
     qy[3] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[3].periodLeg = periodLeg; qy[3].periodNum = HleFunc.periodQY(radioObj, qy[3].quarter);
-    async.waterfall([
-            function(callback) {
-                CriGrp.allList(function(err, crigrp) {
-                    callback(null, crigrp);
-                });
-            },
-            function(crigrp, callback) {
-                Mark.avgMarkObj(qy, idObj, radioObj, function(err, mark) {
-                    i = 0;
-                    crigrp.forEach(function(valGrp){
-                        chartLabel[i] = valGrp.name;
-                        for (j = 0; j < 4; j++) {
-                            chartData[j][i] = 0;
-                        }
-                        mark.forEach(function(valMark){
-                            if (valMark.group.toString() === valGrp._id.toString()) {
-                                for (j = 0; j < 4; j++) {
-                                    if ((valMark.quarter === qy[j].quarter) && (valMark.year === qy[j].year)) {
-                                        chartData[j][i] = valMark.mark/valMark.count;
+
+    async.parallel([
+        function(cb) {
+            var out = {};
+            var chartData = [];
+            for (i = 0; i < 4; i++) {chartData[i] = [];}
+            var chartLabel = [];
+            var chartDataSets = [];
+            async.waterfall([
+                function(callback) {
+                    Role.allListGroups(req.session.role, function(err, crigrp) {
+                        callback(null, crigrp);
+                    });
+                },
+                function(crigrp, callback) {
+                    Mark.avgMarkObj(qy, idObj, radioObj, function(err, mark) {
+                        i = 0;
+                        crigrp.forEach(function(valGrp){
+                            chartLabel[i] = valGrp.name;
+                            for (j = 0; j < 4; j++) {
+                                chartData[j][i] = 0;
+                            }
+                            mark.forEach(function(valMark){
+                                if (valMark.group.toString() === valGrp._id.toString()) {
+                                    for (j = 0; j < 4; j++) {
+                                        if ((valMark.quarter === qy[j].quarter) && (valMark.year === qy[j].year)) {
+                                            chartData[j][i] = valMark.mark/valMark.count;
+                                        }
+
                                     }
                                 }
-                            }
+                            });
+                            i++;
                         });
-                        i++;
+
+                        for (i = 0; i < 4; i++) {
+                            var chartDataSet = {};
+                            if (i === 1) {
+                                chartDataSet.fillColor = 'red';
+                                chartDataSet.strokeColor = 'red';
+                            }
+                            if (i === 0) {
+                                chartDataSet.fillColor = 'green';
+                                chartDataSet.strokeColor = 'green';
+                            }
+                            if (i === 2) {
+                                chartDataSet.fillColor = 'blue';
+                                chartDataSet.strokeColor = 'blue';
+                            }
+                            if (i === 3) {
+                                chartDataSet.fillColor = 'gray';
+                                chartDataSet.strokeColor = 'gray';
+                            }
+                            chartDataSet.data = chartData[i];
+                            chartDataSets.push(chartDataSet);
+                        }
+                        out.labels   = chartLabel;
+                        out.datasets = chartDataSets;
+                        out.legends  = qy;
+                        if (!out.labels) {out.labels = [];}
+                        callback(null, out);
                     });
-                    callback(null, mark);
-                });
-            }
-        ],
-        function(){
-            data.labels = chartLabel;
-            if (!data.labels) {data.labels = [];}
+                }
+            ],cb);
+        },
+        function(cb) {
+            var out = {};
+            var chartData = [];
+            for (i = 0; i < 4; i++) {chartData[i] = [];}
+            var chartLabel = [];
+            var chartDataSets = [];
+            var lstGroup   = [];
+            async.waterfall([
+                function(callback) {
+                    Role.listGroups(req.session.role, callback);
+                },
+                function(roleGroup, callback) {
+                    roleGroup.forEach(function (val) {
+                        lstGroup.push(val._id);
+                    });
+                    CriGrp.idList(lstGroup, '100000000000000000000001', radioObj, function (err, cri) {
+                        callback(null, cri);
+                    });
+                },
+                function(cri, callback) {
+                    for (i = 0; i < 4; i++) {chartData[i] = [];}
+                    Mark.avgMarkCri(qy, idObj, radioObj, function(err, mark) {
+                        i = 0;
+                        cri.forEach(function(valCri){
+                            chartLabel[i] = valCri.name;
+                            for (j = 0; j < 4; j++) {
+                                chartData[j][i] = 0;
+                            }
+                            mark.forEach(function(valMark){
+                                if (valMark.cri.toString() === valCri._id.toString()) {
+                                    for (j = 0; j < 4; j++) {
+                                        if ((valMark.quarter === qy[j].quarter) && (valMark.year === qy[j].year)) {
+                                            chartData[j][i] = valMark.mark/valMark.count;
+                                        }
+                                    }
+                                }
+                            });
+                            i++;
+                        });
 
-            for(i = 0; i < 4; i++) {
-                var chartDataSet = {};
-                if (i === 1) {
-                    chartDataSet.fillColor = 'red';
-                    chartDataSet.strokeColor = 'red';
-                }
-                if (i === 0) {
-                    chartDataSet.fillColor = 'green';
-                    chartDataSet.strokeColor = 'green';
-                }
-                if (i === 2) {
-                    chartDataSet.fillColor = 'blue';
-                    chartDataSet.strokeColor = 'blue';
-                }
-                if (i === 3) {
-                    chartDataSet.fillColor = 'gray';
-                    chartDataSet.strokeColor = 'gray';
-                }
-                chartDataSet.data = chartData[i];
-                chartDataSets.push(chartDataSet);
-            }
+                        for (i = 0; i < 4; i++) {
+                            var chartDataSet = {};
+                            if (i === 1) {
+                                chartDataSet.fillColor = 'red';
+                                chartDataSet.strokeColor = 'red';
+                            }
+                            if (i === 0) {
+                                chartDataSet.fillColor = 'green';
+                                chartDataSet.strokeColor = 'green';
+                            }
+                            if (i === 2) {
+                                chartDataSet.fillColor = 'blue';
+                                chartDataSet.strokeColor = 'blue';
+                            }
+                            if (i === 3) {
+                                chartDataSet.fillColor = 'gray';
+                                chartDataSet.strokeColor = 'gray';
+                            }
+                            chartDataSet.data = chartData[i];
+                            chartDataSets.push(chartDataSet);
+                        }
 
-            data.datasets = chartDataSets;
-            data.legends = qy;
-            chart.bar(data, function (err){
+                        out.labels   = chartLabel;
+                        out.datasets = chartDataSets;
+                        out.legends  = qy;
+                        if (!out.labels) {out.labels = [];}
+                        callback(null, out);
+                    });
+                }
+            ],cb);
+        },
+        function(cb) {
+            Obj.idList(idObj, function(err, obj) {
+                cb(null, obj);
+            });
+        }
+    ],
+        function(error, result){
+            var pathRepo = './public/repo/repo3-' + req.session.user + '.pdf';
+            chart.kitRepo3(pathRepo, result, function (err, path){
                 if(err) {
                     logs.warn(err);
                     res.status(403).json(err.message);
                 } else {
-                    logs.info("Файл сохранен в report2.pdf.");
-                    res.status(200).json('success');
+                    logs.info("Файл сохранен в " + pathRepo);
+                    res.status(200).json(path);
                 }
             });
         }
     );
+
 };
 
 exports.download = function(req, res) {
-    var file = "./public/repo/report2.pdf";
+    var file = req.query["path"];
     res.status(200).download(file);
 };
 

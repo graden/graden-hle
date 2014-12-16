@@ -222,7 +222,7 @@ $(function () {
         var $url          = $highlight.attr('data-url');
         var fsuccess = function(data){
             if (data) {
-                location.href = '/download';
+                location.href = '/download?path=' + data;
             }
         };
         ajaxData('POST', $url, {'idGrp': $idGrp, 'idObj': $idObj,
