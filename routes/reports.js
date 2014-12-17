@@ -128,10 +128,11 @@ exports.report2 = function(req, res) {
     a.periodLeg = periodLeg;
     a.periodNum = HleFunc.periodQY(radioObj, a.quarter);
 
-    qy[0] = a;
-    qy[1] = HleFunc.prevQY(radioObj, qy[0].quarter, qy[0].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter);
-    qy[2] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter);
-    qy[3] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[3].periodLeg = periodLeg; qy[3].periodNum = HleFunc.periodQY(radioObj, qy[3].quarter);
+    qy[3] = a;
+    qy[2] = HleFunc.prevQY(radioObj, qy[3].quarter, qy[3].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter);
+    qy[1] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter);
+    qy[0] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[0].periodLeg = periodLeg; qy[0].periodNum = HleFunc.periodQY(radioObj, qy[0].quarter);
+
     async.waterfall([
         function(callback) {
             Obj.allList(function(err, obj) {
@@ -191,7 +192,6 @@ exports.report2 = function(req, res) {
             data.legends = qy;
             var pathRepo = './public/repo/repo2-' + req.session.user + '.pdf';
             chart.kitRepo2(pathRepo, data, function (err, path){
-                console.log(req.session);
                 if(err) {
                     logs.warn(err);
                     res.status(403).json(err.message);
@@ -218,10 +218,10 @@ exports.report3 = function(req, res) {
     a.periodLeg = periodLeg;
     a.periodNum = HleFunc.periodQY(radioObj, a.quarter);
 
-    qy[0] = a;
-    qy[1] = HleFunc.prevQY(radioObj, qy[0].quarter, qy[0].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter);
-    qy[2] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter);
-    qy[3] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[3].periodLeg = periodLeg; qy[3].periodNum = HleFunc.periodQY(radioObj, qy[3].quarter);
+    qy[3] = a;
+    qy[2] = HleFunc.prevQY(radioObj, qy[3].quarter, qy[3].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter);
+    qy[1] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter);
+    qy[0] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[0].periodLeg = periodLeg; qy[0].periodNum = HleFunc.periodQY(radioObj, qy[0].quarter);
 
     async.parallel([
         function(cb) {

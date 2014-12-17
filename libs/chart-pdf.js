@@ -2,7 +2,15 @@ var pdfDoc  = require('pdfkit');
 var fs = require('fs');
 
 exports.polar = function(config, data, callback) {
-    var doc = new pdfDoc({encoding: 'UTF-8', size:'A4'});
+    var docOptions = {
+        size: "A4",
+        layout: "portrait",
+        info: {
+            Title: "Оценка объектов",
+            Author: "Denis Grankin"
+        }
+    };
+    var doc = new pdfDoc(docOptions);
     var width = 400;
     var height = 400;
 
@@ -269,7 +277,6 @@ exports.kitRepo3 = function(pathPDF, data, callback){
         }
     };
 
-
     var docs = new pdfDoc(docOptions);
 
     var config1 = {
@@ -413,9 +420,7 @@ function barDiag(doc, config, data) {
         };
     }
 
-
-
-    //Check and set the scale
+     //Check and set the scale
     var labelTemplateString = (config.scaleShowLabels) ? config.scaleLabel : "";
     var calculatedScale;
     if (!config.scaleOverride){

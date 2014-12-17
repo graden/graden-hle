@@ -87,6 +87,12 @@ canvas {
     vertical-align: middle;
 }
 
+#select-subject {
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+}
+
 
 
 

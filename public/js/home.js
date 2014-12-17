@@ -77,7 +77,9 @@ $(function () {
         $content.find('tr').remove();
         $tBody.html(data.reports.list);
         FixTable($content);
-        $('#tbl-report').find('tfoot th:eq(0) div').text(data.reports.count)
+        $('#tbl-report').find('tfoot th:eq(0) div').text(data.reports.count);
+        //$(data.subjects.list).appendTo('#subject-list');
+        //$("select").selectmenu("destroy").selectmenu({style:"dropdown", width: 220});
     }
 
     function TaskContentLoad(data) {
@@ -420,6 +422,11 @@ $(function () {
     });
 
     $('input, textarea').addClass("ui-corner-all");
+
+    /*$('#subject-list').selectmenu({
+        width: 220
+    });*/
+
 
 });
 

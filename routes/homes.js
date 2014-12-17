@@ -4,6 +4,7 @@ var Mark = require('models/mark').Mark;
 var Task = require('models/task').Task;
 var Role = require('models/role').Role;
 var User = require('models/user').User;
+var Sbj  = require('models/subject').Subject;
 var CriGroup = require('models/crigroup').CriGroup;
 var HleFunc = require('libs/func-hle');
 
@@ -102,6 +103,20 @@ exports.update = function(req, res) {
                 out.count = count;
                 callback(null, out);
             });
+        },
+        function(callback) {
+            Sbj.list(idObj, function(err, sbj){
+                var count = 0;
+                var out = {};
+                var txtList = '';
+                sbj.forEach(function(val) {
+                    count++;
+                    txtList += '<option value="' + val._id + '">' + val.fName + '</option>';
+                });
+                out.list  = txtList;
+                out.count = count;
+                callback(null, out);
+            });
         }
     ],
         function(error, result){
@@ -146,6 +161,7 @@ exports.update = function(req, res) {
                     a.task     = result[3];
                     a.taskPrev = result[4];
                     a.reports  = result[5];
+                    a.subjects = result[6];
                     a.radar    = JSON.stringify(HleFunc.chartRadar(tblMark));
 
                     res.status(200).json(a);

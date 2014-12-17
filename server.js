@@ -1,31 +1,28 @@
-var express = require('express');
-var session  = require('express-session');
-var cookieParser = require('cookie-parser');
-var favicon = require('serve-favicon');
-var log4js = require('log4js');
-var bodyParser = require('body-parser');
-var url = require('url');
-var config  = require('config');
-var logs  = require('libs/logs')('CON');
-var HttpError = require('error').HttpError;
-var checkAuth = require('middleware/checkAuth');
-var checkPermit = require('middleware/checkPermit');
+var express       = require('express');
+var session       = require('express-session');
+var cookieParser  = require('cookie-parser');
+var favicon       = require('serve-favicon');
+var log4js        = require('log4js');
+var bodyParser    = require('body-parser');
+var url           = require('url');
+var config        = require('config');
+var logs          = require('libs/logs')('CON');
+var HttpError     = require('error').HttpError;
+var checkAuth     = require('middleware/checkAuth');
+var checkPermit   = require('middleware/checkPermit');
+var sessionStore  = require('libs/sessionStore');
+var ejsTemplate   = require('ejs-locals');
+
 var port = process.env.port || config.get('port');
 var app = express();
 
-app.listen(port, function(){
-    logs.warn('%s - %s: %s','robot','Starting the server on port',port);
-});
 
+app.use(require('middleware/sendHttpError'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(log4js.connectLogger(logs, { level: 'auto' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-
-var sessionStore = require('libs/sessionStore');
-var ejsTemplate  = require('ejs-locals');
 
 app.use(session({
     secret: config.get('session:secret'),
@@ -37,7 +34,10 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(require('middleware/sendHttpError'));
+app.listen(port, function(){
+    logs.warn('%s - %s: %s','robot','Starting the server on port',port);
+});
+
 app.use(require('middleware/loadUser'));
 
 app.engine('ejs', ejsTemplate);
@@ -54,6 +54,7 @@ app.use(function (req, res, next) {
     logs.info('%s - %s - %s', user, ipAddr, req.url);
     next();
 });
+
 
 app.get('/login', require('routes/logins').get);
 app.post('/login', require('routes/logins').post);
