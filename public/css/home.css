@@ -93,6 +93,30 @@ canvas {
     vertical-align: middle;
 }
 
+.tbl-block {
+    display: table;
+    margin: 0 auto;
+}
+
+.tbl-block-cell {
+    display: table-cell;
+    text-align: center;
+}
+
+.tbl-band {
+    display: table-cell;
+    width: 5px;
+}
+
+#radio-role div label{
+    color: #1c94c4;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    padding-left: 2px;
+}
 
 
 

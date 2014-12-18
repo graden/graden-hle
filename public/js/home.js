@@ -5,6 +5,13 @@ $(function () {
     $('#grid-tabs').tabs();
     $('#radio').buttonset();
 
+    $(document).ready(function(){
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-orange',
+            radioClass: 'iradio_flat-orange'
+        });
+    });
+
     FirstLoadHome();
 
     function isNumeric(n) {
