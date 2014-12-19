@@ -3,15 +3,15 @@ $(function () {
 
     $('#chart-tabs').tabs();
     $('#grid-tabs').tabs();
-    $('#radio').buttonset();
+
 
     $(document).ready(function(){
-        $('input').iCheck({
+        $('#radio-role div input').iCheck({
             checkboxClass: 'icheckbox_flat-orange',
             radioClass: 'iradio_flat-orange'
         });
     });
-
+    $('#radio').buttonset();
     FirstLoadHome();
 
     function isNumeric(n) {

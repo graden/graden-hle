@@ -105,10 +105,10 @@ canvas {
 
 .tbl-band {
     display: table-cell;
-    width: 5px;
+    width: 10px;
 }
 
-#radio-role div label{
+#radio-role label{
     color: #1c94c4;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
@@ -116,6 +116,17 @@ canvas {
     letter-spacing: 1px;
     line-height: 1.5;
     padding-left: 2px;
+}
+#radio-role div {
+    margin-bottom: 3px;
+}
+
+#radio-role {
+    border: 1px solid #bababa;
+    border-radius: 4px;
+    margin-top: 7px;
+    margin-right: 5px;
+    padding: 5px 4px 2px 9px;
 }
 
 
