@@ -15,7 +15,7 @@
       </option>
       <option name="outputFromStdout" value="true" />
       <option name="passParentEnvs" value="true" />
-      <option name="program" value="C:/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.9/bin/scss" />
+      <option name="program" value="C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.9/bin/scss" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$FileDir$" />

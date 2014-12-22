@@ -5,7 +5,7 @@ var ObjectId = Schema.Types.ObjectId;
 var schema = new Schema ({
     createDate:   {type: Date, default: Date.now},
     modifyDate:   {type: Date, default: Date.now},
-    typePeriod:   {type: ObjectId},
+    typePeriod:   {type: Number},
     valueMark:    {type: Number},
     valueQuarter: {type: Number},
     valueYear:    {type: Number},
@@ -136,9 +136,8 @@ schema.statics.update = function(vMark, idMark, idGrp, idCri, idQuarter, idYear,
     Mark.findById(idMark, function(err, fMark){
         if (!err) {
             if (!fMark) {
-                fMark = new Mark({ linkCri: idCri, linkCriGroup: idGrp,
-                                   valueQuarter: idQuarter, valueYear:idYear,
-                                   linkObject: idObject, linkType: radioObj});
+                fMark = new Mark({ linkCri: idCri, linkCriGroup: idGrp, valueQuarter: idQuarter, valueYear:idYear,
+                                   linkObject: idObject, linkType: radioObj });
             }
             fMark.valueMark  = vMark;
             fMark.modifyDate = new Date();

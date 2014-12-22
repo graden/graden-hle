@@ -7,10 +7,8 @@
 
 <div id="header">
     <div id="logo">
-        <% include ./layout/logo.ejs %>
-        <div id="logo-left">
-
-        </div>
+        <% include ./layout/logo-main.ejs %>
+        <div id="logo-left"></div>
     </div>
 </div>
 
@@ -182,7 +180,8 @@
                                 <thead>
                                     <tr>
                                         <th class="td-1"><div>#</div></th>
-                                        <th class="td-2"><div>Наименование объектов</div></th>
+                                        <th class="td-2"><div>Наименование</div></th>
+                                        <th class="td-3"><div>Период</div></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -196,6 +195,7 @@
                                 <tr data-id="<%= val._id %>">
                                     <td class="td-1"><div><%= i %></div></td>
                                     <td class="td-2"><div><%= val.name %></div></td>
+                                    <td class="td-3"><div><%= val.period %></div></td>
                                 </tr>
                                 <% }); %>
                                 </tbody>
@@ -207,6 +207,7 @@
                                 <tr>
                                     <th class="td-1"><div><%= i %></div></th>
                                     <th class="td-2"><div></div></th>
+                                    <th class="td-3"><div></div></th>
                                 </tr>
                                 </tfoot>
                             </table>

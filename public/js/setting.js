@@ -37,7 +37,6 @@ $(function () {
     }
 
     /* погрузка данных в 'data-cri-group-content' при изменение фокуса 'data-cri-group'  */
-
     function SubjectContentLoad(id) {
         var fsuccess = function(data){
             var $content = $('#tbl-subject-body');
@@ -179,7 +178,7 @@ $(function () {
     $('#button-add-object').click(function() {
         var $table     = $('#tbl-object');
         var $content   = $('#tbl-object-body');
-        var $dialog    = $('#dialog-cri');
+        var $dialog    = $('#dialog-obj');
         $dialog.find('#name-cri').val('');
         $dialog.dialog('option', 'title', 'Добавить объект');
         $dialog.dialog('option', 'url', 'object');
@@ -194,8 +193,10 @@ $(function () {
         var $content   = $('#tbl-object-body');
         var $highlight = $content.find('tr.hle-grid-highlight');
         var $id        = $highlight.attr('data-id');
+        var $idPeriod  = $highlight.attr('data-period');
         var $name      = $highlight.find('td:eq(1) div').text();
-        var $dialog    = $('#dialog-cri');
+        var $txtPeriod = $highlight.find('td:eq(2) div').text();
+        var $dialog    = $('#dialog-obj');
         $dialog.find('#name-cri').val($name);
         $dialog.dialog('option', 'title', 'Изменить объект');
         $dialog.dialog('option', 'id', $id);
@@ -317,6 +318,54 @@ $(function () {
         $dialog.dialog('open');
     });
 
+    $("#dialog-obj").dialog({
+        autoOpen: false, minHeight: 60, width: 400, modal: true, resizable: false,
+        buttons: {
+            'Ok': function() {
+                var $name = $("#name-obj").val();
+                var $type = $(this).dialog('option', 'type');
+                var $url  = $(this).dialog('option', 'url') + '/' + $type;
+                var $content = $(this).dialog('option', 'content');
+                var $highlight  = $content.find('tr.hle-grid-highlight');
+                var $table = $(this).dialog('option', 'table');
+                var $footTable = $table.find('tfoot');
+                var $id = $(this).dialog('option', 'id');
+                var fsuccess = null;
+                if ($type == 'create') {
+                    fsuccess = function(data){
+                        if (data) {
+                            var $i = $content.find('tr:last-child td:eq(0) div').text();
+                            var $tBody = $content.find('tbody:last');
+                            parseInt($i);
+                            $i++;
+                            AddTrTable($content);
+                            $tBody.append('<tr data-id="' + data._id + '">' +
+                                '<td class="td-1"><div>' + $i + '</div></td>'+
+                                '<td class="td-2"><div>' + data.name + '</div></td>' +
+                                '<td class="td-2"><div>' + data.period + '</div></td></tr>'
+                            );
+                            $footTable.find('th:eq(0) div').text($i);
+                            FixTable($content);
+                        }
+                    };
+                    ajaxData('POST', $url, {'name':$name, 'period':$period}, fsuccess);
+                }
+                if ($type == 'update') {
+                    fsuccess = function(data){
+                        if (data) {
+                            $highlight.find('td:eq(1) div').text(data.name);
+                            $highlight.find('td:eq(2) div').text(data.period);
+
+                        }
+                    };
+                    ajaxData('POST', $url, {'id':$id, 'name':$name, 'period':$period}, fsuccess);
+                }
+                $(this).dialog('close');
+            },
+            'Отмена': function() {$( this ).dialog('close');}
+        },
+        close: function() {$( this ).dialog('close');}
+    });
 
     $("#dialog-cri").dialog({
         autoOpen: false, minHeight: 60, width: 400, modal: true, resizable: false,
@@ -900,5 +949,10 @@ $(function () {
     $('#role-pupil').selectmenu({
         width: 180
     });
+
+    $('#list-period').selectmenu({
+        width: 180
+    });
+
 
 });

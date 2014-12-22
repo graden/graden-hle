@@ -3,6 +3,7 @@ var mongoose = require('libs/mongoose');
 var Schema = mongoose.Schema;
 var schema = new Schema ({
     name:         {type: String, required: true},
+    tPeriod:      {type: Number, default: 1},
     type:         {type: String, default: 'object'},
     permit:       {type: Boolean, default: true}
 });
@@ -50,7 +51,7 @@ schema.statics.idList = function(id, callback) {
     }
 };
 
-schema.statics.create = function(name, type, permit, callback) {
+schema.statics.create = function(name, type, permit, period, callback) {
     var Obj = this;
     async.waterfall([
         function(callback) {
@@ -60,7 +61,7 @@ schema.statics.create = function(name, type, permit, callback) {
             if (obj) {
                 callback(new AuthError("Такой объект уже существует!"));
             } else {
-                obj = new Obj({name: name, type: type, permit: permit});
+                obj = new Obj({name: name, type: type, tPeriod: period, permit: permit});
                 obj.save(function(err) {
                     if (err) {
                         callback(err, null);
@@ -73,9 +74,9 @@ schema.statics.create = function(name, type, permit, callback) {
     ], callback);
 };
 
-schema.statics.update = function(id, name, type, permit, callback) {
+schema.statics.update = function(id, name, type, permit, period, callback) {
     var Obj = this;
-    Obj.findByIdAndUpdate(id, { $set: { name: name, type: type, permit: permit }}, function (err, obj) {
+    Obj.findByIdAndUpdate(id, { $set: { name: name, type: type, tPeriod: period, permit: permit }}, function (err, obj) {
         if (err) {
             callback(err, null);
         } else {

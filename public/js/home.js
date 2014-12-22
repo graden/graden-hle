@@ -258,13 +258,13 @@ $(function () {
     });
 
     $("#button-groups").click(function() {
-        var $content = $("#tbl-sprav-body"); var $i=0;
+        var $content = $("#tbl-sprav-body");
         var $tBody = $content.find('tbody:last');
         var fsuccess = function(data){
             if (data) {
                 $content.find('tr').remove();
                 $tBody.html(data.list);
-                $('#tbl-sprav').find('tfoot th:eq(0) div').text($i);
+                $('#tbl-sprav').find('tfoot th:eq(0) div').text(data.count);
                 var $dialog = $('#dialog-form-tbl');
                 $dialog.dialog('option', 'type', 'groups');
                 $dialog.dialog('option', 'title', 'Группы направлений');
@@ -299,8 +299,6 @@ $(function () {
         var $a = QuarterHalfYear('plus', $radioObj, $idQuarter, $idYear);
         UpdateHome($.cookie('idGrp'), $.cookie('idObj'), $a.year, $a.quarter, $radioObj);
     });
-
-
 
     $('#btn-add-task').click(function() {
         var $content = $('#tbl-task-body');

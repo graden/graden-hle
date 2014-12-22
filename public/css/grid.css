@@ -162,13 +162,17 @@
   width: 40px;
   text-align: center; }
 
-#tbl-object .td-2 {
+#tbl-object .td-2 div {
+  width: 300px;
+  text-align: left; }
+
+#tbl-object .td-3 {
   width: 100%;
   border-right: none; }
-  #tbl-object .td-2 div {
-    width: 300px;
+  #tbl-object .td-3 div {
+    width: 110px;
     text-align: left; }
-#tbl-object th.td-2 {
+#tbl-object th.td-3 {
   border-right: none; }
 
 #tbl-subject .td-1 div {

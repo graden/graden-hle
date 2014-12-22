@@ -146,7 +146,6 @@ exports.update = function(req, res) {
                             '<td class="td-3 td-bold"><div>' + val.markDef.toFixed(2) + '</div></td>' +
                             '<td class="td-4"><div>' + val.markPrev.toFixed(2) + '</div></td>' +
                             '</tr>';
-
                     });
                     outMark.avgDef  = (countDef === 0) ? 0 : (avgDef/countDef).toFixed(2);
                     outMark.avgPrev = (countPrev === 0) ? 0 : (avgPrev/countPrev).toFixed(2);
@@ -163,7 +162,6 @@ exports.update = function(req, res) {
                     a.reports  = result[5];
                     a.subjects = result[6];
                     a.radar    = JSON.stringify(HleFunc.chartRadar(tblMark));
-
                     res.status(200).json(a);
                 });
             }
