@@ -48,6 +48,7 @@ $grid-div-padding-left: 2px;
 @include table-body-height("#tbl-object", 310px, 460px);
 @include table-body-height("#tbl-subject", 310px, 460px);
 @include table-body-height("#tbl-user", 310px, 945px);
+@include table-body-height("#tbl-period", 310px, 945px);
 @include table-body-height("#tbl-mark", 310px, 460px);
 @include table-body-height("#tbl-task", 310px, 460px);
 @include table-body-height("#tbl-task-prev", 310px, 460px);
@@ -108,6 +109,9 @@ $grid-div-padding-left: 2px;
 
 @include table-td("#tbl-role", false, 40px, center, 1, true);
 @include table-td("#tbl-role", true, 650px, left, 2, true);
+
+@include table-td("#tbl-period", false, 40px, center, 1, true);
+@include table-td("#tbl-period", true, 750px, left, 2, true);
 
 @include table-td("#tbl-role-office", false, 20px, center, 1, true);
 @include table-td("#tbl-role-office", true, 230px, left, 2, true);

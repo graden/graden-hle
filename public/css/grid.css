@@ -68,6 +68,16 @@
   width: 100%;
   border: none; }
 
+#tbl-period .tbl-head, #tbl-period .tbl-body, #tbl-period .tbl-footer {
+  width: 945px; }
+
+#tbl-period .tbl-body {
+  height: 310px; }
+
+#tbl-period-body {
+  width: 100%;
+  border: none; }
+
 #tbl-mark .tbl-head, #tbl-mark .tbl-body, #tbl-mark .tbl-footer {
   width: 460px; }
 
@@ -374,6 +384,19 @@
     width: 650px;
     text-align: left; }
 #tbl-role th.td-2 {
+  border-right: none; }
+
+#tbl-period .td-1 div {
+  width: 40px;
+  text-align: center; }
+
+#tbl-period .td-2 {
+  width: 100%;
+  border-right: none; }
+  #tbl-period .td-2 div {
+    width: 750px;
+    text-align: left; }
+#tbl-period th.td-2 {
   border-right: none; }
 
 #tbl-role-office .td-1 div {

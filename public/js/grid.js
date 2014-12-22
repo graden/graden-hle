@@ -128,6 +128,9 @@ $(function () {
                 FixTable('#tbl-role-office');
                 FixTable('#tbl-role-group');
             }
+            if (ui.newTab.index = 5) {
+                FixTable('#tbl-period-body');
+            }
         }
     });
 });

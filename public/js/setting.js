@@ -461,7 +461,6 @@ $(function () {
             $msgBox.dialog('open');
         }
         $dialog.find('#name-role').val($name);
-
         $dialog.dialog('option', 'title', 'Изменить роль');
         $dialog.dialog('option', 'id', $id);
         $dialog.dialog('option', 'content', $content);
@@ -500,7 +499,6 @@ $(function () {
         $dialog.dialog('option', 'id', $id);
         $dialog.dialog('option', 'idRole', $idRole);
         $dialog.dialog('open');
-
     });
 
     $('#button-del-user').click(function() {
@@ -661,7 +659,6 @@ $(function () {
         },
         close: function() {$(this).dialog('close');}
     });
-
 
     $('#dialog-user').dialog({
         autoOpen: false, width: 400, modal: true, resizable: false,
@@ -951,7 +948,7 @@ $(function () {
     });
 
     $('#list-period').selectmenu({
-        width: 180
+        width: 376
     });
 
 

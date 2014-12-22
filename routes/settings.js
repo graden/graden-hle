@@ -44,7 +44,8 @@ exports.get = function(req, res, next) {
                     lstCriGroupContent:  results[1][0].linkCri,
                     lstObj: results[2],
                     lstUser: results[3],
-                    lstRole: results[4]
+                    lstRole: results[4],
+                    lstPeriod: results[4]
                 });
             }
         }
