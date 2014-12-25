@@ -390,13 +390,21 @@
   width: 40px;
   text-align: center; }
 
-#tbl-period .td-2 {
+#tbl-period .td-2 div {
+  width: 400px;
+  text-align: left; }
+
+#tbl-period .td-3 div {
+  width: 300px;
+  text-align: left; }
+
+#tbl-period .td-4 {
   width: 100%;
   border-right: none; }
-  #tbl-period .td-2 div {
-    width: 750px;
+  #tbl-period .td-4 div {
+    width: 50px;
     text-align: left; }
-#tbl-period th.td-2 {
+#tbl-period th.td-4 {
   border-right: none; }
 
 #tbl-role-office .td-1 div {
@@ -407,7 +415,7 @@
   width: 100%;
   border-right: none; }
   #tbl-role-office .td-2 div {
-    width: 230px;
+    width: 240px;
     text-align: left; }
 #tbl-role-office th.td-2 {
   border-right: none; }
@@ -420,7 +428,7 @@
   width: 100%;
   border-right: none; }
   #tbl-role-group .td-2 div {
-    width: 230px;
+    width: 240px;
     text-align: left; }
 #tbl-role-group th.td-2 {
   border-right: none; }

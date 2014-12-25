@@ -101,6 +101,15 @@
     width: 100%;
 }
 
+#cell-count-period {
+    padding-left: 5px;
+}
+
+.ui-selectmenu-text {
+    line-height: 1 !important;
+    padding-top: 5px !important;
+}
+
 
 
 

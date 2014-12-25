@@ -111,13 +111,15 @@ $grid-div-padding-left: 2px;
 @include table-td("#tbl-role", true, 650px, left, 2, true);
 
 @include table-td("#tbl-period", false, 40px, center, 1, true);
-@include table-td("#tbl-period", true, 750px, left, 2, true);
+@include table-td("#tbl-period", false, 400px, left, 2, true);
+@include table-td("#tbl-period", false, 300px, left, 3, true);
+@include table-td("#tbl-period", true, 50px, left, 4, true);
 
 @include table-td("#tbl-role-office", false, 20px, center, 1, true);
-@include table-td("#tbl-role-office", true, 230px, left, 2, true);
+@include table-td("#tbl-role-office", true, 240px, left, 2, true);
 
 @include table-td("#tbl-role-group", false, 20px, center, 1, true);
-@include table-td("#tbl-role-group", true, 230px, left, 2, true);
+@include table-td("#tbl-role-group", true, 240px, left, 2, true);
 
 .tbl-body {
     background-color: #eeefff;

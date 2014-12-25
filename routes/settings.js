@@ -4,6 +4,7 @@ var Cri      = require('models/cri').Cri;
 var CriGroup = require('models/crigroup').CriGroup;
 var Obj      = require('models/object').Obj;
 var Role     = require('models/role').Role;
+var Period   = require('models/period').Period;
 
 exports.get = function(req, res, next) {
     async.parallel([
@@ -31,6 +32,11 @@ exports.get = function(req, res, next) {
             Role.allList(function(err, role) {
                 callback(null, role);
             });
+        },
+        function(callback) {
+            Period.allList(function(err, period) {
+                callback(null, period);
+            });
         }
     ],
         function(error, results){
@@ -45,7 +51,7 @@ exports.get = function(req, res, next) {
                     lstObj: results[2],
                     lstUser: results[3],
                     lstRole: results[4],
-                    lstPeriod: results[4]
+                    lstPeriod: results[5]
                 });
             }
         }

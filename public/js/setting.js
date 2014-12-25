@@ -301,6 +301,56 @@ $(function () {
         $dialog.dialog('open');
     });
 
+    $('#button-add-period').click(function() {
+        var $table      = $('#tbl-period');
+        var $content    = $('#tbl-period-body');
+        var $dialog     = $('#dialog-period');
+        $dialog.find('#name').val('');
+        $dialog.dialog('option', 'title', 'Добавить новую периодичность ');
+        $dialog.dialog('option', 'type', 'create');
+        $dialog.dialog('option', 'url', 'period');
+        $dialog.dialog('option', 'content', $content);
+        $dialog.dialog('option', 'table', $table);
+        $dialog.dialog('open');
+    });
+
+    $('#button-edit-period').click(function() {
+        var $table      = $('#tbl-period');
+        var $content    = $('#tbl-period-body');
+        var $highlight  = $content.find('tr.hle-grid-highlight');
+        var $id         = $highlight.attr('data-id');
+        var $code       = $highlight.attr('data-code');
+        var $name       = $highlight.find('td:eq(1) div').text();
+        var $desc       = $highlight.find('td:eq(2) div').text();
+        var $dialog     = $('#dialog-period');
+        $dialog.find('#name-cri').val($name);
+        $dialog.dialog('option', 'title', 'Изменить периодичность');
+        $dialog.dialog('option', 'id', $id);
+        $dialog.dialog('option', 'type', 'update');
+        $dialog.dialog('option', 'url', 'period');
+        $dialog.dialog('option', 'content', $content);
+        $dialog.dialog('option', 'table', $table);
+        $dialog.dialog('open');
+    });
+
+    $('#button-del-period').click(function() {
+        var $content   = $('#tbl-period-body');
+        var $highlight = $content.find('tr.hle-grid-highlight');
+        var $id        = $highlight.attr('data-id');
+        var $fsuccess  = function() {
+            $highlight.remove();
+            FixTable($content);
+        };
+        var $dialog  = $('#dialog-remove');
+        $dialog.find('#txt-message').text("Вы хотите удалить данную периодичность?");
+        $dialog.dialog('option', 'title', 'Подтверждение удаления');
+        $dialog.dialog('option', 'url', "/period/remove");
+        $dialog.dialog('option', 'data', {'id': $id});
+        $dialog.dialog('option', 'fsuccess', $fsuccess);
+        $dialog.dialog('open');
+    });
+
+
     $('#button-del-cri-group').click(function() {
         var $content = $('#tbl-cri-group-body');
         var $highlight  = $content.find('tr.hle-grid-highlight');
@@ -906,6 +956,33 @@ $(function () {
         ajaxData('GET', '/role/list', {}, fsuccess);
     });
 
+    $( "#dialog-period" ).dialog({
+        autoOpen: false, //height: 400, width: 500,
+        modal: true, resizable: false,
+        dialogClass: 'no-dialog-padding',
+        buttons: {
+            "Ok": function() {
+                var $content      = $(this).dialog('option', 'content');
+                var $button       = $(this).dialog('option', 'button');
+                var $highlight    = $content.find('tr.hle-grid-highlight');
+                var $id           = $highlight.attr('data-id');
+                var $code         = $highlight.attr('data-code');
+                var $name         = $highlight.find('td:eq(1) div').text();
+                var $desc         = $highlight.find('td:eq(2) div').text();
+                var $cycle        = $highlight.find('td:eq(3) div').text();
+                $content          = $('#tbl-user-body');
+                $highlight        = $content.find('tr.hle-grid-highlight');
+
+                $highlight.attr('data-id-role',$id);
+                $highlight.find('td:eq(3) div').text($name);
+                $button.button({ label: $name });
+                $(this).dialog( "close" );
+            },
+            "Отмена": function() {$( this ).dialog( "close" );}
+        },
+        close: function() {$( this ).dialog( "close" );}
+    });
+
     $( "#dialog-form-role" ).dialog({
         autoOpen: false, //height: 400, width: 500,
         modal: true, resizable: false,
@@ -939,16 +1016,20 @@ $(function () {
         $(this).removeClass("ui-state-focus");
     });
 
-    $('#role-master').selectmenu({
+    $('#list-role-master').selectmenu({
         width: 180
     });
 
-    $('#role-pupil').selectmenu({
+    $('#list-role-pupil').selectmenu({
         width: 180
     });
 
     $('#list-period').selectmenu({
         width: 376
+    });
+
+    $('#list-cycle-period').selectmenu({
+        width: 200
     });
 
 
