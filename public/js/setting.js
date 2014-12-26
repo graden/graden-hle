@@ -305,7 +305,13 @@ $(function () {
         var $table      = $('#tbl-period');
         var $content    = $('#tbl-period-body');
         var $dialog     = $('#dialog-period');
-        $dialog.find('#name').val('');
+
+        $dialog.find('#name-period').val('');
+        $dialog.find('#desc-period').val('');
+        $dialog.find('#count-period').val('');
+        $dialog.find('#list-cycle-period').val(0);
+        $dialog.find('#list-cycle-period').selectmenu('refresh', true);
+
         $dialog.dialog('option', 'title', 'Добавить новую периодичность ');
         $dialog.dialog('option', 'type', 'create');
         $dialog.dialog('option', 'url', 'period');
@@ -322,10 +328,18 @@ $(function () {
         var $code       = $highlight.attr('data-code');
         var $name       = $highlight.find('td:eq(1) div').text();
         var $desc       = $highlight.find('td:eq(2) div').text();
+        var $count      = $highlight.find('td:eq(3) div').text();
         var $dialog     = $('#dialog-period');
-        $dialog.find('#name-cri').val($name);
+
+        $dialog.find('#name-period').val($name);
+        $dialog.find('#desc-period').val($desc);
+        $dialog.find('#count-period').val($count);
+        $dialog.find('#list-cycle-period').val($code);
+        $dialog.find('#list-cycle-period').selectmenu('refresh', true);
+
         $dialog.dialog('option', 'title', 'Изменить периодичность');
         $dialog.dialog('option', 'id', $id);
+        $dialog.dialog('option', 'code', $code);
         $dialog.dialog('option', 'type', 'update');
         $dialog.dialog('option', 'url', 'period');
         $dialog.dialog('option', 'content', $content);
@@ -606,7 +620,7 @@ $(function () {
         var $contentFoot = $('#tbl-role-office').find('tfoot th:eq(0) div');
         var $highlight   = $content.find('tr.hle-grid-highlight');
         var $id          = $highlight.attr('data-id');
-        $content = $('#tbl-sprav-body');
+        $content         = $('#tbl-sprav-body');
         var $tBody = $content.find('tbody:last');
         var fsuccess = function(data){
             if (data) {
@@ -1031,6 +1045,4 @@ $(function () {
     $('#list-cycle-period').selectmenu({
         width: 200
     });
-
-
 });
