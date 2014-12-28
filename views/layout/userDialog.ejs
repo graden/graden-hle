@@ -13,20 +13,18 @@
     <div id="select-twise">
         <div id="select-master">
             <select id="list-role-master">
-                <option>Slower</option>
-                <option>Slow</option>
-                <option>Medium</option>
-                <option>Fast</option>
-                <option>Faster</option>
+                <option value="100000000000000000000001">Нет Роли</option>
+                <% lstRole.forEach(function(val) { %>
+                <option value="<%= val._id%>"><%= val.name%></option>
+                <% }); %>
             </select>
         </div>
         <div id="select-pupil">
             <select id="list-role-pupil">
-                <option>Slower</option>
-                <option>Slow</option>
-                <option>Medium</option>
-                <option>Fast</option>
-                <option>Faster</option>
+                <option value="100000000000000000000001">Нет Роли</option>
+                <% lstRole.forEach(function(val) { %>
+                <option value="<%= val._id%>"><%= val.name%></option>
+                <% }); %>
             </select>
         </div>
     </div>

@@ -6,6 +6,9 @@ var schema = new Schema ({
     modifyDate:   {type: Date, default: Date.now},
     valueTask:    {type: String},
     percentTask:  {type: Number, defualt: 0},
+    typeValue:    {type: ObjectId, ref: 'dsTypeValue'},
+    SetTask:      {type: Number, defualt: 0},
+    DefTask:      {type: Number, defualt: 0},
     valueQuarter: {type: Number},
     valueYear:    {type: Number},
     linkCriGroup: {type: ObjectId, ref: 'dsCriGroup'},
@@ -41,11 +44,12 @@ schema.statics.allList = function(idGrp, idQuarter, idYear, idObj, radioObj, cal
     });
 };
 
-schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, percent, radioObj, callback) {
+schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, percent, setValue, defValue, radioObj, callback) {
     var Task = this;
     var tsk = new Task({linkCriGroup:idGrp, valueQuarter:idQuarter,
-                         valueYear:idYear, linkObject:idObject,
-                         valueTask:value, percentTask:percent, linkType: radioObj});
+                        valueYear:idYear, linkObject:idObject,
+                        valueTask:value, percentTask:percent,
+                        setValue:setValue, defValue:defValue, linkType: radioObj});
         tsk.save(function(err){
             if (err) {
                 callback(err, null);
@@ -55,10 +59,11 @@ schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, perc
         });
 };
 
-schema.statics.update = function(idTask, idGrp, idQuarter, idYear, idObject, value, percent, radioObj, callback) {
+schema.statics.update = function(idTask, idGrp, idQuarter, idYear, idObject, value, percent, setValue, defValue, radioObj, callback) {
     var Task = this;
     Task.findByIdAndUpdate(idTask,{$set: {linkCriGroup:idGrp, valueQuarter:idQuarter, valueYear:idYear,
-        linkObject:idObject, valueTask:value, percentTask:percent, modifyDate: new Date(), linkType: radioObj}}).exec(function(err, task){
+                                          linkObject:idObject, valueTask:value, percentTask:percent, setValue:setValue,
+                                          defValue:defValue, modifyDate: new Date(), linkType: radioObj}}).exec(function(err, task){
             if (err) {
                 callback(err, null);
             } else {

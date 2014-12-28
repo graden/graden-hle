@@ -8,12 +8,14 @@ exports.create = function(req, res) {
     var idYear      = req.body.idYear;
     var taskValue   = (req.body.taskValue.length === 0) ? '' : req.body.taskValue;
     var taskPercent = (req.body.taskPercent.length === 0) ? 0 : req.body.taskPercent;
+    var setValue    = req.body.setValue;
+    var defValue    = req.body.defValue;
     var radioObj    = req.body.radioObj;
     if (idGrp === '100000000000000000000001' || idObj === '100000000000000000000001') {
         res.status(403).json(new HttpError(403, "Нельзя создать задачу в консолидированном режиме!"));
         return;
     }
-    Task.create(idGrp, idQuarter, idYear, idObj, taskValue, taskPercent, radioObj, function(err, task){
+    Task.create(idGrp, idQuarter, idYear, idObj, taskValue, taskPercent, setValue, defValue, radioObj, function(err, task){
         if (err) {
             res.status(403).json(err);
         } else {
@@ -30,12 +32,14 @@ exports.update = function(req, res) {
     var idYear      = req.body.idYear;
     var taskValue   = (req.body.taskValue.length === 0) ? '' : req.body.taskValue;
     var taskPercent = (req.body.taskPercent.length === 0) ? 0 : req.body.taskPercent;
+    var setValue    = req.body.setValue;
+    var defValue    = req.body.defValue;
     var radioObj    = req.body.radioObj;
     if (idGrp === '100000000000000000000001' || idObj === '100000000000000000000001') {
         res.status(403).json(new HttpError(403, "Нельзя изменить задачу в консолидированном режиме!"));
         return;
     }
-    Task.update(idTask, idGrp, idQuarter, idYear, idObj, taskValue, taskPercent, radioObj, function(err, task){
+    Task.update(idTask, idGrp, idQuarter, idYear, idObj, taskValue, taskPercent, setValue, defValue, radioObj, function(err, task){
         if (err) {
             res.status(403).json(err);
         } else {

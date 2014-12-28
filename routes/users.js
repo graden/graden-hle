@@ -7,8 +7,9 @@ exports.create = function(req, res, next) {
     var username = req.body.username;
     var password = req.body.username;
     var role     = req.body.role;
+    var roleSec  = req.body.roleSec;
     var email = '';//req.body.email;
-    User.create(fullname, email, role, username, password, function(err, user) {
+    User.create(fullname, email, role, roleSec, username, password, function(err, user) {
         if (err) {
             if (err instanceof AuthError) {
                 next(new HttpError(403, err.message));
@@ -26,9 +27,10 @@ exports.update = function(req, res) {
     var fullname  = req.body.fullname;
     var username  = req.body.username;
     var role      = req.body.role;
+    var roleSec   = req.body.roleSec;
     var email     = req.body.email;
     var mustPass  = req.body.mustPassword;
-    User.update(id, username, fullname, email, role, mustPass, function(err, user) {
+    User.update(id, username, fullname, email, role, roleSec, mustPass, function(err, user) {
         if (err) {
             res.status(403).json(err);
         } else {

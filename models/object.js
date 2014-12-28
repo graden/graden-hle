@@ -1,16 +1,18 @@
 var async = require('async');
 var mongoose = require('libs/mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 var schema = new Schema ({
     name:         {type: String, required: true},
-    tPeriod:      {type: Number, default: 1},
+    tPeriodObj:   {type: ObjectId, ref: 'dsPeriods'},
+    tPeriodSbj:   {type: ObjectId, ref: 'dsPeriods'},
     type:         {type: String, default: 'object'},
     permit:       {type: Boolean, default: true}
 });
 
 schema.statics.allList = function(callback) {
     var Obj = this;
-    Obj.find({}).exec(function(err, obj){
+    Obj.find({}).populate('tPeriodObj').populate('tPeriodSbj').exec(function(err, obj){
         if (err) {
             callback(err, null);
         } else {
@@ -76,7 +78,7 @@ schema.statics.create = function(name, type, permit, period, callback) {
 
 schema.statics.update = function(id, name, type, permit, period, callback) {
     var Obj = this;
-    Obj.findByIdAndUpdate(id, { $set: { name: name, type: type, tPeriod: period, permit: permit }}, function (err, obj) {
+    Obj.findByIdAndUpdate(id, { $set: { name: name, type: type, tPeriodObj: period, permit: permit }}, function (err, obj) {
         if (err) {
             callback(err, null);
         } else {

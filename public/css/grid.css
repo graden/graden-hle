@@ -170,266 +170,408 @@
 
 #tbl-object .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-object .td-2 div {
   width: 300px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-object .td-3 {
   width: 100%;
   border-right: none; }
   #tbl-object .td-3 div {
     width: 110px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-object th.td-3 {
   border-right: none; }
 
 #tbl-subject .td-1 div {
   width: 20px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-subject .td-2 div {
   width: 240px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-subject .td-3 div {
   width: 70px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-subject .td-4 {
   width: 100%;
   border-right: none; }
   #tbl-subject .td-4 div {
     width: 70px;
-    text-align: center; }
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-subject th.td-4 {
   border-right: none; }
 
 #tbl-cri-group-content .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-cri-group-content .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-cri-group-content .td-2 div {
     width: 320px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-cri-group-content th.td-2 {
   border-right: none; }
 
 #tbl-cri-group .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-cri-group .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-cri-group .td-2 div {
     width: 320px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-cri-group th.td-2 {
   border-right: none; }
 
 #tbl-cri-list .td-1 div {
   width: 30px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-cri-list .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-cri-list .td-2 div {
     width: 280px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-cri-list th.td-2 {
   border-right: none; }
 
 #tbl-sprav .td-1 div {
   width: 30px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-sprav .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-sprav .td-2 div {
     width: 200px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-sprav th.td-2 {
   border-right: none; }
 
 #tbl-sprav-role .td-1 div {
   width: 30px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-sprav-role .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-sprav-role .td-2 div {
     width: 200px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-sprav-role th.td-2 {
   border-right: none; }
 
 #tbl-cri .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-cri .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-cri .td-2 div {
     width: 300px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-cri th.td-2 {
   border-right: none; }
 
 #tbl-mark .td-1 div {
   width: 25px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-mark .td-2 div {
   width: 300px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-mark .td-3 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-mark .td-4 {
   width: 100%;
   border-right: none; }
   #tbl-mark .td-4 div {
     width: 30px;
-    text-align: center; }
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-mark th.td-4 {
   border-right: none; }
 
 #tbl-task .td-1 div {
   width: 20px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-task .td-2 div {
   width: 340px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-task .td-3 {
   width: 100%;
   border-right: none; }
   #tbl-task .td-3 div {
     width: 30px;
-    text-align: center; }
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-task th.td-3 {
   border-right: none; }
 
 #tbl-task-prev .td-1 div {
   width: 25px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-task-prev .td-2 div {
   width: 340px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-task-prev .td-3 {
   width: 100%;
   border-right: none; }
   #tbl-task-prev .td-3 div {
     width: 30px;
-    text-align: center; }
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-task-prev th.td-3 {
   border-right: none; }
 
 #tbl-report .td-1 div {
   width: 20px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-report .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-report .td-2 div {
     width: 335px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-report th.td-2 {
   border-right: none; }
 
 #tbl-user .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-user .td-2 div {
   width: 250px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-user .td-3 div {
   width: 200px;
-  text-align: left; }
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
-#tbl-user .td-4 {
+#tbl-user .td-4 div {
+  width: 200px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
+
+#tbl-user .td-5 {
   width: 100%;
   border-right: none; }
-  #tbl-user .td-4 div {
+  #tbl-user .td-5 div {
     width: 200px;
-    text-align: left; }
-#tbl-user th.td-4 {
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
+#tbl-user th.td-5 {
   border-right: none; }
 
 #tbl-role .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-role .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-role .td-2 div {
     width: 650px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-role th.td-2 {
   border-right: none; }
 
 #tbl-period .td-1 div {
   width: 40px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-period .td-2 div {
-  width: 400px;
-  text-align: left; }
+  width: 200px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-period .td-3 div {
-  width: 300px;
-  text-align: left; }
+  width: 400px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-period .td-4 {
   width: 100%;
   border-right: none; }
   #tbl-period .td-4 div {
-    width: 50px;
-    text-align: left; }
+    width: 100px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-period th.td-4 {
   border-right: none; }
 
 #tbl-role-office .td-1 div {
   width: 20px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-role-office .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-role-office .td-2 div {
     width: 240px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-role-office th.td-2 {
   border-right: none; }
 
 #tbl-role-group .td-1 div {
   width: 20px;
-  text-align: center; }
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #tbl-role-group .td-2 {
   width: 100%;
   border-right: none; }
   #tbl-role-group .td-2 div {
     width: 240px;
-    text-align: left; }
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
 #tbl-role-group th.td-2 {
   border-right: none; }
 

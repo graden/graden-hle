@@ -30,3 +30,14 @@ exports.create = function(req, res) {
         }
     });
 };
+
+exports.remove = function(req, res) {
+    var id       = req.body.id;
+    Period.remove(id, function(err, period){
+        if (err) {
+            res.status(403).json(err);
+        } else {
+            res.status(200).json(period);
+        }
+    });
+};

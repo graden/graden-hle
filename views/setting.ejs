@@ -271,7 +271,8 @@
                                 <th class="td-1"><div>#</div></th>
                                 <th class="td-2"><div>Имя пользователя</div></th>
                                 <th class="td-3"><div>Логин пользователя</div></th>
-                                <th class="td-4"><div>Роль пользователя</div></th>
+                                <th class="td-4"><div>Роль (Я оцениваю)</div></th>
+                                <th class="td-5"><div>Роль (Меня оценивают)</div></th>
                             </tr>
                         </thead>
                     </table>
@@ -284,8 +285,8 @@
                         <% var rSec = null; %>
                         <% lstUser.forEach(function(val) { %>
                         <% i++; %>
-                        <% if (val.role) { rPri = val.role._id} else {rPri = "0"}%>
-                        <% if (val.roleSec) { rSec = val.roleSec._id} else {rSec = "0"}%>
+                        <% if (val.role) { rPri = val.role._id} else {rPri = "100000000000000000000001"}%>
+                        <% if (val.roleSec) { rSec = val.roleSec._id} else {rSec = "100000000000000000000001"}%>
                         <tr data-id="<%= val._id %>" data-id-role="<%= rPri %>" data-id-role-sec="<%= rSec %>">
                             <td class="td-1"><div><%= i %></div></td>
                             <td class="td-2"><div><%= val.fullname %></div></td>
@@ -294,6 +295,11 @@
                             <td class="td-4"><div><%= val.role.name %></div></td>
                             <%} else { %>
                             <td class="td-4"><div>Нет роли</div></td>
+                            <%}%>
+                            <% if (val.roleSec) { %>
+                            <td class="td-5"><div><%= val.roleSec.name %></div></td>
+                            <%} else { %>
+                            <td class="td-5"><div>Нет роли</div></td>
                             <%}%>
                         </tr>
                         <% }); %>
@@ -308,6 +314,7 @@
                             <th class="td-2"><div></div></th>
                             <th class="td-3"><div></div></th>
                             <th class="td-4"><div></div></th>
+                            <th class="td-5"><div></div></th>
                         </tr>
                         </tfoot>
                     </table>
@@ -370,7 +377,9 @@
                         <thead>
                         <tr>
                             <th class="td-1"><div>#</div></th>
-                            <th class="td-2"><div>Наименование периодичности</div></th>
+                            <th class="td-2"><div>Наименование</div></th>
+                            <th class="td-3"><div>Описание</div></th>
+                            <th class="td-4"><div>Цикличность</div></th>
                         </tr>
                         </thead>
                     </table>
@@ -381,9 +390,11 @@
                         <% var i=0; %>
                         <% lstPeriod.forEach(function(val) { %>
                         <% i++; %>
-                        <tr data-id="<%= val._id %>">
+                        <tr data-id="<%= val._id %>" data-id-period="<%= val.codePeriod %>">
                             <td class="td-1"><div><%= i %></div></td>
-                            <td class="td-2"><div><%= val.name %></div></td>
+                            <td class="td-2"><div><%= val.namePeriod %></div></td>
+                            <td class="td-3"><div><%= val.descPeriod %></div></td>
+                            <td class="td-4"><div><%= val.countPeriod %></div></td>
                         </tr>
                         <% }); %>
                         </tbody>
@@ -395,6 +406,8 @@
                         <tr>
                             <th class="td-1"><div><%= i %></div></th>
                             <th class="td-2"><div></div></th>
+                            <th class="td-3"><div></div></th>
+                            <th class="td-4"><div></div></th>
                         </tr>
                         </tfoot>
                     </table>
@@ -448,7 +461,6 @@
 <% include ./layout/criDialog.ejs %>
 <% include ./layout/objDialog.ejs %>
 <% include ./layout/rmDialog.ejs %>
-<% include ./layout/roleDialog.ejs %>
 <% include ./layout/roleDialogEdit.ejs %>
 <% include ./layout/roleDialogAdd.ejs %>
 <% include ./layout/tblDialog.ejs %>

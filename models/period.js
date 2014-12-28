@@ -1,6 +1,7 @@
-var async    = require('async');
-var mongoose = require('libs/mongoose');
-var Schema   = mongoose.Schema;
+var async     = require('async');
+var AuthError = require('error').AuthError;
+var mongoose  = require('libs/mongoose');
+var Schema    = mongoose.Schema;
 
 var schema = new Schema ({
     createDate:   {type: Date, default: Date.now},
@@ -27,7 +28,7 @@ schema.statics.create = function(name, desc, count, code, permit, callback) {
     var Period = this;
     async.waterfall([
         function(callback) {
-            Period.findOne({codePeriod: code}, callback);
+            Period.findOne({namePeriod: name}, callback);
         },
         function(period, callback) {
             if (period) {

@@ -179,7 +179,7 @@ $(function () {
         var $table     = $('#tbl-object');
         var $content   = $('#tbl-object-body');
         var $dialog    = $('#dialog-obj');
-        $dialog.find('#name-cri').val('');
+        $dialog.find('#name-obj').val('');
         $dialog.dialog('option', 'title', 'Добавить объект');
         $dialog.dialog('option', 'url', 'object');
         $dialog.dialog('option', 'type', 'create');
@@ -189,15 +189,20 @@ $(function () {
     });
 
     $('#button-edit-object').click(function() {
-        var $table     = $('#tbl-object');
-        var $content   = $('#tbl-object-body');
-        var $highlight = $content.find('tr.hle-grid-highlight');
-        var $id        = $highlight.attr('data-id');
-        var $idPeriod  = $highlight.attr('data-period');
-        var $name      = $highlight.find('td:eq(1) div').text();
-        var $txtPeriod = $highlight.find('td:eq(2) div').text();
-        var $dialog    = $('#dialog-obj');
-        $dialog.find('#name-cri').val($name);
+        var $table        = $('#tbl-object');
+        var $content      = $('#tbl-object-body');
+        var $highlight    = $content.find('tr.hle-grid-highlight');
+        var $id           = $highlight.attr('data-id');
+        var $idPeriodObj  = $highlight.attr('data-period-obj');
+        var $idPeriodSbj  = $highlight.attr('data-period-sbj');
+        var $name         = $highlight.find('td:eq(1) div').text();
+        var $dialog       = $('#dialog-obj');
+
+        $dialog.find('#name-obj').val($name);
+        $dialog.find('#list-period-obj').val($idPeriodObj);
+        $dialog.find('#list-period-obj').selectmenu('refresh', true);
+        $dialog.find('#list-period-sbj').val($idPeriodSbj);
+        $dialog.find('#list-period-sbj').selectmenu('refresh', true);
         $dialog.dialog('option', 'title', 'Изменить объект');
         $dialog.dialog('option', 'id', $id);
         $dialog.dialog('option', 'url', 'object');
@@ -205,12 +210,14 @@ $(function () {
         $dialog.dialog('option', 'content', $content);
         $dialog.dialog('option', 'table', $table);
         $dialog.dialog('open');
+
     });
 
     $('#button-add-cri-group').click(function() {
         var $table     = $('#tbl-cri-group');
         var $content   = $('#tbl-cri-group-body');
         var $dialog    = $('#dialog-cri');
+        $dialog.find('#name-cri').val('');
         $dialog.dialog('option', 'title', 'Добавить группу');
         $dialog.dialog('option', 'url', 'crigroup');
         $dialog.dialog('option', 'type', 'create');
@@ -226,7 +233,7 @@ $(function () {
         var $id        = $highlight.attr('data-id');
         var $name      = $highlight.find('td:eq(1) div').text();
         var $dialog    = $('#dialog-cri');
-        $dialog.find('#input-text-cri').val($name);
+        $dialog.find('#name-cri').val($name);
         $dialog.dialog('option', 'title', 'Изменить группу');
         $dialog.dialog('option', 'id', $id);
         $dialog.dialog('option', 'url', 'crigroup');
@@ -312,7 +319,7 @@ $(function () {
         $dialog.find('#list-cycle-period').val(0);
         $dialog.find('#list-cycle-period').selectmenu('refresh', true);
 
-        $dialog.dialog('option', 'title', 'Добавить новую периодичность ');
+        $dialog.dialog('option', 'title', 'Добавить новую периодичность');
         $dialog.dialog('option', 'type', 'create');
         $dialog.dialog('option', 'url', 'period');
         $dialog.dialog('option', 'content', $content);
@@ -325,7 +332,7 @@ $(function () {
         var $content    = $('#tbl-period-body');
         var $highlight  = $content.find('tr.hle-grid-highlight');
         var $id         = $highlight.attr('data-id');
-        var $code       = $highlight.attr('data-code');
+        var $code       = $highlight.attr('data-id-period');
         var $name       = $highlight.find('td:eq(1) div').text();
         var $desc       = $highlight.find('td:eq(2) div').text();
         var $count      = $highlight.find('td:eq(3) div').text();
@@ -387,6 +394,7 @@ $(function () {
         buttons: {
             'Ok': function() {
                 var $name = $("#name-obj").val();
+                var $period = 1;
                 var $type = $(this).dialog('option', 'type');
                 var $url  = $(this).dialog('option', 'url') + '/' + $type;
                 var $content = $(this).dialog('option', 'content');
@@ -406,7 +414,7 @@ $(function () {
                             $tBody.append('<tr data-id="' + data._id + '">' +
                                 '<td class="td-1"><div>' + $i + '</div></td>'+
                                 '<td class="td-2"><div>' + data.name + '</div></td>' +
-                                '<td class="td-2"><div>' + data.period + '</div></td></tr>'
+                                '<td class="td-3"><div>' + data.tPeriodObj + '</div></td></tr>'
                             );
                             $footTable.find('th:eq(0) div').text($i);
                             FixTable($content);
@@ -418,7 +426,7 @@ $(function () {
                     fsuccess = function(data){
                         if (data) {
                             $highlight.find('td:eq(1) div').text(data.name);
-                            $highlight.find('td:eq(2) div').text(data.period);
+                            $highlight.find('td:eq(2) div').text(data.tPeriodObj);
 
                         }
                     };
@@ -550,18 +558,26 @@ $(function () {
         var $dialog     = $('#dialog-user');
         var $id         = $highlight.attr('data-id');
         var $idRole     = $highlight.attr('data-id-role');
+        if ($idRole == 0) {$idRole = '100000000000000000000001'}
+        var $idRoleSec  = $highlight.attr('data-id-role-sec');
+        if ($idRoleSec == 0) {$idRoleSec = '100000000000000000000001'}
         var $fullName   = $highlight.find('td:eq(1) div').text();
         var $username   = $highlight.find('td:eq(2) div').text();
         var $rolename   = $highlight.find('td:eq(3) div').text();
         $dialog.find('#name-user').val($fullName);
         $dialog.find('#login-user').val($username);
+        $dialog.find('#list-role-master').val($idRole);
+        $dialog.find('#list-role-master').selectmenu('refresh', true);
+        $dialog.find('#list-role-pupil').val($idRoleSec);
+        $dialog.find('#list-role-pupil').selectmenu('refresh', true);
         $dialog.find('#password-user').val('');
         $('#btn-role').button({ label: $rolename });
         $dialog.dialog('option', 'title', 'Редактирование текущего пользователя');
         $dialog.dialog('option', 'type', 'update');
         $dialog.dialog('option', 'content', $content);
         $dialog.dialog('option', 'id', $id);
-        $dialog.dialog('option', 'idRole', $idRole);
+        //$dialog.dialog('option', 'idRole', $idRole);
+        //$dialog.dialog('option', 'idRoleSec', $idRoleSec);
         $dialog.dialog('open');
     });
 
@@ -733,7 +749,12 @@ $(function () {
                 var $highlight  = $content.find('tr.hle-grid-highlight');
                 var $tBody      = $content.find('tbody:last');
                 var $fullname   = $(this).find('#name-user').val();
-                var $role       = $highlight.attr('data-id-role');
+                var $role       = $(this).find('#list-role-master').val();
+                var $roleSec    = $(this).find('#list-role-pupil').val();
+                var rPri        = "100000000000000000000001";
+                var rSec        = "100000000000000000000001";
+                var nPri        = "Нет роли";
+                var nSec        = "Нет роли";
                 var $mustPass   = $("#mustPassword").prop('checked');
                 var $email      = '';
                 var $username   = $(this).find('#login-user').val();
@@ -744,11 +765,21 @@ $(function () {
                 if ($type == 'insert') {
                     fsuccess = function(data) {
                         AddTrTable($content);
-                        $tBody.append('<tr data-id="'+ data._id +'">' +
+                        if (data.role) {
+                            rPri = data.role._id;
+                            nPri = data.role.name;
+                        }
+                        if (data.roleSec) {
+                            rSec = data.roleSec._id;
+                            nSec = data.roleSec.name;
+                        }
+                        $tBody.append('<tr data-id="' + data._id + '" data-id-role="' + rPri + '" data-id-role-sec="' + rSec + '">' +
                             '<td class="td-1"><div>' + $i + '</div></td>'+
                             '<td class="td-2"><div>' + data.fullname + '</div></td>'+
                             '<td class="td-3"><div>' + data.username + '</div></td>'+
-                            '<td class="td-4"><div>' + data.role + '</div></td>'+'</tr>'
+                            '<td class="td-4"><div>' + nPri + '</div></td>'+
+                            '<td class="td-5"><div>' + nSec + '</div></td>'+
+                            '</tr>'
                         );
                         FixTable($content);
                     };
@@ -759,12 +790,27 @@ $(function () {
                     var $id = $(this).dialog('option', 'id');
                     if ($id) {
                         fsuccess = function(data) {
+                            if (data.role) {
+                                rPri = data.role._id;
+                                nPri = data.role.name;
+                            }
+                            if (data.roleSec) {
+                                rSec = data.roleSec._id;
+                                nSec = data.roleSec.name;
+                            }
+
                             $highlight.find('td:eq(1) div').text(data.fullname);
                             $highlight.find('td:eq(2) div').text(data.username);
-                            $highlight.find('td:eq(3) div').text(data.role.name);
+                            $highlight.attr('data-id-role', rPri);
+                            $highlight.find('td:eq(3) div').text(nPri);
+                            $highlight.attr('data-id-role-sec', rSec);
+                            $highlight.find('td:eq(4) div').text(nSec);
+
                         };
-                        $dt = {'id':$id,'fullname':$fullname,
-                               'username':$username,'email':$email,'role':$role, 'mustPassword':$mustPass};
+                        $dt = {'id':$id, 'fullname':$fullname,
+                               'username':$username, 'email':$email, 'role':$role,
+                               'roleSec':$roleSec, 'mustPassword':$mustPass};
+
                         ajaxData('POST','/user/update', $dt, fsuccess);
                     } else {
                         var $msgBox = $('#dialog-message');
@@ -949,78 +995,62 @@ $(function () {
         close: function() {$( this ).dialog( "close" );}
     });
 
-
-    $("#btn-role").click(function() {
-        var $content = $('#tbl-sprav-role-body');
-        var $tBody = $content.find('tbody:last');
-        var $btn = $(this);
-        var fsuccess = function(data){
-            if (data) {
-                $content.find('tr').remove();
-                $tBody.html(data.list);
-                $('#tbl-sprav-role').find('tfoot th:eq(0) div').text(data.count);
-                var $dialog = $('#dialog-form-role');
-                $dialog.dialog('option', 'title', 'Роли пользователя');
-                $dialog.dialog('option', 'content', $content);
-                $dialog.dialog('option', 'button', $btn);
-                $dialog.dialog('open');
-                FixTable($content);
-            }
-        };
-        ajaxData('GET', '/role/list', {}, fsuccess);
-    });
-
     $( "#dialog-period" ).dialog({
         autoOpen: false, //height: 400, width: 500,
         modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {
             "Ok": function() {
-                var $content      = $(this).dialog('option', 'content');
-                var $button       = $(this).dialog('option', 'button');
-                var $highlight    = $content.find('tr.hle-grid-highlight');
-                var $id           = $highlight.attr('data-id');
-                var $code         = $highlight.attr('data-code');
-                var $name         = $highlight.find('td:eq(1) div').text();
-                var $desc         = $highlight.find('td:eq(2) div').text();
-                var $cycle        = $highlight.find('td:eq(3) div').text();
-                $content          = $('#tbl-user-body');
-                $highlight        = $content.find('tr.hle-grid-highlight');
+                var $name  = $(this).find('#name-period').val();
+                var $desc  = $(this).find('#desc-period').val();
+                var $count = $(this).find('#count-period').val();
+                var $code  = $(this).find('#list-cycle-period').val();
+                var $id    = $(this).dialog('option', 'id');
+                var $type  = $(this).dialog('option', 'type');
 
-                $highlight.attr('data-id-role',$id);
-                $highlight.find('td:eq(3) div').text($name);
-                $button.button({ label: $name });
+                var $content    = $(this).dialog('option', 'content');
+                var $highlight  = $content.find('tr.hle-grid-highlight');
+                var $tBody      = $content.find('tbody:last');
+                var $i          = $content.find('tr:last-child td:eq(0) div').text();
+                var fsuccess = null;
+                if ($type == 'create') {
+                    fsuccess = function(data) {
+                        alert(data._id);
+                        if (data) {
+                            AddTrTable($content);
+                            parseInt($i); $i++;
+                            $tBody.append('<tr data-id="'+ data._id +'" data-id-period="' + data.codePeriod + '">' +
+                                '<td class="td-1"><div>' + $i + '</div></td>'+
+                                '<td class="td-2"><div>' + data.namePeriod + '</div></td>'+
+                                '<td class="td-3"><div>' + data.descPeriod + '</div></td>'+
+                                '<td class="td-4"><div>' + data.countPeriod + '</div></td>'+
+                                '</tr>'
+                            );
+                            FixTable($content);
+                        }
+                    };
+                    ajaxData('POST', '/period/create', {'name':$name, 'desc':$desc, 'count':$count, 'code':$code}, fsuccess);
+                }
+                if ($type == 'update') {
+                    fsuccess = function(data) {
+                        if (data) {
+                            $highlight.attr('data-id-period', $code);
+                            $highlight.find('td:eq(1) div').text($name);
+                            $highlight.find('td:eq(2) div').text($desc);
+                            $highlight.find('td:eq(3) div').text($count);
+                        }
+                    };
+                    ajaxData('POST', '/period/update', {'id':$id, 'name':$name, 'desc':$desc, 'count':$count, 'code':$code}, fsuccess);
+                }
+
+
+
                 $(this).dialog( "close" );
             },
             "Отмена": function() {$( this ).dialog( "close" );}
         },
         close: function() {$( this ).dialog( "close" );}
     });
-
-    $( "#dialog-form-role" ).dialog({
-        autoOpen: false, //height: 400, width: 500,
-        modal: true, resizable: false,
-        dialogClass: 'no-dialog-padding',
-        buttons: {
-            "Ok": function() {
-                var $content      = $(this).dialog('option', 'content');
-                var $button       = $(this).dialog('option', 'button');
-                var $highlight    = $content.find('tr.hle-grid-highlight');
-                var $id           = $highlight.attr('data-id');
-                var $name         = $highlight.find('td:eq(1) div').text();
-                $content          = $('#tbl-user-body');
-                $highlight        = $content.find('tr.hle-grid-highlight');
-
-                $highlight.attr('data-id-role',$id);
-                $highlight.find('td:eq(3) div').text($name);
-                $button.button({ label: $name });
-                $(this).dialog( "close" );
-            },
-            "Отмена": function() {$( this ).dialog( "close" );}
-        },
-        close: function() {$( this ).dialog( "close" );}
-    });
-
 
     $("input[type=submit], button").button().click(function(event) {
         event.preventDefault();
@@ -1032,13 +1062,17 @@ $(function () {
 
     $('#list-role-master').selectmenu({
         width: 180
-    });
+    }).selectmenu("menuWidget").addClass("overflow-select");
 
     $('#list-role-pupil').selectmenu({
         width: 180
+    }).selectmenu("menuWidget").addClass("overflow-select");
+
+    $('#list-period-obj').selectmenu({
+        width: 376
     });
 
-    $('#list-period').selectmenu({
+    $('#list-period-sbj').selectmenu({
         width: 376
     });
 

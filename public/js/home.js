@@ -428,9 +428,9 @@ $(function () {
 
     $('input, textarea').addClass("ui-corner-all");
 
-    /*$('#subject-list').selectmenu({
-        width: 220
-    });*/
+    $('#list-type-value').selectmenu({
+        width: 180
+    }).selectmenu("menuWidget").addClass("overflow-select");
 
 
 });

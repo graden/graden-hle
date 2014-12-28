@@ -57,7 +57,7 @@ schema.statics.authorize = function(username, password, callback) {
   ], callback);
 };
 
-schema.statics.create = function (fullname, email, role, username, password,  callback) {
+schema.statics.create = function (fullname, email, role, roleSec, username, password,  callback) {
     var User = this;
     async.waterfall([
         function(callback) {
@@ -67,7 +67,7 @@ schema.statics.create = function (fullname, email, role, username, password,  ca
             if (user) {
                     callback(new AuthError("Такой пользователь уже существует!"));
             } else {
-                user = new User({fullname: fullname, email: email, role: role, username: username,
+                user = new User({fullname: fullname, email: email, role: role, roleSec: roleSec, username: username,
                                  password: password});
                 user.save(function(err) {
                     if (err) {
@@ -92,13 +92,31 @@ schema.statics.idList = function (id, callback) {
     });
 };
 
-schema.statics.update = function (id, username, fullname, email, role, mustPassword, callback) {
+schema.statics.update = function (id, username, fullname, email, role, roleSec, mustPassword, callback) {
     var User = this;
-    User.findByIdAndUpdate(id, { $set: {username: username, fullname: fullname, email: email, role: role, mustChgPassword: mustPassword}}, function (err, user) {
+    User.findById(id, function(err, user) {
         if (err) {
             callback(err, null);
         } else {
-            callback(null, user);
+            user.username        = username;
+            user.fullname        = fullname;
+            user.email           = email;
+            user.role            = role;
+            user.roleSec         = roleSec;
+            user.mustChgPassword = mustPassword;
+            user.save(function(err) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    User.findById(id).populate('role').populate('roleSec').exec( function (err, userRef) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, userRef);
+                        }
+                    });
+                }
+            })
         }
     });
 };

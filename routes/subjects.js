@@ -35,7 +35,7 @@ exports.remove = function(req, res) {
         if (err) {
             res.status(403).json(err);
         } else {
-                res.status(200).json(sbj.idObj);
+            res.status(200).json(sbj.idObj);
         }
     });
 };

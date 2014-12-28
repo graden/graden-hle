@@ -1,7 +1,18 @@
 <div id="dialog-obj" title="">
-    <label class='label-txt' for='name-obj'>Критерий:</label>
+    <label class='label-txt' for='name-obj'>Наименование объекта:</label>
     <input class='input-txt' type='text' id='name-obj' value=''/>
     <div id="select-period">
-        <select id="list-period"></select>
+        <label class='label-txt' for='list-period-obj'>Периодичность объекта:</label>
+        <select id="list-period-obj">
+            <% lstPeriod.forEach(function(val) { %>
+            <option value="<%= val._id %>"><%= val.namePeriod %></option>
+            <% }); %>
+        </select>
+        <label class='label-txt' for='list-period-sbj'>Периодичность субъекта:</label>
+        <select id="list-period-sbj">
+            <% lstPeriod.forEach(function(val) { %>
+            <option value="<%= val._id %>"><%= val.namePeriod %></option>
+            <% }); %>
+        </select>
     </div>
 </div>
