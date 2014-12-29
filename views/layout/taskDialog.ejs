@@ -1,12 +1,12 @@
 <div id="dialog-form-task" title="">
     <label class="label-txt" for="task-value">Поставленная задача:</label>
-    <textarea class="input-txt" id="task-value" rows="5" cols="50"></textarea>
-    <div class="tbl-block">
-        <div class="tbl-block-cell">
+    <textarea class="input-txt" id="task-value" rows="5" cols="70"></textarea>
+    <div class="tbl-block" style="width:100%; margin-top: 10px;">
+        <div class="tbl-block-cell" style="text-align: left;">
             <label class="label-txt-2" for="select-type-value">Тип данных</label>
         </div>
         <div class="tbl-band"></div>
-        <div class="tbl-block-cell" id="select-type-value">
+        <div class="tbl-block-cell" id="select-type-value" style="width: 200px;">
             <select id="list-type-value">
                 <option value="0">проценты</option>
                 <option value="1">количество</option>
@@ -14,15 +14,21 @@
             </select>
         </div>
     </div>
-    <div class="tbl-block">
-        <div class="tbl-band"></div>
-        <div class="tbl-block-cell">
-            <label class="label-txt" for="task-value-set">Задано</label>
-            <input class="input-txt" id="task-value-set" type="text"  value=""/>
+    <div class="tbl-block" style="width:100%;">
+        <div class="tbl-block-cell" style="text-align: left;">
+            <label class="label-txt-2" for="task-value-set">Задано</label>
         </div>
         <div class="tbl-band"></div>
-        <div class="tbl-block-cell">
-            <label class="label-txt" for="task-value-def">Выполнено</label>
+        <div class="tbl-block-cell" style="width: 200px;">
+            <input class="input-txt" id="task-value-set" type="text"  value=""/>
+        </div>
+    </div>
+    <div class="tbl-block" style="width:100%;">
+        <div class="tbl-block-cell" style="text-align: left;">
+            <label class="label-txt-2" for="task-value-def">Выполнено</label>
+        </div>
+        <div class="tbl-band"></div>
+        <div class="tbl-block-cell" style="width: 200px;">
             <input class="input-txt" id="task-value-def" type="text"  value=""/>
         </div>
     </div>

@@ -56,9 +56,16 @@ exports.update = function(req, res) {
                 var count = 0;
                 var out = {};
                 var txtList = '';
+                var setTask = 0;
+                var defTask = 0;
+                var typeVal = 0;
                 task.forEach(function(val) {
                     count++;
-                    txtList += '<tr data-id="' + val._id + '">' +
+                    setTask = (val.setTask) ? val.setTask : 0;
+                    defTask = (val.defTask) ? val.defTask : 0;
+                    typeVal = (val.typeValue) ? val.typeValue : 0;
+                    txtList += '<tr data-id="' + val._id + '" data-def-value="' + defTask +
+                        '" data-set-value="' + setTask  + '" data-type-value="' + typeVal + '">' +
                         '<td class="td-1"><div>' + count + '</div></td>' +
                         '<td class="td-2"><div>' + val.valueTask + '</div></td>' +
                         '<td class="td-3"><div>' + val.percentTask + '</div></td>' +
@@ -74,9 +81,16 @@ exports.update = function(req, res) {
                 var count = 0;
                 var out = {};
                 var txtList = '';
+                var setTask = 0;
+                var defTask = 0;
+                var typeVal = 0;
                 task.forEach(function(val) {
                     count++;
-                    txtList += '<tr data-id="' + val._id + '">' +
+                    setTask = (val.setTask) ? val.setTask : 0;
+                    defTask = (val.defTask) ? val.defTask : 0;
+                    typeVal = (val.typeValue) ? val.typeValue : 0;
+                    txtList += '<tr data-id="' + val._id + '" data-def-value="' + defTask +
+                        '" data-set-value="' + setTask  + '" data-type-value="' + typeVal + '">' +
                         '<td class="td-1"><div>' + count + '</div></td>' +
                         '<td class="td-2"><div>' + val.valueTask + '</div></td>' +
                         '<td class="td-3"><div>' + val.percentTask + '</div></td>' +

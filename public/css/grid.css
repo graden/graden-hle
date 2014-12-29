@@ -389,7 +389,7 @@
   overflow: hidden; }
 
 #tbl-task .td-2 div {
-  width: 340px;
+  width: 350px;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -399,7 +399,7 @@
   width: 100%;
   border-right: none; }
   #tbl-task .td-3 div {
-    width: 30px;
+    width: 50px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -408,14 +408,14 @@
   border-right: none; }
 
 #tbl-task-prev .td-1 div {
-  width: 25px;
+  width: 20px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
 
 #tbl-task-prev .td-2 div {
-  width: 340px;
+  width: 350px;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -425,7 +425,7 @@
   width: 100%;
   border-right: none; }
   #tbl-task-prev .td-3 div {
-    width: 30px;
+    width: 50px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;

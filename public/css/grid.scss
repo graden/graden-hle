@@ -93,12 +93,12 @@ $grid-div-padding-left: 2px;
 @include table-td("#tbl-mark", true,  40px, center, 4, true);
 
 @include table-td("#tbl-task", false, 20px, center, 1, true);
-@include table-td("#tbl-task", false, 340px, left, 2, true);
-@include table-td("#tbl-task", true, 30px, center, 3, true);
+@include table-td("#tbl-task", false, 350px, left, 2, true);
+@include table-td("#tbl-task", true, 50px, center, 3, true);
 
-@include table-td("#tbl-task-prev", false, 25px, center, 1, true);
-@include table-td("#tbl-task-prev", false, 340px, left, 2, true);
-@include table-td("#tbl-task-prev", true, 30px, center, 3, true);
+@include table-td("#tbl-task-prev", false, 20px, center, 1, true);
+@include table-td("#tbl-task-prev", false, 350px, left, 2, true);
+@include table-td("#tbl-task-prev", true, 50px, center, 3, true);
 
 @include table-td("#tbl-report", false, 20px, center, 1, true);
 @include table-td("#tbl-report", true, 335px, left, 2, true);

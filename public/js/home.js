@@ -302,10 +302,12 @@ $(function () {
 
     $('#btn-add-task').click(function() {
         var $content = $('#tbl-task-body');
-        $('#task-value').val('');
-        $('#task-percent').val('');
-
         var $dialog = $('#dialog-form-task');
+        $dialog.find('#task-value').val('');
+        //$dialog.find('#task-percent').val('');
+        $dialog.find('#task-value-set').val('');
+        $dialog.find('#task-value-def').val('');
+
         $dialog.dialog('option', 'title', 'Добавить новую задачу');
         $dialog.dialog('option', 'id', null);
         $dialog.dialog('option', 'content', $content);
@@ -320,10 +322,19 @@ $(function () {
         if ($id) {
             var $value     = $highlight.find('td:eq(1) div').text();
             var $percent   = $highlight.find('td:eq(2) div').text();
-            $('#task-value').val($value);
-            $('#task-percent').val($percent);
+            var $setValue  = $highlight.attr('data-set-value');
+            var $defValue  = $highlight.attr('data-def-value');
+            var $typeValue = $highlight.attr('data-type-value');
 
             var $dialog = $('#dialog-form-task');
+            $dialog.find('#task-value').val($value);
+            //$dialog.find('#task-percent').val($percent);
+            $dialog.find('#task-value-set').val($setValue);
+            $dialog.find('#task-value-def').val($defValue);
+            $dialog.find('#list-type-value').val($typeValue);
+            $dialog.find('#list-type-value').selectmenu('refresh', true);
+
+
             $dialog.dialog('option', 'title', 'Изменить текущую задачу');
             $dialog.dialog('option', 'id', $id);
             $dialog.dialog('option', 'content', $content);
@@ -368,12 +379,16 @@ $(function () {
                 var $data       = {};
                 var $value      = $.trim($(this).find('#task-value').val());
                 var $percent    = $.trim($(this).find('#task-percent').val());
-                if (isNumeric($percent)) {
+                var $setTask    = $.trim($(this).find('#task-value-set').val());
+                var $defTask    = $.trim($(this).find('#task-value-def').val());
+                var $typeValue  = $(this).find('#list-type-value').val();
+                if (isNumeric($setTask) && isNumeric($defTask)) {
                     if ($type == 'create') {
                         $data = {
                             'idYear': $idYear, 'idQuarter': $idQuarter,
                             'idObj': $idObj, 'idGrp': $idGrp, 'taskValue': $value,
-                            'taskPercent': $percent, 'radioObj': $radioObj
+                            'taskPercent': $percent, 'setTask': $setTask, 'defTask': $defTask,
+                            'typeValue': $typeValue, 'radioObj': $radioObj
                         };
                         var $fsuccess = function (data) {
                             AddTrTable($content);
@@ -381,7 +396,9 @@ $(function () {
                             var $tBody = $content.find('tbody:last');
                             parseInt($i);
                             $i++;
-                            $tBody.append('<tr data-id="' + data._id + '">' +
+
+                            $tBody.append('<tr data-id="' + data._id + '" data-def-value="' + data.defTask +
+                                '" data-set-value="' + data.setTask  + '" data-type-value="' + data.typeValue + '">' +
                                 '<td class="td-1"><div>' + $i + '</div></td>' +
                                 '<td class="td-2"><div>' + data.valueTask + '</div></td>' +
                                 '<td class="td-3"><div>' + data.percentTask.toFixed(2) + '</div></td>' +
@@ -394,11 +411,15 @@ $(function () {
                         $data = {
                             'id': $id, 'idYear': $idYear, 'idQuarter': $idQuarter,
                             'idObj': $idObj, 'idGrp': $idGrp, 'taskValue': $value,
-                            'taskPercent': $percent, 'radioObj': $radioObj
+                            'taskPercent': $percent, 'setTask': $setTask, 'defTask': $defTask,
+                            'typeValue': $typeValue, 'radioObj': $radioObj
                         };
                         $fsuccess = function (data) {
                             if (data) {
                                 if ($id === $highlight.attr('data-id')) {
+                                    $highlight.attr('data-def-value',data.defTask);
+                                    $highlight.attr('data-set-value',data.setTask);
+                                    $highlight.attr('data-type-value',data.typeValue);
                                     $highlight.find('td:eq(1) div').text(data.valueTask);
                                     $highlight.find('td:eq(2) div').text(data.percentTask.toFixed(2));
                                 }
@@ -429,7 +450,7 @@ $(function () {
     $('input, textarea').addClass("ui-corner-all");
 
     $('#list-type-value').selectmenu({
-        width: 180
+        width: 200
     }).selectmenu("menuWidget").addClass("overflow-select");
 
 
