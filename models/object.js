@@ -7,7 +7,9 @@ var schema = new Schema ({
     tPeriodObj:   {type: ObjectId, ref: 'dsPeriods'},
     tPeriodSbj:   {type: ObjectId, ref: 'dsPeriods'},
     type:         {type: String, default: 'object'},
-    permit:       {type: Boolean, default: true}
+    permit:       {type: Boolean, default: true},
+    modified:     {type: Date, default: Date.now},
+    created:      {type: Date, default: Date.now}
 });
 
 schema.statics.allList = function(callback) {
@@ -53,8 +55,9 @@ schema.statics.idList = function(id, callback) {
     }
 };
 
-schema.statics.create = function(name, type, permit, period, callback) {
+schema.statics.create = function(name, type, permit, periodObj, periodSbj, callback) {
     var Obj = this;
+    var id  = ObjectId;
     async.waterfall([
         function(callback) {
             Obj.findOne({name: name}, callback);
@@ -63,12 +66,18 @@ schema.statics.create = function(name, type, permit, period, callback) {
             if (obj) {
                 callback(new AuthError("Такой объект уже существует!"));
             } else {
-                obj = new Obj({name: name, type: type, tPeriod: period, permit: permit});
+                obj = new Obj({_id: id, name: name, type: type, tPeriod: period, permit: permit});
                 obj.save(function(err) {
                     if (err) {
                         callback(err, null);
                     } else {
-                        callback(null, obj);
+                        Obj.findById(id).populate('tPeriodObj').populate('tPeriodSbj').exec(function (err,objRef){
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, objRef);
+                            }
+                        });
                     }
                 });
             }
@@ -76,15 +85,34 @@ schema.statics.create = function(name, type, permit, period, callback) {
     ], callback);
 };
 
-schema.statics.update = function(id, name, type, permit, period, callback) {
+schema.statics.update = function(id, name, type, permit, periodObj, periodSbj, callback) {
     var Obj = this;
-    Obj.findByIdAndUpdate(id, { $set: { name: name, type: type, tPeriodObj: period, permit: permit }}, function (err, obj) {
+    Obj.findById(id, function(err, obj) {
         if (err) {
             callback(err, null);
         } else {
-            callback(null, obj);
+            obj.name        = name;
+            obj.type        = type;
+            obj.tPeriodObj  = periodObj;
+            obj.tPeriodSbj  = periodSbj;
+            obj.permit      = permit;
+            obj.modified    = new Date();
+            obj.save(function(err) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    Obj.findById(id).populate('tPeriodObj').populate('tPeriodSbj').exec(function(err,objRef){
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, objRef);
+                        }
+                    });
+                }
+            })
         }
     });
+
 };
 
 schema.statics.remove  = function(id, callback) {

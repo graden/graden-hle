@@ -118,7 +118,7 @@ $(function () {
     }
 
     $("#dialog-form-mark").dialog({
-        autoOpen: false, width: 300, modal: true, resizable: false,
+        autoOpen: false, width: 'auto', height: 'auto', modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {
             "Сохранить": function() {
@@ -154,7 +154,7 @@ $(function () {
     });
 
     $( "#dialog-form-tbl" ).dialog({
-        autoOpen: false, width: 360, //height: 400,
+        autoOpen: false, width: 'auto', height: 'auto',
         modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {
@@ -352,7 +352,7 @@ $(function () {
     });
 
     $( "#dialog-form-task" ).dialog({
-        autoOpen: false, width: 400, modal: true, resizable: false,
+        autoOpen: false, width: 'auto', height: 'auto', modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {
             "Ok": function() {

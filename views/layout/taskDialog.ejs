@@ -1,23 +1,28 @@
 <div id="dialog-form-task" title="">
     <label class="label-txt" for="task-value">Поставленная задача:</label>
-    <textarea class="input-txt" id="task-value" rows="10" cols="50"></textarea>
-    <label class="label-txt" for="task-percent">% выполнения:</label>
+    <textarea class="input-txt" id="task-value" rows="5" cols="50"></textarea>
     <div class="tbl-block">
+        <div class="tbl-block-cell">
+            <label class="label-txt-2" for="select-type-value">Тип данных</label>
+        </div>
+        <div class="tbl-band"></div>
         <div class="tbl-block-cell" id="select-type-value">
             <select id="list-type-value">
                 <option value="0">проценты</option>
                 <option value="1">количество</option>
-                <option value="2">рубли</option>
-                <option value="3">договоров</option>
-                <option value="4">заяков</option>
+                <option value="2">штук</option>
             </select>
         </div>
+    </div>
+    <div class="tbl-block">
         <div class="tbl-band"></div>
         <div class="tbl-block-cell">
+            <label class="label-txt" for="task-value-set">Задано</label>
             <input class="input-txt" id="task-value-set" type="text"  value=""/>
         </div>
         <div class="tbl-band"></div>
         <div class="tbl-block-cell">
+            <label class="label-txt" for="task-value-def">Выполнено</label>
             <input class="input-txt" id="task-value-def" type="text"  value=""/>
         </div>
     </div>

@@ -596,17 +596,24 @@ window.Chart = function(context){
 				ctx.fill();
 
 				ctx.beginPath();
-				ctx.arc(0,0, (scaleHop*5), 0, 2*Math.PI, false);
+				ctx.arc(0,0, (scaleHop*4), 0, 2*Math.PI, false);
 				ctx.arc(0,0, (scaleHop*2), 0, -2*Math.PI, true);
 				ctx.closePath();
 				ctx.fillStyle = "rgba(250,250,0,0.2)";
 				ctx.fill();
 
 				ctx.beginPath();
-				ctx.arc(0,0, (scaleHop*7), 0, 2*Math.PI, false);
-				ctx.arc(0,0, (scaleHop*5), 0, -2*Math.PI, true);
+				ctx.arc(0,0, (scaleHop*6), 0, 2*Math.PI, false);
+				ctx.arc(0,0, (scaleHop*4), 0, -2*Math.PI, true);
 				ctx.closePath();
 				ctx.fillStyle = "rgba(250,0,0,0.2)";
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.arc(0,0, (scaleHop*7), 0, 2*Math.PI, false);
+				ctx.arc(0,0, (scaleHop*6), 0, -2*Math.PI, true);
+				ctx.closePath();
+				ctx.fillStyle = "rgba(0,0,0,0.05)";
 				ctx.fill();
 			}
 

@@ -4,7 +4,9 @@
     <div id="select-period">
         <label class='label-txt' for='list-period-obj'>Периодичность объекта:</label>
         <select id="list-period-obj">
+            <%var i = 0%>
             <% lstPeriod.forEach(function(val) { %>
+            <%i++%>
             <option value="<%= val._id %>"><%= val.namePeriod %></option>
             <% }); %>
         </select>

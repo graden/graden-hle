@@ -250,7 +250,7 @@ exports.kitRepo2 = function(pathPDF, data, callback){
 
     docs.font(config.scaleFont);
     docs.fontSize(20);
-    docs.text('Оценка работы РЦ по POS',config.xPos, 20, {align: 'center', width: config.width});
+    docs.text('Оценка работы по POS',config.xPos, 20, {align: 'center', width: config.width});
     docs.moveDown(0.2);
 
     barDiag(docs, config, data);
@@ -404,8 +404,8 @@ function barDiag(doc, config, data) {
         var lowerValue = Number.MAX_VALUE;
         for (i=0; i<data.datasets.length; i++){
             for (j=0; j<data.datasets[i].data.length; j++){
-                if ( data.datasets[i].data[j] > upperValue) { upperValue = data.datasets[i].data[j] };
-                if ( data.datasets[i].data[j] < lowerValue) { lowerValue = data.datasets[i].data[j] };
+                if ( data.datasets[i].data[j] > upperValue) { upperValue = data.datasets[i].data[j] }
+                if ( data.datasets[i].data[j] < lowerValue) { lowerValue = data.datasets[i].data[j] }
             }
         }
 

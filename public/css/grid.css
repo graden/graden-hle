@@ -169,29 +169,36 @@
   border: none; }
 
 #tbl-object .td-1 div {
-  width: 40px;
+  width: 20px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
 
 #tbl-object .td-2 div {
-  width: 300px;
+  width: 220px;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
 
-#tbl-object .td-3 {
+#tbl-object .td-3 div {
+  width: 90px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
+
+#tbl-object .td-4 {
   width: 100%;
   border-right: none; }
-  #tbl-object .td-3 div {
-    width: 110px;
-    text-align: left;
+  #tbl-object .td-4 div {
+    width: 90px;
+    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden; }
-#tbl-object th.td-3 {
+#tbl-object th.td-4 {
   border-right: none; }
 
 #tbl-subject .td-1 div {
@@ -295,7 +302,7 @@
   width: 100%;
   border-right: none; }
   #tbl-sprav .td-2 div {
-    width: 200px;
+    width: 280px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -342,14 +349,14 @@
   border-right: none; }
 
 #tbl-mark .td-1 div {
-  width: 25px;
+  width: 20px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
 
 #tbl-mark .td-2 div {
-  width: 300px;
+  width: 290px;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -366,7 +373,7 @@
   width: 100%;
   border-right: none; }
   #tbl-mark .td-4 div {
-    width: 30px;
+    width: 40px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;

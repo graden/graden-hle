@@ -59,9 +59,10 @@ $grid-div-padding-left: 2px;
 @include table-body-height("#tbl-role-office", 200px, 250px);
 @include table-body-height("#tbl-role-group", 200px, 250px);
 
-@include table-td("#tbl-object", false, 40px, center, 1, true);
-@include table-td("#tbl-object", false, 300px, left, 2, true);
-@include table-td("#tbl-object", true, 110px, left, 3, true);
+@include table-td("#tbl-object", false, 20px, center, 1, true);
+@include table-td("#tbl-object", false, 220px, left, 2, true);
+@include table-td("#tbl-object", false, 90px, center, 3, true);
+@include table-td("#tbl-object", true, 90px, center, 4, true);
 
 @include table-td("#tbl-subject", false, 20px, center, 1, true);
 @include table-td("#tbl-subject", false, 240px, left, 2, true);
@@ -78,7 +79,7 @@ $grid-div-padding-left: 2px;
 @include table-td("#tbl-cri-list", true, 280px, left, 2, true);
 
 @include table-td("#tbl-sprav", false, 30px, center, 1, true);
-@include table-td("#tbl-sprav", true, 200px, left, 2, true);
+@include table-td("#tbl-sprav", true, 280px, left, 2, true);
 
 @include table-td("#tbl-sprav-role", false, 30px, center, 1, true);
 @include table-td("#tbl-sprav-role", true, 200px, left, 2, true);
@@ -86,10 +87,10 @@ $grid-div-padding-left: 2px;
 @include table-td("#tbl-cri", false, 40px, center, 1, true);
 @include table-td("#tbl-cri", true,  300px, left, 2, true);
 
-@include table-td("#tbl-mark", false, 25px, center, 1, true);
-@include table-td("#tbl-mark", false, 300px, left, 2, true);
+@include table-td("#tbl-mark", false, 20px, center, 1, true);
+@include table-td("#tbl-mark", false, 290px, left, 2, true);
 @include table-td("#tbl-mark", false, 40px, center, 3, true);
-@include table-td("#tbl-mark", true,  30px, center, 4, true);
+@include table-td("#tbl-mark", true,  40px, center, 4, true);
 
 @include table-td("#tbl-task", false, 20px, center, 1, true);
 @include table-td("#tbl-task", false, 340px, left, 2, true);

@@ -182,7 +182,8 @@
                                     <tr>
                                         <th class="td-1"><div>#</div></th>
                                         <th class="td-2"><div>Наименование</div></th>
-                                        <th class="td-3"><div>Период</div></th>
+                                        <th class="td-3"><div>dT объекта</div></th>
+                                        <th class="td-4"><div>dT субъекта</div></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -191,12 +192,25 @@
                             <table id="tbl-object-body" class="tbl">
                                 <tbody>
                                 <% var i=0; %>
+                                <% var idPerObj = 0; %>
+                                <% var idPerSbj = 0; %>
                                 <% lstObj.forEach(function(val) { %>
                                 <% i++; %>
-                                <tr data-id="<%= val._id %>">
+                                <% idPerObj = (val.tPeriodObj) ? val.tPeriodObj._id : 0%>
+                                <% idPerSbj = (val.tPeriodSbj) ? val.tPeriodSbj._id : 0%>
+                                <tr data-id="<%= val._id %>" data-period-obj="<%= idPerObj %>" data-period-sbj="<%= idPerSbj %>">
                                     <td class="td-1"><div><%= i %></div></td>
                                     <td class="td-2"><div><%= val.name %></div></td>
-                                    <td class="td-3"><div><%= val.period %></div></td>
+                                    <% if (val.tPeriodObj) { %>
+                                    <td class="td-3"><div><%= val.tPeriodObj.descPeriod %></div></td>
+                                    <%} else { %>
+                                    <td class="td-3"><div>Нет данных</div></td>
+                                    <%}%>
+                                    <% if (val.tPeriodSbj) { %>
+                                    <td class="td-4"><div><%= val.tPeriodSbj.descPeriod %></div></td>
+                                    <%} else { %>
+                                    <td class="td-4"><div>Нет данных</div></td>
+                                    <%}%>
                                 </tr>
                                 <% }); %>
                                 </tbody>
@@ -209,6 +223,7 @@
                                     <th class="td-1"><div><%= i %></div></th>
                                     <th class="td-2"><div></div></th>
                                     <th class="td-3"><div></div></th>
+                                    <th class="td-4"><div></div></th>
                                 </tr>
                                 </tfoot>
                             </table>

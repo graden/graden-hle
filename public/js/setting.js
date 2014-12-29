@@ -199,6 +199,9 @@ $(function () {
         var $dialog       = $('#dialog-obj');
 
         $dialog.find('#name-obj').val($name);
+        if ($idPeriodObj == 0) {
+
+        }
         $dialog.find('#list-period-obj').val($idPeriodObj);
         $dialog.find('#list-period-obj').selectmenu('refresh', true);
         $dialog.find('#list-period-sbj').val($idPeriodSbj);
@@ -210,7 +213,6 @@ $(function () {
         $dialog.dialog('option', 'content', $content);
         $dialog.dialog('option', 'table', $table);
         $dialog.dialog('open');
-
     });
 
     $('#button-add-cri-group').click(function() {
@@ -394,7 +396,8 @@ $(function () {
         buttons: {
             'Ok': function() {
                 var $name = $("#name-obj").val();
-                var $period = 1;
+                var $periodObj = $(this).find('#list-period-obj').val();
+                var $periodSbj = $(this).find('#list-period-sbj').val();
                 var $type = $(this).dialog('option', 'type');
                 var $url  = $(this).dialog('option', 'url') + '/' + $type;
                 var $content = $(this).dialog('option', 'content');
@@ -414,23 +417,30 @@ $(function () {
                             $tBody.append('<tr data-id="' + data._id + '">' +
                                 '<td class="td-1"><div>' + $i + '</div></td>'+
                                 '<td class="td-2"><div>' + data.name + '</div></td>' +
-                                '<td class="td-3"><div>' + data.tPeriodObj + '</div></td></tr>'
+                                '<td class="td-3"><div>' + data.tPeriodObj.descPeriod  + '</div></td>' +
+                                '<td class="td-4"><div>' + data.tPeriodSbj.descPeriod  + '</div></td>' +
+                                '</tr>'
                             );
                             $footTable.find('th:eq(0) div').text($i);
                             FixTable($content);
                         }
                     };
-                    ajaxData('POST', $url, {'name':$name, 'period':$period}, fsuccess);
+                    ajaxData('POST', $url, {'name':$name, 'periodObj':$periodObj, 'periodSbj':$periodSbj}, fsuccess);
                 }
                 if ($type == 'update') {
                     fsuccess = function(data){
                         if (data) {
                             $highlight.find('td:eq(1) div').text(data.name);
-                            $highlight.find('td:eq(2) div').text(data.tPeriodObj);
+                            if (data.tPeriodObj) {
+                                $highlight.find('td:eq(2) div').text(data.tPeriodObj.descPeriod);
+                            }
+                            if (data.tPeriodSbj) {
+                                $highlight.find('td:eq(3) div').text(data.tPeriodSbj.descPeriod);
+                            }
 
                         }
                     };
-                    ajaxData('POST', $url, {'id':$id, 'name':$name, 'period':$period}, fsuccess);
+                    ajaxData('POST', $url, {'id':$id, 'name':$name, 'periodObj':$periodObj, 'periodSbj':$periodSbj}, fsuccess);
                 }
                 $(this).dialog('close');
             },
@@ -968,7 +978,7 @@ $(function () {
     });
 
     $( "#dialog-form-tbl" ).dialog({
-        autoOpen: false, width: 360, //height: 400,
+        autoOpen: false,// width: 400, //height: 400,
         modal: true, resizable: false,
         dialogClass: 'no-dialog-padding',
         buttons: {

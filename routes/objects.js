@@ -4,10 +4,12 @@ var async   = require('async');
 var HleFunc = require('libs/func-hle');
 
 exports.create = function(req, res) {
-    var name    = req.body.name;
-    var permit  = true; //req.body.name;
-    var type    = 'object'; //req.body.type;
-    Object.create(name, type, permit, function(err, object) {
+    var name       = req.body.name;
+    var periodObj  = req.body.periodObj;
+    var periodSbj  = req.body.periodSbj;
+    var permit     = true; //req.body.name;
+    var type       = 'object'; //req.body.type;
+    Object.create(name, type, permit, periodObj, periodSbj, function(err, object) {
         if (err) {
             res.status(403).json(err);
         } else {
@@ -17,11 +19,14 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-    var id      = req.body.id;
-    var name    = req.body.name;
-    var permit  = true; //req.body.name;
-    var type    = 'object'; //req.body.type;
-    Object.update(id, name, type, permit, function(err, object) {
+    var id         = req.body.id;
+    var name       = req.body.name;
+    var periodObj  = req.body.periodObj;
+    var periodSbj  = req.body.periodSbj;
+    console.log('period=', periodObj, periodSbj);
+    var permit     = true; //req.body.name;
+    var type       = 'object'; //req.body.type;
+    Object.update(id, name, type, permit, periodObj, periodSbj, function(err, object) {
         if (err) {
             res.status(403).json(err);
         } else {

@@ -82,7 +82,8 @@ $(function () {
     FixTable('#tbl-cri-body');
 
     $(document).ready(function(){
-        $('body *').disableSelection();
+        $('body table, body ul, body li, body div, body h, body a').disableSelection();
+
     });
 
     $('#grid-tabs').tabs({
