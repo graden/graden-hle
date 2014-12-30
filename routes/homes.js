@@ -9,6 +9,9 @@ var CriGroup = require('models/crigroup').CriGroup;
 var HleFunc = require('libs/func-hle');
 
 exports.update = function(req, res) {
+    var idRolePri  = req.session.rolePri;
+    var idRoleSec  = req.session.roleSec;
+
     var setAllGroup  = (!req.session.setAllGroup) ? 'false' : req.session.setAllGroup;
     var setAllObject = (!req.session.setAllObject) ? 'false' : req.session.setAllObject;
     var idGrp = '100000000000000000000001';
@@ -22,7 +25,10 @@ exports.update = function(req, res) {
     var idQuarter  = parseInt(req.body.idQuarter);
     var idYear     = parseInt(req.body.idYear);
     var radioObj   = req.body.radioObj;
-    var idRole     = req.session.role;
+    var radioRole  = req.body.radioRole;
+
+    var idRole     = (radioRole == 'true') ? idRolePri : idRoleSec;
+
     var lstGroup   = [];
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
     async.parallel([
@@ -59,16 +65,18 @@ exports.update = function(req, res) {
                 var setTask = 0;
                 var defTask = 0;
                 var typeVal = 0;
+                var perTask = 0;
                 task.forEach(function(val) {
                     count++;
                     setTask = (val.setTask) ? val.setTask : 0;
                     defTask = (val.defTask) ? val.defTask : 0;
                     typeVal = (val.typeValue) ? val.typeValue : 0;
+                    perTask = (val.percentTask) ? val.percentTask : 0;
                     txtList += '<tr data-id="' + val._id + '" data-def-value="' + defTask +
                         '" data-set-value="' + setTask  + '" data-type-value="' + typeVal + '">' +
                         '<td class="td-1"><div>' + count + '</div></td>' +
                         '<td class="td-2"><div>' + val.valueTask + '</div></td>' +
-                        '<td class="td-3"><div>' + val.percentTask + '</div></td>' +
+                        '<td class="td-3"><div>' + perTask.toFixed(2) + '</div></td>' +
                         '</tr>';
                 });
                 out.list  = txtList;
@@ -84,16 +92,18 @@ exports.update = function(req, res) {
                 var setTask = 0;
                 var defTask = 0;
                 var typeVal = 0;
+                var perTask = 0;
                 task.forEach(function(val) {
                     count++;
                     setTask = (val.setTask) ? val.setTask : 0;
                     defTask = (val.defTask) ? val.defTask : 0;
                     typeVal = (val.typeValue) ? val.typeValue : 0;
+                    perTask = (val.percentTask) ? val.percentTask : 0;
                     txtList += '<tr data-id="' + val._id + '" data-def-value="' + defTask +
                         '" data-set-value="' + setTask  + '" data-type-value="' + typeVal + '">' +
                         '<td class="td-1"><div>' + count + '</div></td>' +
                         '<td class="td-2"><div>' + val.valueTask + '</div></td>' +
-                        '<td class="td-3"><div>' + val.percentTask + '</div></td>' +
+                        '<td class="td-3"><div>' + perTask.toFixed(2) + '</div></td>' +
                         '</tr>';
                 });
                 out.list  = txtList;
@@ -166,6 +176,7 @@ exports.update = function(req, res) {
                     outMark.count   = count;
                     req.session.idGroups   = idGrp;
                     req.session.idObjects  = idObj;
+                    req.session.role       = idRole;
                     req.session.idYears    = idYear;
                     req.session.idQuarters = idQuarter;
                     req.session.typeMarks  = radioObj;
@@ -184,21 +195,32 @@ exports.update = function(req, res) {
 };
 
 exports.first = function(req, res) {
-    //req.session.user = '52e68a1f14ffacf446cf3390';
-    //req.session.username = 'Test';
-    //req.session.role = '5406a263f6f2fb960e242314';
-
+    var idRolePri   = (!req.session.rolePri) ? null : req.session.rolePri;
+    var idRoleSec   = (!req.session.roleSec) ? null : req.session.roleSec;
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;
-    var idRole      = (!req.session.role) ? null : req.session.role;
     var defYear     = (!req.session.idYears) ? HleFunc.nowQY().year : req.session.idYears;
     var defQuarter  = (!req.session.idQuarters) ? HleFunc.nowQY().quarter : req.session.idQuarters;
     var radioObj    = (!req.session.radioObjs) ? 'true' : req.session.radioObjs;
     var perSet      = (!req.session.permitSettings) ? 'false' : req.session.permitSettings;
-
     var lstGroup    = [];
     var nameObj     = '';
     var nameGrp     = '';
+    var bRolePri    = '';
+    var bRoleSec    = '';
+
+    var idRole = idRolePri;
+
+    if (idRoleSec == '100000000000000000000001' || !idRoleSec) {
+        bRoleSec = 'disabled';
+        idRole = idRolePri;
+    }
+
+    if (idRolePri == '100000000000000000000001' || !idRolePri) {
+        bRolePri = 'disabled';
+        idRole = idRoleSec;
+    }
+
     async.series([
         function(callback) {
             Role.idList(idRole, function(err, lstRole) {
@@ -265,6 +287,7 @@ exports.first = function(req, res) {
         function(error, result){
             req.session.idGroups        = idGrp;
             req.session.idObjects       = idObj;
+            req.session.role            = idRole;
             req.session.idYears         = defYear;
             req.session.idQuarters      = defQuarter;
             req.session.radioObjs       = radioObj;
@@ -277,15 +300,16 @@ exports.first = function(req, res) {
             res.cookie('idYear', defYear);
             res.cookie('idQuarter', defQuarter);
             res.cookie('radioObj', radioObj);
+            res.cookie('radioRole', idRole);
             res.cookie('permitSettings', perSet);
             res.cookie('setAllGroup', result[0].setAllGroup);
             res.cookie('setAllObject', result[0].setAllObject);
-
-            //console.log('name= ', nameGrp, nameObj);
             res.render('home.ejs', {
                 username:    'Пользователь: ' + result[4].fullname,
                 txtObject:   nameObj,
-                txtGroup:    nameGrp
+                txtGroup:    nameGrp,
+                txtRolePri:  bRolePri,
+                txtRoleSec:  bRoleSec
             });
         }
     );

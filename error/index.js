@@ -7,7 +7,7 @@ function HttpError(status, message) {
   Error.apply(this, arguments);
   Error.captureStackTrace(this, HttpError);
   this.status = status;
-  this.message = message + http.STATUS_CODES[status];
+  this.message = message;
 }
 
 util.inherits(HttpError, Error);
@@ -20,7 +20,7 @@ function AuthError(message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, AuthError);
 
-    this.message = messag + http.STATUS_CODES[status]
+    this.message = message;
 }
 
 util.inherits(AuthError, Error);

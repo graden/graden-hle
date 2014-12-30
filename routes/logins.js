@@ -20,8 +20,9 @@ exports.post = function(req, res, next) {
     } else {
         req.session.user = user._id;
         req.session.username = user.username;
-        req.session.role = user.role;
-        req.session.roleSec = user.roleSec;
+        req.session.rolePri  = user.role;
+        req.session.role     = user.role;
+        req.session.roleSec  = user.roleSec;
         logs.warn('%s - %s',req.session.username, 'Login');
         if (user.mustChgPassword) {
             res.status(201).json(user._id);

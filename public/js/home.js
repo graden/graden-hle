@@ -26,6 +26,7 @@ $(function () {
         var $idObj       = $.cookie('idObj');
 
         var $radio       = $('#radio1').prop('checked');
+        var $radioRole   = $('#radio-master').prop('checked');
         var txtPeriod    = ($radio) ? 'Квартал:': 'Полугодие:';
         var txtGroup     = ($radio) ? 'Объект:': 'Объект:';
         if (!$radio) {
@@ -38,13 +39,13 @@ $(function () {
         $('#name-quarter').text(txtPeriod);
         $('#name-object').text(txtGroup);
         $('#value-quarter').text(QuarterRome(q) + ', ' + $year + ' года.');
-        UpdateHome($idGrp, $idObj, $year, $quarter, $radio);
+        UpdateHome($idGrp, $idObj, $year, $quarter, $radio, $radioRole);
     }
 
-    function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj) {
+    function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj, radioRole) {
         var fsuccess = function(data){
-            //$('#name-group').text(data.nameGrp);
-            //$('#name-object').text(data.nameObj);
+            //$('#radio-master').iCheck(data.vRolePri);
+            //$('#radio-pupil').iCheck(data.vRoleSec);
             MarkContentLoad(data);
             TaskContentLoad(data);
             RptContentLoad(data);
@@ -75,7 +76,7 @@ $(function () {
             }
         };
         ajaxData('POST', '/home/update', {'idGrp':idGrp, 'idObj':idObj, 'idYear':idYear,
-                 'idQuarter':idQuarter, 'radioObj':radioObj}, fsuccess);
+                 'idQuarter':idQuarter, 'radioObj':radioObj, 'radioRole':radioRole}, fsuccess);
     }
 
     function RptContentLoad(data) {
@@ -149,8 +150,16 @@ $(function () {
         close: function() {$( this ).dialog( "close" );}
     });
 
-    $('input[type=radio]').on('change', function(){
+    $('#radio-btn').find('input').on('change', function(){
         FirstLoadHome();
+    });
+
+    $('#radio-role').find('input').on('ifChecked', function () {
+        FirstLoadHome();
+        var $dialog  = $('#dialog-message');
+        $dialog.find('#txt-message').text("Произошла смена роли пользователя!");
+        $dialog.dialog('option', 'title', 'Информация');
+        $dialog.dialog('open');
     });
 
     $( "#dialog-form-tbl" ).dialog({
@@ -218,6 +227,14 @@ $(function () {
         $dialog.dialog('option', 'idCri', $id);
         $dialog.dialog('option', 'title', 'Оценка компитенции');
         $dialog.dialog( "open" );
+    });
+
+    $("#btn-doc-1").click(function() {
+        location.href = '/downloadDocs?path=./public/repo/desc-comp.doc';
+    });
+
+    $("#btn-doc-2").click(function() {
+        location.href = '/downloadDocs?path=./public/repo/scale-marks.doc';
     });
 
     $("#btn-exe-report").click(function() {

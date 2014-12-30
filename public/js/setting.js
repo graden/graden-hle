@@ -1025,7 +1025,6 @@ $(function () {
                 var fsuccess = null;
                 if ($type == 'create') {
                     fsuccess = function(data) {
-                        alert(data._id);
                         if (data) {
                             AddTrTable($content);
                             parseInt($i); $i++;

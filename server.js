@@ -81,6 +81,7 @@ var app = express();
     app.post('/reports/repo2', require('routes/reports').report2);
     app.post('/reports/repo3', require('routes/reports').report3);
     app.get('/download', require('routes/reports').download);
+    app.get('/downloadDocs', require('routes/reports').downloadDocs);
 
     app.get('/home', checkAuth, require('routes/homes').first);
     app.get('/', checkAuth, require('routes/homes').redi);

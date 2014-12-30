@@ -389,6 +389,11 @@ exports.report3 = function(req, res) {
 
 };
 
+exports.downloadDocs = function(req, res) {
+    var file = req.query["path"];
+    res.status(200).download(file);
+};
+
 exports.download = function(req, res) {
     var file = req.query["path"];
     res.status(200).download(file, function(err) {
@@ -398,9 +403,6 @@ exports.download = function(req, res) {
     });
 };
 
-exports.loaddy = function(req, res) {
-    res.status(200).send('47422ecc835fa505cf200a490a759994d9d811a8ee63d1dc09f2e0f8');
-};
 
 
 
