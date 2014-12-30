@@ -4,14 +4,15 @@ $(function () {
     $('#chart-tabs').tabs();
     $('#grid-tabs').tabs();
 
-
     $(document).ready(function(){
-        $('#radio-role div input').iCheck({
+        $('#radio-role').find('input').iCheck({
             checkboxClass: 'icheckbox_flat-orange',
             radioClass: 'iradio_flat-orange'
         });
     });
+
     $('#radio').buttonset();
+
     FirstLoadHome();
 
     function isNumeric(n) {
@@ -26,7 +27,7 @@ $(function () {
         var $idObj       = $.cookie('idObj');
 
         var $radio       = $('#radio1').prop('checked');
-        var $radioRole   = $('#radio-master').prop('checked');
+
         var txtPeriod    = ($radio) ? 'Квартал:': 'Полугодие:';
         var txtGroup     = ($radio) ? 'Объект:': 'Объект:';
         if (!$radio) {
@@ -39,10 +40,10 @@ $(function () {
         $('#name-quarter').text(txtPeriod);
         $('#name-object').text(txtGroup);
         $('#value-quarter').text(QuarterRome(q) + ', ' + $year + ' года.');
-        UpdateHome($idGrp, $idObj, $year, $quarter, $radio, $radioRole);
+        UpdateHome($idGrp, $idObj, $year, $quarter, $radio);
     }
 
-    function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj, radioRole) {
+    function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj) {
         var fsuccess = function(data){
             //$('#radio-master').iCheck(data.vRolePri);
             //$('#radio-pupil').iCheck(data.vRoleSec);
@@ -76,7 +77,7 @@ $(function () {
             }
         };
         ajaxData('POST', '/home/update', {'idGrp':idGrp, 'idObj':idObj, 'idYear':idYear,
-                 'idQuarter':idQuarter, 'radioObj':radioObj, 'radioRole':radioRole}, fsuccess);
+                 'idQuarter':idQuarter, 'radioObj':radioObj}, fsuccess);
     }
 
     function RptContentLoad(data) {
@@ -155,11 +156,21 @@ $(function () {
     });
 
     $('#radio-role').find('input').on('ifChecked', function () {
-        FirstLoadHome();
-        var $dialog  = $('#dialog-message');
-        $dialog.find('#txt-message').text("Произошла смена роли пользователя!");
-        $dialog.dialog('option', 'title', 'Информация');
-        $dialog.dialog('open');
+        var $radioRole   = $('#radio-master').prop('checked');
+        var fsuccess = function(data){
+            if (data) {
+                //$('#radio-master').iCheck(data.priChe);
+                var $dialog  = $('#dialog-message');
+                $dialog.find('#txt-message').text("Произошла смена роли пользователя!");
+                $dialog.dialog('option', 'title', 'Информация');
+                $dialog.dialog('open');
+                //FirstLoadHome();
+                window.location.href = "/home";
+                //$('#radio-pupil').iCheck(data.secSta);
+                //$('#radio-master').iCheck(data.priSta);
+            }
+        };
+        ajaxData('GET', '/role/change', {role: $radioRole}, fsuccess);
     });
 
     $( "#dialog-form-tbl" ).dialog({

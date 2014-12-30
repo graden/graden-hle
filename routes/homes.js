@@ -9,9 +9,7 @@ var CriGroup = require('models/crigroup').CriGroup;
 var HleFunc = require('libs/func-hle');
 
 exports.update = function(req, res) {
-    var idRolePri  = req.session.rolePri;
-    var idRoleSec  = req.session.roleSec;
-
+    var idRole       = req.session.role;
     var setAllGroup  = (!req.session.setAllGroup) ? 'false' : req.session.setAllGroup;
     var setAllObject = (!req.session.setAllObject) ? 'false' : req.session.setAllObject;
     var idGrp = '100000000000000000000001';
@@ -25,9 +23,6 @@ exports.update = function(req, res) {
     var idQuarter  = parseInt(req.body.idQuarter);
     var idYear     = parseInt(req.body.idYear);
     var radioObj   = req.body.radioObj;
-    var radioRole  = req.body.radioRole;
-
-    var idRole     = (radioRole == 'true') ? idRolePri : idRoleSec;
 
     var lstGroup   = [];
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
@@ -195,8 +190,8 @@ exports.update = function(req, res) {
 };
 
 exports.first = function(req, res) {
-    var idRolePri   = (!req.session.rolePri) ? null : req.session.rolePri;
-    var idRoleSec   = (!req.session.roleSec) ? null : req.session.roleSec;
+
+    var idRole      = (!req.session.role) ? null : req.session.role;
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;
     var defYear     = (!req.session.idYears) ? HleFunc.nowQY().year : req.session.idYears;
@@ -206,20 +201,6 @@ exports.first = function(req, res) {
     var lstGroup    = [];
     var nameObj     = '';
     var nameGrp     = '';
-    var bRolePri    = '';
-    var bRoleSec    = '';
-
-    var idRole = idRolePri;
-
-    if (idRoleSec == '100000000000000000000001' || !idRoleSec) {
-        bRoleSec = 'disabled';
-        idRole = idRolePri;
-    }
-
-    if (idRolePri == '100000000000000000000001' || !idRolePri) {
-        bRolePri = 'disabled';
-        idRole = idRoleSec;
-    }
 
     async.series([
         function(callback) {
@@ -307,9 +288,7 @@ exports.first = function(req, res) {
             res.render('home.ejs', {
                 username:    'Пользователь: ' + result[4].fullname,
                 txtObject:   nameObj,
-                txtGroup:    nameGrp,
-                txtRolePri:  bRolePri,
-                txtRoleSec:  bRoleSec
+                txtGroup:    nameGrp
             });
         }
     );

@@ -74,7 +74,7 @@ var app = express();
     app.post('/role/load', require('routes/roles').load);
     app.get('/role/list', require('routes/roles').list);
     app.post('/role/update', require('routes/roles').update);
-    //app.post('/role/remove', require('routes/roles').remove);
+    app.get('/role/change', require('routes/roles').change);
 
     app.get('/setting',checkPermit.setting, require('routes/settings').get);
     app.get('/setting/permit',checkPermit.setting, require('routes/settings').permit);

@@ -1,5 +1,6 @@
 var Role  = require('models/role').Role;
 var async = require('async');
+var HleFunc = require('libs/func-hle');
 
 exports.list = function(req, res) {
     Role.allList(function(err, role) {
@@ -202,4 +203,53 @@ exports.update = function(req, res) {
             res.status(200).json(role);
         }
     });
+};
+
+exports.change = function(req, res) {
+    var role = req.query["role"];
+    var a = {};
+    var idRolePri   = (!req.session.rolePri || req.session.rolePri == '100000000000000000000001') ? null : req.session.rolePri;
+    var idRoleSec   = (!req.session.roleSec || req.session.roleSec == '100000000000000000000001') ? null : req.session.roleSec;
+
+    a.secSta = 'enable';
+    a.priSta = 'enable';
+    a.secChe = 'uncheck';
+    a.priChe = 'check';
+
+    if (idRolePri && !idRoleSec) {
+        req.session.role = idRolePri;
+        a.secSta = 'disable';
+        a.priSta = 'enable';
+        a.secChe = 'uncheck';
+        a.priChe = 'check';
+    }
+    if (!idRolePri && idRoleSec) {
+        req.session.role = idRoleSec;
+        a.priSta = 'disable';
+        a.secSta = 'enable';
+        a.priChe = 'uncheck';
+        a.secChe = 'check';
+    }
+    if (idRolePri && idRoleSec && role == 'true') {
+        req.session.role = idRolePri;
+        a.secSta = 'enable';
+        a.priSta = 'enable';
+        a.secChe = 'uncheck';
+        a.priChe = 'check';
+    }
+    if (idRolePri && idRoleSec && role == 'false') {
+        req.session.role = idRoleSec;
+        a.secSta = 'enable';
+        a.priSta = 'enable';
+        a.secChe = 'check';
+        a.priChe = 'uncheck';
+    }
+    req.session.idGroups       = '';
+    req.session.idObjects      = '';
+    req.session.idYears        = HleFunc.nowQY().year;
+    req.session.idQuarters     = HleFunc.nowQY().quarter;
+    req.session.radioObjs      = 'true';
+    req.session.permitSettings = 'false';
+
+    res.status(200).json(a);
 };

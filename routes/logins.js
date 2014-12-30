@@ -18,7 +18,7 @@ exports.post = function(req, res, next) {
            next(err);
       }
     } else {
-        req.session.user = user._id;
+        req.session.user     = user._id;
         req.session.username = user.username;
         req.session.rolePri  = user.role;
         req.session.role     = user.role;
