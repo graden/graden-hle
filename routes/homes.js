@@ -190,7 +190,29 @@ exports.update = function(req, res) {
 };
 
 exports.first = function(req, res) {
+    var a = {};
+    var idRolePri   = (!req.session.rolePri || req.session.rolePri == '100000000000000000000001') ? null : req.session.rolePri;
+    var idRoleSec   = (!req.session.roleSec || req.session.roleSec == '100000000000000000000001') ? null : req.session.roleSec;
 
+    a.secSta = '';
+    a.priSta = '';
+    a.secChe = '';
+    a.priChe = 'checked';
+
+    if (idRolePri && !idRoleSec) {
+        req.session.role = idRolePri;
+        a.secSta = 'disabled';
+        a.priSta = '';
+        a.secChe = '';
+        a.priChe = 'checked';
+    }
+    if (!idRolePri && idRoleSec) {
+        req.session.role = idRoleSec;
+        a.priSta = 'disabled';
+        a.secSta = '';
+        a.priChe = '';
+        a.secChe = 'checked';
+    }
     var idRole      = (!req.session.role) ? null : req.session.role;
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;
@@ -201,7 +223,7 @@ exports.first = function(req, res) {
     var lstGroup    = [];
     var nameObj     = '';
     var nameGrp     = '';
-
+    var roleChg     = (!req.session.roleChg) ? a : req.session.roleChg;
     async.series([
         function(callback) {
             Role.idList(idRole, function(err, lstRole) {
@@ -288,7 +310,8 @@ exports.first = function(req, res) {
             res.render('home.ejs', {
                 username:    'Пользователь: ' + result[4].fullname,
                 txtObject:   nameObj,
-                txtGroup:    nameGrp
+                txtGroup:    nameGrp,
+                roleChg:     roleChg
             });
         }
     );

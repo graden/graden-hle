@@ -211,38 +211,38 @@ exports.change = function(req, res) {
     var idRolePri   = (!req.session.rolePri || req.session.rolePri == '100000000000000000000001') ? null : req.session.rolePri;
     var idRoleSec   = (!req.session.roleSec || req.session.roleSec == '100000000000000000000001') ? null : req.session.roleSec;
 
-    a.secSta = 'enable';
-    a.priSta = 'enable';
-    a.secChe = 'uncheck';
-    a.priChe = 'check';
+    a.secSta = '';
+    a.priSta = '';
+    a.secChe = '';
+    a.priChe = 'checked';
 
     if (idRolePri && !idRoleSec) {
         req.session.role = idRolePri;
-        a.secSta = 'disable';
-        a.priSta = 'enable';
-        a.secChe = 'uncheck';
-        a.priChe = 'check';
+        a.secSta = 'disabled';
+        a.priSta = '';
+        a.secChe = '';
+        a.priChe = 'checked';
     }
     if (!idRolePri && idRoleSec) {
         req.session.role = idRoleSec;
-        a.priSta = 'disable';
-        a.secSta = 'enable';
-        a.priChe = 'uncheck';
-        a.secChe = 'check';
+        a.priSta = 'disabled';
+        a.secSta = '';
+        a.priChe = '';
+        a.secChe = 'checked';
     }
     if (idRolePri && idRoleSec && role == 'true') {
         req.session.role = idRolePri;
-        a.secSta = 'enable';
-        a.priSta = 'enable';
-        a.secChe = 'uncheck';
-        a.priChe = 'check';
+        a.secSta = '';
+        a.priSta = '';
+        a.secChe = '';
+        a.priChe = 'checked';
     }
     if (idRolePri && idRoleSec && role == 'false') {
         req.session.role = idRoleSec;
-        a.secSta = 'enable';
-        a.priSta = 'enable';
-        a.secChe = 'check';
-        a.priChe = 'uncheck';
+        a.secSta = '';
+        a.priSta = '';
+        a.secChe = 'checked';
+        a.priChe = '';
     }
     req.session.idGroups       = '';
     req.session.idObjects      = '';
@@ -250,6 +250,7 @@ exports.change = function(req, res) {
     req.session.idQuarters     = HleFunc.nowQY().quarter;
     req.session.radioObjs      = 'true';
     req.session.permitSettings = 'false';
+    req.session.roleChg        = a;
 
     res.status(200).json(a);
 };
