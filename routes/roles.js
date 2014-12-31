@@ -252,5 +252,6 @@ exports.change = function(req, res) {
     req.session.permitSettings = 'false';
     req.session.roleChg        = a;
 
+    //res.redirect('/home/update');
     res.status(200).json(a);
 };

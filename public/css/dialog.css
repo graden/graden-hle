@@ -61,7 +61,7 @@ textarea {
     resize: none;
 }
 
-#dialog-message h4{
+#dialog-message h4, #dialog-message-role h4{
     text-align: center;
 }
 

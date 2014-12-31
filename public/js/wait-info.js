@@ -39,6 +39,17 @@ $(function () {
         autoOpen: false, minHeight: 10, minWidth: 100, width: 300, modal: true, resizable: false
     });
 
+    $("#dialog-message-role").dialog({
+        autoOpen: false, minHeight: 50, width: 300, modal: true, resizable: false,
+        buttons: {
+            "Ok": function() {
+                window.location.href = "/home";
+                $( this ).dialog("close");
+            }
+        },
+        close: function() {$( this ).dialog("close");}
+    });
+
     $("#dialog-message").dialog({
         autoOpen: false, minHeight: 50, width: 300, modal: true, resizable: false,
         buttons: {

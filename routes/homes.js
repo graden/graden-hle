@@ -12,13 +12,16 @@ exports.update = function(req, res) {
     var idRole       = req.session.role;
     var setAllGroup  = (!req.session.setAllGroup) ? 'false' : req.session.setAllGroup;
     var setAllObject = (!req.session.setAllObject) ? 'false' : req.session.setAllObject;
-    var idGrp = '100000000000000000000001';
-    var idObj = '100000000000000000000001';
+    var idGrp        = '100000000000000000000001';
+    var idObj        = '100000000000000000000001';
+    var nameGrp      = '';
+    var nameObj      = '';
+
     if (setAllGroup == 'false') {
-        idGrp = req.body.idGrp;
+        idGrp = (req.body.idGrp == '') ? null : req.body.idGrp;
     }
     if (setAllObject == 'false') {
-        idObj = req.body.idObj;
+        idObj = (req.body.idObj == '') ? null : req.body.idObj;
     }
     var idQuarter  = parseInt(req.body.idQuarter);
     var idYear     = parseInt(req.body.idYear);
@@ -30,7 +33,22 @@ exports.update = function(req, res) {
         function(callback) {
             async.waterfall([
                     function(callback) {
-                        Role.listGroups(idRole, callback);
+                        Role.listObjects(idRole, idQuarter, idYear, function(err, obj) {
+                            if (!idObj) {
+                                idObj   = obj[0]._id.toString();
+                                nameObj = obj[0].name.toString();
+                            }
+                            callback(null, obj);
+                        });
+                    },
+                    function(obj, callback) {
+                        Role.listGroups(idRole, function(err, crigroup) {
+                            if (!idGrp) {
+                                idGrp   = crigroup[0]._id.toString();
+                                nameGrp = crigroup[0].name.toString();
+                            }
+                            callback(null, crigroup);
+                        });
                     },
                     function(roleGroup, callback) {
                         roleGroup.forEach(function (val) {
@@ -182,6 +200,9 @@ exports.update = function(req, res) {
                     a.reports  = result[5];
                     a.subjects = result[6];
                     a.radar    = JSON.stringify(HleFunc.chartRadar(tblMark));
+                    a.nameGrp    = nameGrp;
+                    a.nameObj    = nameObj;
+
                     res.status(200).json(a);
                 });
             }
@@ -191,6 +212,7 @@ exports.update = function(req, res) {
 
 exports.first = function(req, res) {
     var a = {};
+
     var idRolePri   = (!req.session.rolePri || req.session.rolePri == '100000000000000000000001') ? null : req.session.rolePri;
     var idRoleSec   = (!req.session.roleSec || req.session.roleSec == '100000000000000000000001') ? null : req.session.roleSec;
 
@@ -214,6 +236,9 @@ exports.first = function(req, res) {
         a.secChe = 'checked';
     }
     var idRole      = (!req.session.role) ? null : req.session.role;
+
+    console.log('role-change= ',idRole, idRolePri, idRoleSec);
+
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;
     var defYear     = (!req.session.idYears) ? HleFunc.nowQY().year : req.session.idYears;

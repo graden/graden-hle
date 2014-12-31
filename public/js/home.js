@@ -12,7 +12,6 @@ $(function () {
     });
 
     $('#radio').buttonset();
-
     FirstLoadHome();
 
     function isNumeric(n) {
@@ -45,8 +44,6 @@ $(function () {
 
     function UpdateHome(idGrp, idObj, idYear, idQuarter, radioObj) {
         var fsuccess = function(data){
-            //$('#radio-master').iCheck(data.vRolePri);
-            //$('#radio-pupil').iCheck(data.vRoleSec);
             MarkContentLoad(data);
             TaskContentLoad(data);
             RptContentLoad(data);
@@ -157,18 +154,27 @@ $(function () {
 
     $('#radio-role').find('input').on('ifChecked', function () {
         var $radioRole   = $('#radio-master').prop('checked');
-        var fsuccess = function(data){
-            if (data) {
-                //$('#radio-master').iCheck(data.priChe);
-                var $dialog  = $('#dialog-message');
-                $dialog.find('#txt-message').text("Произошла смена роли пользователя!");
-                $dialog.dialog('option', 'title', 'Информация');
-                $dialog.dialog('open');
-                //FirstLoadHome();
-                window.location.href = "/home";
-                //$('#radio-pupil').iCheck(data.secSta);
-                //$('#radio-master').iCheck(data.priSta);
+        var fsuccess = function(){
+            var q = 0;
+            var $quarter     = $.cookie('idQuarter');
+            var $year        = $.cookie('idYear');
+            var $idGrp       = '';
+            var $idObj       = '';
+            var $radio       = true;
+
+            var txtPeriod    = ($radio) ? 'Квартал:': 'Полугодие:';
+            var txtGroup     = ($radio) ? 'Объект:': 'Объект:';
+            if (!$radio) {
+                $quarter = ($quarter == 1 || $quarter == 2) ? 1 : 3;
+                $.cookie('idQuarter', $quarter);
+                q = ($quarter == 1) ? 1 : 2;
+            } else {
+                q = $quarter;
             }
+            $('#name-quarter').text(txtPeriod);
+            $('#name-object').text(txtGroup);
+            $('#value-quarter').text(QuarterRome(q) + ', ' + $year + ' года.');
+            UpdateHome($idGrp, $idObj, $year, $quarter, $radio);
         };
         ajaxData('GET', '/role/change', {role: $radioRole}, fsuccess);
     });
@@ -225,7 +231,7 @@ $(function () {
         var $id = $highlight.attr('data-id');
         if ($id == '') {
             var $msgBox = $('#dialog-message');
-            $('#txt-message').text('Отсутствуют данные в таблице')
+            $('#txt-message').text('Отсутствуют данные в таблице');
             $msgBox.dialog('option', 'title', 'Сообщение об ошибке...');
             $msgBox.dialog('open');
             return;
