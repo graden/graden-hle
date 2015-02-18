@@ -267,7 +267,7 @@ exports.kitRepo2 = function(pathPDF, data, callback){
 
 };
 
-exports.kitRepo3 = function(pathPDF, data, callback){
+exports.  kitRepo3 = function(pathPDF, data, callback){
     var docOptions = {
         size: "A4",
         layout: "portrait",

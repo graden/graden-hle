@@ -229,6 +229,7 @@ exports.report3 = function(req, res) {
             var chartData = [];
             for (i = 0; i < 4; i++) {chartData[i] = [];}
             var chartLabel = [];
+            var chartLabelMiddle = [];
             var chartDataSets = [];
             async.waterfall([
                 function(callback) {
@@ -238,6 +239,9 @@ exports.report3 = function(req, res) {
                 },
                 function(crigrp, callback) {
                     Mark.avgMarkObj(qy, idObj, radioObj, function(err, mark) {
+                        for (j = 0; j < 4; j++) {
+                            chartLabelMiddle[j] = 0;
+                        }
                         i = 0;
                         crigrp.forEach(function(valGrp){
                             chartLabel[i] = valGrp.name;
@@ -249,8 +253,8 @@ exports.report3 = function(req, res) {
                                     for (j = 0; j < 4; j++) {
                                         if ((valMark.quarter === qy[j].quarter) && (valMark.year === qy[j].year)) {
                                             chartData[j][i] = valMark.mark/valMark.count;
+                                            chartLabelMiddle[j] = chartLabelMiddle[j] + valMark.mark/valMark.count;
                                         }
-
                                     }
                                 }
                             });
