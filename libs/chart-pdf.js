@@ -267,7 +267,7 @@ exports.kitRepo2 = function(pathPDF, data, callback){
 
 };
 
-exports.  kitRepo3 = function(pathPDF, data, callback){
+exports.kitRepo3 = function(pathPDF, data, callback){
     var docOptions = {
         size: "A4",
         layout: "portrait",
@@ -568,7 +568,7 @@ function barDiag(doc, config, data) {
     for (j=0; j<data.datasets.length; j++){
         doc.moveDown(0.3);
         doc.fill(config.scaleFontColor);
-        doc.text(data.legends[j].periodNum  + ' ' + data.legends[j].periodLeg  + ' ' + data.legends[j].year ,{align:'right', width: 100});
+        doc.text(data.legends[j].periodNum  + ' ' + data.legends[j].periodLeg  + ' ' + data.legends[j].year + ' ' + data.legMiddle[j].toFixed(getDecimalPlaces(1))  ,{align:'right', width: 100});
         doc.rect(config.xPos+config.width+10, doc.y-7,5,5);
         doc.fill(data.datasets[j].fillColor);
     }

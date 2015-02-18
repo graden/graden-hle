@@ -127,11 +127,12 @@ exports.report2 = function(req, res) {
     a.year = parseInt(req.body.idYear);
     a.periodLeg = periodLeg;
     a.periodNum = HleFunc.periodQY(radioObj, a.quarter);
+    a.middleMark = 0;
 
     qy[3] = a;
-    qy[2] = HleFunc.prevQY(radioObj, qy[3].quarter, qy[3].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter);
-    qy[1] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter);
-    qy[0] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[0].periodLeg = periodLeg; qy[0].periodNum = HleFunc.periodQY(radioObj, qy[0].quarter);
+    qy[2] = HleFunc.prevQY(radioObj, qy[3].quarter, qy[3].year); qy[2].periodLeg = periodLeg; qy[2].periodNum = HleFunc.periodQY(radioObj, qy[2].quarter); qy[2].middleMark = 0;
+    qy[1] = HleFunc.prevQY(radioObj, qy[2].quarter, qy[2].year); qy[1].periodLeg = periodLeg; qy[1].periodNum = HleFunc.periodQY(radioObj, qy[1].quarter); qy[1].middleMark = 0;
+    qy[0] = HleFunc.prevQY(radioObj, qy[1].quarter, qy[1].year); qy[0].periodLeg = periodLeg; qy[0].periodNum = HleFunc.periodQY(radioObj, qy[0].quarter); qy[0].middleMark = 0;
 
     async.waterfall([
         function(callback) {
@@ -229,8 +230,8 @@ exports.report3 = function(req, res) {
             var chartData = [];
             for (i = 0; i < 4; i++) {chartData[i] = [];}
             var chartLabel = [];
-            var chartLabelMiddle = [];
             var chartDataSets = [];
+            var chartLegMiddle = [];
             async.waterfall([
                 function(callback) {
                     Role.allListGroups(req.session.role, function(err, crigrp) {
@@ -240,7 +241,7 @@ exports.report3 = function(req, res) {
                 function(crigrp, callback) {
                     Mark.avgMarkObj(qy, idObj, radioObj, function(err, mark) {
                         for (j = 0; j < 4; j++) {
-                            chartLabelMiddle[j] = 0;
+                            chartLegMiddle[j] = 0;
                         }
                         i = 0;
                         crigrp.forEach(function(valGrp){
@@ -253,7 +254,7 @@ exports.report3 = function(req, res) {
                                     for (j = 0; j < 4; j++) {
                                         if ((valMark.quarter === qy[j].quarter) && (valMark.year === qy[j].year)) {
                                             chartData[j][i] = valMark.mark/valMark.count;
-                                            chartLabelMiddle[j] = chartLabelMiddle[j] + valMark.mark/valMark.count;
+                                            chartLegMiddle[j] = chartLegMiddle[j] + valMark.mark/valMark.count;
                                         }
                                     }
                                 }
@@ -285,6 +286,7 @@ exports.report3 = function(req, res) {
                         out.labels   = chartLabel;
                         out.datasets = chartDataSets;
                         out.legends  = qy;
+                        out.legMiddle  = chartLegMiddle;
                         if (!out.labels) {out.labels = [];}
                         callback(null, out);
                     });
@@ -297,6 +299,7 @@ exports.report3 = function(req, res) {
             for (i = 0; i < 4; i++) {chartData[i] = [];}
             var chartLabel = [];
             var chartDataSets = [];
+            var chartLegMiddle = [];
             var lstGroup   = [];
             async.waterfall([
                 function(callback) {
@@ -313,6 +316,9 @@ exports.report3 = function(req, res) {
                 function(cri, callback) {
                     for (i = 0; i < 4; i++) {chartData[i] = [];}
                     Mark.avgMarkCri(qy, idObj, radioObj, function(err, mark) {
+                        for (j = 0; j < 4; j++) {
+                            chartLegMiddle[j] = 0;
+                        }
                         i = 0;
                         cri.forEach(function(valCri){
                             chartLabel[i] = valCri.name;
@@ -324,6 +330,7 @@ exports.report3 = function(req, res) {
                                     for (j = 0; j < 4; j++) {
                                         if ((valMark.quarter === qy[j].quarter) && (valMark.year === qy[j].year)) {
                                             chartData[j][i] = valMark.mark/valMark.count;
+                                            chartLegMiddle[j] = chartLegMiddle[j] + valMark.mark/valMark.count;
                                         }
                                     }
                                 }
@@ -356,6 +363,7 @@ exports.report3 = function(req, res) {
                         out.labels   = chartLabel;
                         out.datasets = chartDataSets;
                         out.legends  = qy;
+                        out.legMiddle  = chartLegMiddle;
                         if (!out.labels) {out.labels = [];}
                         callback(null, out);
                     });
