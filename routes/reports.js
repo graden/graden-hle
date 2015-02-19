@@ -212,8 +212,7 @@ exports.report3 = function(req, res) {
     var a = {};
     var radioObj = req.body.radioObj;
     var idObj    = req.body.idObj;
-    var periodLeg = (radioObj == "true") ? "квартал" : "полугодие";
-
+    var periodLeg = (radioObj == "true") ? "Q" : "H";
     a.quarter = parseInt(req.body.idQuarter);
     a.year = parseInt(req.body.idYear);
     a.periodLeg = periodLeg;
@@ -261,7 +260,9 @@ exports.report3 = function(req, res) {
                             });
                             i++;
                         });
-
+                        for (j = 0; j < 4; j++) {
+                            chartLegMiddle[j] = chartLegMiddle[j]/i
+                        }
                         for (i = 0; i < 4; i++) {
                             var chartDataSet = {};
                             if (i === 1) {
@@ -337,7 +338,9 @@ exports.report3 = function(req, res) {
                             });
                             i++;
                         });
-
+                        for (j = 0; j < 4; j++) {
+                            chartLegMiddle[j] = chartLegMiddle[j]/i
+                        }
                         for (i = 0; i < 4; i++) {
                             var chartDataSet = {};
                             if (i === 1) {
