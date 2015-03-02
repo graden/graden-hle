@@ -343,6 +343,30 @@ exports.kitRepo3 = function(pathPDF, data, callback){
 
     barDiag(docs, config2, data[1]);
 
+    //Show Tasks
+    docs.addPage();
+    docs.fillColor('black');
+    docs.fontSize(14);
+
+    docs.text('Поставленные задачи по ' + data[2] + ' / ' + data[3], config1.xPos, 20, {align: 'center', width: 590});
+    docs.moveDown(1);
+    var i = 0;
+    var y = 0;
+    var v = 0;
+    docs.fontSize(10);
+    data[4].forEach(function(val) {
+        y = docs.y;
+        i++;
+        v = parseFloat(val.percentTask);
+        if (isNaN(v)) {
+            v = 0;
+        }
+
+        docs.text(i + ')', 30, y, {columns: 1, align:'left', width: 40});
+        docs.text(v.toFixed(2) + ' %', 385, y, {columns: 1, align:'left', width: 120});
+        docs.text(val.valueTask, 70, y, {columns: 1, align:'left', width: 300});
+        docs.moveDown();
+    });
 
     docs.end();
     var ws = fs.createWriteStream(pathPDF);
@@ -572,6 +596,8 @@ function barDiag(doc, config, data) {
         doc.rect(config.xPos+config.width+10, doc.y-7,5,5);
         doc.fill(data.datasets[j].fillColor);
     }
+
+
 }
 
 //Populate an array of all the labels by interpolating the string.

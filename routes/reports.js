@@ -7,6 +7,7 @@ var CriGrp   = require('models/crigroup').CriGroup;
 var Sbj      = require('models/subject').Subject;
 var Role     = require('models/role').Role;
 var Mark     = require('models/mark').Mark;
+var Task     = require('models/task').Task;
 var HleFunc  = require('libs/func-hle');
 
 exports.report1 = function(err, res) {
@@ -261,7 +262,7 @@ exports.report3 = function(req, res) {
                             i++;
                         });
                         for (j = 0; j < 4; j++) {
-                            chartLegMiddle[j] = chartLegMiddle[j]/i
+                            chartLegMiddle[j] = (chartLegMiddle[j] == 0) ? 0 : chartLegMiddle[j]/i;
                         }
                         for (i = 0; i < 4; i++) {
                             var chartDataSet = {};
@@ -339,7 +340,7 @@ exports.report3 = function(req, res) {
                             i++;
                         });
                         for (j = 0; j < 4; j++) {
-                            chartLegMiddle[j] = chartLegMiddle[j]/i
+                            chartLegMiddle[j] = (chartLegMiddle[j] == 0) ? 0 : chartLegMiddle[j]/i;
                         }
                         for (i = 0; i < 4; i++) {
                             var chartDataSet = {};
@@ -385,6 +386,11 @@ exports.report3 = function(req, res) {
                     nameSubject =  sbj[0].fName + ' ' + sbj[0].sName.charAt(0) + '.' + sbj[0].tName.charAt(0) + '.';
                 }
                 cb(null, nameSubject);
+            });
+        },
+        function(cb) {
+            Task.allList('100000000000000000000001', a.quarter, a.year, idObj, radioObj, function(err, task){
+                cb(null, task);
             });
         }
     ],
