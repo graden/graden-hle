@@ -323,6 +323,7 @@ exports.report3 = function(req, res) {
                         }
                         i = 0;
                         cri.forEach(function(valCri){
+                            console.log(valCri);
                             chartLabel[i] = valCri.name;
                             for (j = 0; j < 4; j++) {
                                 chartData[j][i] = 0;
@@ -389,7 +390,7 @@ exports.report3 = function(req, res) {
             });
         },
         function(cb) {
-            Task.allList('100000000000000000000001', a.quarter, a.year, idObj, radioObj, function(err, task){
+            Task.allList('200000000000000000000002', a.quarter, a.year, idObj, radioObj, function(err, task){
                 cb(null, task);
             });
         }

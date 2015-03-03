@@ -3,8 +3,11 @@ var AuthError = require('error').AuthError;
 var mongoose = require('libs/mongoose'),
     Schema = mongoose.Schema;
 
+var ObjectId = Schema.Types.ObjectId;
+
 var schema = new Schema ({
     name:         {type: String, required: true},
+    idGrp:        {type: ObjectId},
     permit:       {type: Boolean, default: true},
     type:         {type: String, default: 'object'}
 });

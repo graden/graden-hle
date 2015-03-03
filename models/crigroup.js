@@ -62,6 +62,7 @@ schema.statics.idList = function(arrayGrp, id, typeObj, callback) {
                 } else {
                     crigroup.forEach(function(cg){
                         for(var i = 0; i < cg.linkCri.length; i++) {
+                            cg.linkCri[i].name = cg.linkCri[i].name + ' (' + cg.name + ')';
                             obj.push(cg.linkCri[i]);
                         }
                     });

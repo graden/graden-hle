@@ -22,26 +22,36 @@ schema.statics.allList = function(idGrp, idQuarter, idYear, idObj, radioObj, cal
     var Task = this;
     var objFind = {linkCriGroup: idGrp, valueQuarter: idQuarter, valueYear: idYear,
         linkObject: idObj, linkType: radioObj};
-
-    if (idGrp === '100000000000000000000001' && idObj !== '100000000000000000000001') {
-        objFind = {valueQuarter: idQuarter, valueYear: idYear,
-            linkObject: idObj, linkType: radioObj};
-    }
-    if (idGrp !== '100000000000000000000001' && idObj === '100000000000000000000001') {
-        objFind = {linkCriGroup: idGrp, valueQuarter: idQuarter,
-            valueYear: idYear, linkType: radioObj};
-    }
-    if (idGrp === '100000000000000000000001' && idObj === '100000000000000000000001') {
-        objFind = {valueQuarter: idQuarter, valueYear: idYear,
-            linkType: radioObj};
-    }
-    Task.find(objFind).exec(function (err, task) {
-        if (err) {
-            callback(err, null);
-        } else {
-            callback(null, task);
+    if (idGrp === '200000000000000000000002') {
+        Task.find({valueQuarter: idQuarter, valueYear: idYear,
+            linkObject: idObj, linkType: radioObj}).sort({linkCriGroup: 1}).exec(function (err, task) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, task);
+            }
+        });
+    } else {
+        if (idGrp === '100000000000000000000001' && idObj !== '100000000000000000000001') {
+            objFind = {valueQuarter: idQuarter, valueYear: idYear,
+                linkObject: idObj, linkType: radioObj};
         }
-    });
+        if (idGrp !== '100000000000000000000001' && idObj === '100000000000000000000001') {
+            objFind = {linkCriGroup: idGrp, valueQuarter: idQuarter,
+                valueYear: idYear, linkType: radioObj};
+        }
+        if (idGrp === '100000000000000000000001' && idObj === '100000000000000000000001') {
+            objFind = {valueQuarter: idQuarter, valueYear: idYear,
+                linkType: radioObj};
+        }
+        Task.find(objFind).exec(function (err, task) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, task);
+            }
+        });
+    }
 };
 
 schema.statics.create = function(idGrp, idQuarter, idYear, idObject, value, percent, setTask, defTask, typeValue, radioObj, callback) {
