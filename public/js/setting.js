@@ -938,7 +938,7 @@ $(function () {
     });
 
     $('#dialog-role-edit').dialog({
-        autoOpen: false, height: 450, width: 'auto', modal: true, resizable: false,
+        autoOpen: false, height: 460, width: 770, modal: true, resizable: false,
         buttons: {
             'Сохранить': function() {
                 var $content      = $(this).dialog('option', 'content');

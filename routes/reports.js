@@ -234,7 +234,7 @@ exports.report3 = function(req, res) {
             var chartLegMiddle = [];
             async.waterfall([
                 function(callback) {
-                    Role.allListGroups(req.session.role, function(err, crigrp) {
+                    CriGrp.allListRep(3, function(err, crigrp) {
                         callback(null, crigrp);
                     });
                 },
@@ -305,7 +305,8 @@ exports.report3 = function(req, res) {
             var lstGroup   = [];
             async.waterfall([
                 function(callback) {
-                    Role.listGroups(req.session.role, callback);
+                    //Role.listGroups(req.session.role, callback);
+                    CriGrp.allListRep(3, callback);
                 },
                 function(roleGroup, callback) {
                     roleGroup.forEach(function (val) {

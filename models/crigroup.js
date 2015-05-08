@@ -9,12 +9,24 @@ var schema = new Schema ({
     name:         {type: String, required: true},
     permit:       {type: Boolean, default: true},
     linkCri:      [{type: ObjectId, ref: 'dsCri'}],
-    linkSbj:      [{type: ObjectId, ref: 'dsCri'}]
+    linkSbj:      [{type: ObjectId, ref: 'dsCri'}],
+    grpDirect:    {type: Number, default: 3}
 });
 
 schema.statics.allList = function(callback) {
     var CriGroup = this;
     CriGroup.find({}).sort({name: 1}).populate('linkCri').exec(function(err, crigroup){
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, crigroup);
+        }
+    });
+};
+
+schema.statics.allListRep = function(grp, callback) {
+    var CriGroup = this;
+    CriGroup.find({'grpDirect': grp}).sort({name: 1}).populate('linkCri').exec(function(err, crigroup){
         if (err) {
             callback(err, null);
         } else {
