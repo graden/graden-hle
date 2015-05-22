@@ -8,6 +8,7 @@ var schema = new Schema({
     name:           {type: String},
     objects:        [{type: ObjectId, ref: 'dsObjects'}],
     crigroups:      [{type: ObjectId, ref: 'dsCriGroups'}],
+    levelGroups:    {type: Number},
     btnMarks:       {type: Boolean, default: true},
     newTasks:       {type: Boolean, default: true},
     edtTasks:       {type: Boolean, default: true},
@@ -137,10 +138,10 @@ schema.statics.create = function(name, callback) {
 
 };
 
-schema.statics.update = function(id, btnMark, newTask, edtTask, delTask, name, perSettings, setAllGroup, setAllObject, callback) {
+schema.statics.update = function(id, btnMark, newTask, edtTask, delTask, name, perSettings, setAllGroup, setAllObject, lvl, callback) {
     var Role = this;
-    Role.findByIdAndUpdate(id,{$set: {btnMarks:btnMark, newTasks:newTask, edtTasks:edtTask,
-        delTasks:delTask, name:name, perSettings:perSettings, setAllGroup:setAllGroup, setAllObject:setAllObject}}).exec(function(err, role){
+    Role.findByIdAndUpdate(id,{$set: {btnMarks:btnMark, newTasks:newTask, edtTasks:edtTask, delTasks:delTask, name:name,
+         perSettings:perSettings, setAllGroup:setAllGroup, setAllObject:setAllObject, levelGroups: lvl}}).exec(function(err, role){
         if (err) {
             callback(err, null);
         } else {

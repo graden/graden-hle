@@ -951,6 +951,7 @@ $(function () {
                 var $perSettings  = $("#perSettings-role").prop('checked');
                 var $setAllGroup  = $("#allGroups-role").prop('checked');
                 var $setAllObject = $("#allObjects-role").prop('checked');
+                var $levelGroups   = 3;
                 var fsuccess      = null;
                 var $dt           = {};
                 var $id = $(this).dialog('option', 'id');
@@ -961,7 +962,7 @@ $(function () {
                     $dt = {'id':$id, 'btnMarks':$btnMarks,
                            'newTasks':$newTasks, 'edtTasks':$edtTasks,
                            'delTasks':$delTasks, 'name':$name, 'perSettings':$perSettings,
-                           'setAllGroup': $setAllGroup, 'setAllObject': $setAllObject};
+                           'setAllGroup': $setAllGroup, 'setAllObject': $setAllObject, 'levelGroups': $levelGroups};
                     ajaxData('POST','/role/update', $dt, fsuccess);
                     $(this).dialog('close');
                 } else {

@@ -195,8 +195,9 @@ exports.update = function(req, res) {
     var perSet       = req.body.perSettings;
     var setAllGroup  = req.body.setAllGroup;
     var setAllObject = req.body.setAllObject;
+    var lvlGroups    = req.body.levelGroups;
 
-    Role.update(id, btnMark, newTask, edtTask, delTask, name, perSet, setAllGroup, setAllObject, function(err, role) {
+    Role.update(id, btnMark, newTask, edtTask, delTask, name, perSet, setAllGroup, setAllObject, lvlGroups, function(err, role) {
         if (err) {
             res.status(403).json(err);
         } else {
