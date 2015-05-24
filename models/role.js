@@ -20,11 +20,10 @@ var schema = new Schema({
     created:        {type: Date, default: Date.now}
 });
 
-schema.statics.listGroups = function(id, callback) {
+schema.statics.listGroups = function(id, e, callback) {
     var Role = this;
     var a = {};
-    var e = 3;
-    Role.findOne({_id: id}).populate('crigroups','name' , {grpDirect: e}).exec(function(err, role){
+    Role.findOne({_id: id}).populate('crigroups','name', {grpDirect: e}).exec(function(err, role){
         if (err) {
             callback(err, null);
         } else {

@@ -26,7 +26,7 @@ exports.list = function(req, res) {
 
 exports.listRole = function(req, res) {
     var idRole = req.session.role;
-    Role.listGroups(idRole, function(err, crigroup) {
+    Role.listGroups(idRole,3, function(err, crigroup) {
         if (err) {
             res.status(403).json(err);
         } else {

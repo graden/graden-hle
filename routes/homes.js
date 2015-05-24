@@ -28,6 +28,7 @@ exports.update = function(req, res) {
     var radioObj   = req.body.radioObj;
 
     var lstGroup   = [];
+    var dirGroup   = 3;
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
     async.parallel([
         function(callback) {
@@ -42,7 +43,7 @@ exports.update = function(req, res) {
                         });
                     },
                     function(obj, callback) {
-                        Role.listGroups(idRole, function(err, crigroup) {
+                        Role.listGroups(idRole, dirGroup, function(err, crigroup) {
                             if (!idGrp) {
                                 idGrp   = crigroup[0]._id.toString();
                                 nameGrp = crigroup[0].name.toString();
@@ -246,6 +247,7 @@ exports.first = function(req, res) {
     var radioObj    = (!req.session.radioObjs) ? 'true' : req.session.radioObjs;
     var perSet      = (!req.session.permitSettings) ? 'false' : req.session.permitSettings;
     var lstGroup    = [];
+    var dirGroup    = 3;
     var nameObj     = '';
     var nameGrp     = '';
     var roleChg     = (!req.session.roleChg) ? a : req.session.roleChg;
@@ -263,7 +265,7 @@ exports.first = function(req, res) {
             });
         },
         function(callback) {
-            Role.listGroups(idRole, function(err, crigroup) {
+            Role.listGroups(idRole, dirGroup, function(err, crigroup) {
                 if (idGrp) {
                     crigroup.forEach(function(val){
                         lstGroup.push(val._id);
