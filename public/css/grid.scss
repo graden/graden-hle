@@ -41,8 +41,8 @@ $grid-div-padding-left: 2px;
   }
 }
 
-@include table-body-height("#tbl-cri-group-content", 275px, 470px);
-@include table-body-height("#tbl-cri-group", 275px, 470px);
+@include table-body-height("#tbl-cri-group-content", 275px, 320px);
+@include table-body-height("#tbl-cri-group", 275px, 270px);
 @include table-body-height("#tbl-cri-list", 240px, 330px);
 @include table-body-height("#tbl-cri", 310px, 945px);
 @include table-body-height("#tbl-object", 310px, 460px);

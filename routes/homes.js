@@ -237,7 +237,7 @@ exports.first = function(req, res) {
     }
     var idRole      = (!req.session.role) ? null : req.session.role;
 
-    console.log('role-change= ',idRole, idRolePri, idRoleSec);
+    //console.log('role-change= ',idRole, idRolePri, idRoleSec);
 
     var idGrp       = (!req.session.idGroups) ? '' : req.session.idGroups;
     var idObj       = (!req.session.idObjects) ? '' : req.session.idObjects;

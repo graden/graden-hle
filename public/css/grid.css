@@ -1,5 +1,5 @@
 #tbl-cri-group-content .tbl-head, #tbl-cri-group-content .tbl-body, #tbl-cri-group-content .tbl-footer {
-  width: 470px; }
+  width: 320px; }
 
 #tbl-cri-group-content .tbl-body {
   height: 275px; }
@@ -9,7 +9,7 @@
   border: none; }
 
 #tbl-cri-group .tbl-head, #tbl-cri-group .tbl-body, #tbl-cri-group .tbl-footer {
-  width: 470px; }
+  width: 270px; }
 
 #tbl-cri-group .tbl-body {
   height: 275px; }

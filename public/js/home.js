@@ -487,6 +487,10 @@ $(function () {
         width: 200
     }).selectmenu("menuWidget").addClass("overflow-select");
 
+    $('#list-groups-direct').selectmenu({
+        width: 200
+    }).selectmenu("menuWidget").addClass("overflow-select");
+
 
 });
 
