@@ -23,7 +23,8 @@ var schema = new Schema({
 schema.statics.listGroups = function(id, callback) {
     var Role = this;
     var a = {};
-    Role.findOne({_id: id}).populate('crigroups','name' , {grpDirect: {$in: [3] }}).exec(function(err, role){
+    var e = 3;
+    Role.findOne({_id: id}).populate('crigroups','name' , {grpDirect: e}).exec(function(err, role){
         if (err) {
             callback(err, null);
         } else {
