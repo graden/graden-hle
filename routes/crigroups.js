@@ -24,9 +24,25 @@ exports.list = function(req, res) {
     });
 };
 
+exports.changeDirGroups = function(req, res) {
+    req.session.dirGroups = req.query.dirGroups;
+    //console.log('req.session.dirGroups = ',req.session.dirGroups);
+    Role.listGroups(req.session.role, req.session.dirGroups, function(err, crigroup) {
+        if (err) {
+            res.status(403).json(err);
+        } else {
+            var idGrp = crigroup[0]._id.toString();
+            res.cookie('idGrp', idGrp);
+            req.session.idGroups = idGrp;
+            res.status(200).json(crigroup[0].name.toString());
+        }
+    });
+};
+
 exports.listRole = function(req, res) {
     var idRole = req.session.role;
-    Role.listGroups(idRole,3, function(err, crigroup) {
+    var dirGroups = req.session.dirGroups;
+    Role.listGroups(idRole, dirGroups, function(err, crigroup) {
         if (err) {
             res.status(403).json(err);
         } else {

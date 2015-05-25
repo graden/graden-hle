@@ -93,6 +93,7 @@ var app = express();
     app.post('/crigroup/create', require('routes/crigroups').create);
     app.post('/crigroup/update', require('routes/crigroups').update);
     app.post('/crigroup/remove', require('routes/crigroups').remove);
+    app.get('/crigroup/change/dirGroups', require('routes/crigroups').changeDirGroups);
 
     app.get('/object/list', require('routes/objects').list);
     app.get('/object/listRole', require('routes/objects').listRole);

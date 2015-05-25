@@ -488,9 +488,21 @@ $(function () {
     }).selectmenu("menuWidget").addClass("overflow-select");
 
     $('#list-groups-direct').selectmenu({
-        width: 200
+        width: 200, change: function(event, data) {
+            var fsuccess = function(d){
+                if (d) {
+                    var $idGrp        = $.cookie('idGrp');
+                    var $idObj        = $.cookie('idObj');
+                    var $idYear       = $.cookie('idYear');
+                    var $idQuarter    = $.cookie('idQuarter');
+                    var $radioObj     = $('#radio1').prop('checked');
+                    $('#value-group').text(d);
+                    UpdateHome($idGrp, $idObj, $idYear, $idQuarter, $radioObj);
+                }
+            };
+            ajaxData('GET', '/crigroup/change/dirGroups', {'dirGroups': data.item.value}, fsuccess);
+        }
     }).selectmenu("menuWidget").addClass("overflow-select");
-
 
 });
 

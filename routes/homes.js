@@ -28,7 +28,8 @@ exports.update = function(req, res) {
     var radioObj   = req.body.radioObj;
 
     var lstGroup   = [];
-    var dirGroup   = 3;
+    var dirGroup   = req.session.dirGroups;
+    console.log('update req.session.dirGroups = ',req.session.dirGroups);
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
     async.parallel([
         function(callback) {
@@ -44,6 +45,7 @@ exports.update = function(req, res) {
                     },
                     function(obj, callback) {
                         Role.listGroups(idRole, dirGroup, function(err, crigroup) {
+                            console.log(crigroup);
                             if (!idGrp) {
                                 idGrp   = crigroup[0]._id.toString();
                                 nameGrp = crigroup[0].name.toString();
@@ -247,7 +249,7 @@ exports.first = function(req, res) {
     var radioObj    = (!req.session.radioObjs) ? 'true' : req.session.radioObjs;
     var perSet      = (!req.session.permitSettings) ? 'false' : req.session.permitSettings;
     var lstGroup    = [];
-    var dirGroup    = 3;
+    var dirGroup    = req.session.dirGroups;
     var nameObj     = '';
     var nameGrp     = '';
     var roleChg     = (!req.session.roleChg) ? a : req.session.roleChg;

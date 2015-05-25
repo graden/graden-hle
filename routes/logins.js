@@ -18,11 +18,12 @@ exports.post = function(req, res, next) {
            next(err);
       }
     } else {
-        req.session.user     = user._id;
-        req.session.username = user.username;
-        req.session.rolePri  = user.role;
-        req.session.role     = user.role;
-        req.session.roleSec  = user.roleSec;
+        req.session.user      = user._id;
+        req.session.username  = user.username;
+        req.session.rolePri   = user.role;
+        req.session.role      = user.role;
+        req.session.roleSec   = user.roleSec;
+        req.session.dirGroups = 3;
         logs.warn('%s - %s',req.session.username, 'Login');
         if (user.mustChgPassword) {
             res.status(201).json(user._id);
