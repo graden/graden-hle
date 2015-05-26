@@ -1,5 +1,5 @@
 #tbl-cri-group-content .tbl-head, #tbl-cri-group-content .tbl-body, #tbl-cri-group-content .tbl-footer {
-  width: 320px; }
+  width: 460px; }
 
 #tbl-cri-group-content .tbl-body {
   height: 275px; }
@@ -9,7 +9,7 @@
   border: none; }
 
 #tbl-cri-group .tbl-head, #tbl-cri-group .tbl-body, #tbl-cri-group .tbl-footer {
-  width: 270px; }
+  width: 460px; }
 
 #tbl-cri-group .tbl-body {
   height: 275px; }
@@ -183,23 +183,11 @@
   overflow: hidden; }
 
 #tbl-object .td-3 div {
-  width: 90px;
+  width: 120px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
-
-#tbl-object .td-4 {
-  width: 100%;
-  border-right: none; }
-  #tbl-object .td-4 div {
-    width: 90px;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden; }
-#tbl-object th.td-4 {
-  border-right: none; }
 
 #tbl-subject .td-1 div {
   width: 20px;

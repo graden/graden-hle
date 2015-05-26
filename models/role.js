@@ -27,13 +27,17 @@ schema.statics.listGroups = function(id, e, callback) {
         if (err) {
             callback(err, null);
         } else {
-            if (role.crigroups) {
-                a._id    = '100000000000000000000001';
-                a.name   = 'Все';
-                a.permit = true;
-                role.crigroups.push(a);
+            if (role) {
+                if (role.crigroups) {
+                    a._id    = '100000000000000000000001';
+                    a.name   = 'Все';
+                    a.permit = true;
+                    role.crigroups.push(a);
 
-                callback(null, role.crigroups);
+                    callback(null, role.crigroups);
+                } else {
+                    callback(null, null);
+                }
             } else {
                 callback(null, null);
             }

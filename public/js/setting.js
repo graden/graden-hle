@@ -193,19 +193,16 @@ $(function () {
         var $content      = $('#tbl-object-body');
         var $highlight    = $content.find('tr.hle-grid-highlight');
         var $id           = $highlight.attr('data-id');
-        var $idPeriodObj  = $highlight.attr('data-period-obj');
-        var $idPeriodSbj  = $highlight.attr('data-period-sbj');
+        //var $idPeriodObj  = $highlight.attr('data-period-obj');
+        var $idDirGroups  = $highlight.attr('data-dir-groups');
         var $name         = $highlight.find('td:eq(1) div').text();
         var $dialog       = $('#dialog-obj');
 
         $dialog.find('#name-obj').val($name);
-        if ($idPeriodObj == 0) {
-
-        }
-        $dialog.find('#list-period-obj').val($idPeriodObj);
-        $dialog.find('#list-period-obj').selectmenu('refresh', true);
-        $dialog.find('#list-period-sbj').val($idPeriodSbj);
-        $dialog.find('#list-period-sbj').selectmenu('refresh', true);
+        //$dialog.find('#list-period-obj').val($idPeriodObj);
+        //$dialog.find('#list-period-obj').selectmenu('refresh', true);
+        $dialog.find('#list-dir-groups').val($idDirGroups);
+        $dialog.find('#list-dir-groups').selectmenu('refresh', true);
         $dialog.dialog('option', 'title', 'Изменить объект');
         $dialog.dialog('option', 'id', $id);
         $dialog.dialog('option', 'url', 'object');
