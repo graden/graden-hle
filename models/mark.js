@@ -3,17 +3,29 @@ var mongoose = require('libs/mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var schema = new Schema ({
-    createDate:   {type: Date, default: Date.now},
-    modifyDate:   {type: Date, default: Date.now},
-    typePeriod:   {type: Number},
-    valueMark:    {type: Number},
-    valueQuarter: {type: Number},
-    valueYear:    {type: Number},
-    linkCriGroup: {type: ObjectId, ref: 'dsCriGroup'},
-    linkCri:      {type: ObjectId, ref: 'dsCri'},
-    linkObject:   {type: ObjectId, ref: 'dsObject'},
-    linkType:     {type: String, default: 'true'},
-    comment:      {type: String}
+    createDate:    {type: Date, default: Date.now},
+    modifyDate:    {type: Date, default: Date.now},
+    createUser:    {type: ObjectId, ref: 'dsUsers'},
+    modifyUser:    {type: ObjectId, ref: 'dsUsers'},
+    typePeriod:    {type: Number},
+    typeDirGroups: {type: Number},
+    valueMark:     {type: Number},             //Оценка направ.(группа 0)
+    valueMark1:    {type: Number, default: 0}, //Самооценка (группа 0)
+    valueMark2:    {type: Number, default: 0}, //Оценка др. направлений (группа 0)
+    valueMark3:    {type: Number, default: 0}, //Оценка директора РЦ (группа 1)
+    valueMark4:    {type: Number, default: 0},
+    valueMark5:    {type: Number, default: 0},
+    valueMark6:    {type: Number, default: 0},
+    valueMark7:    {type: Number, default: 0},
+    valueMark8:    {type: Number, default: 0},
+    valueMark9:    {type: Number, default: 0},
+    valueQuarter:  {type: Number},
+    valueYear:     {type: Number},
+    linkCriGroup:  {type: ObjectId, ref: 'dsCriGroup'},
+    linkCri:       {type: ObjectId, ref: 'dsCri'},
+    linkObject:    {type: ObjectId, ref: 'dsObject'},
+    linkType:      {type: String, default: 'true'},
+    comment:       {type: String}
 });
 
 schema.statics.avgMark = function(yq, radioObj, callback) {
@@ -130,16 +142,27 @@ schema.statics.allList = function(idGrp, idQuarter, idYear, idObj, radioObj, cal
     });
 };
 
-schema.statics.update = function(vMark, idMark, idGrp, idCri, idQuarter, idYear, idObject, radioObj, callback) {
+schema.statics.update = function(vMark, vMark1, vMark2, vMark3, vMark4, vMark5, vMark6, vMark7, vMark8, vMark9,
+                                 idMark, idGrp, idCri, idQuarter, idYear, idObject, radioObj, typeDirGroups, callback) {
     var Mark = this;
     idMark = (idMark.length === 0) ? null: idMark;
     Mark.findById(idMark, function(err, fMark){
         if (!err) {
             if (!fMark) {
                 fMark = new Mark({ linkCri: idCri, linkCriGroup: idGrp, valueQuarter: idQuarter, valueYear:idYear,
-                                   linkObject: idObject, linkType: radioObj });
+                                   linkObject: idObject, linkType: radioObj, typeDirGroups: typeDirGroups  });
             }
-            fMark.valueMark  = vMark;
+
+            fMark.valueMark   = vMark;
+            fMark.valueMark1  = vMark1;
+            fMark.valueMark2  = vMark2;
+            fMark.valueMark3  = vMark3;
+            fMark.valueMark4  = vMark4;
+            fMark.valueMark5  = vMark5;
+            fMark.valueMark6  = vMark6;
+            fMark.valueMark7  = vMark7;
+            fMark.valueMark8  = vMark8;
+            fMark.valueMark9  = vMark9;
             fMark.modifyDate = new Date();
             fMark.save(function(err){
                if (err) {

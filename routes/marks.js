@@ -13,13 +13,23 @@ exports.update = function(req, res) {
     var idCri      = req.body.idCri;
     var idMark     = req.body.idMark;
     var vMark      = req.body.vMark;
+    //var vMark1     = req.body.vMark1;
+    //var vMark2     = req.body.vMark2;
+    //var vMark3     = req.body.vMark3;
+    //var vMark4     = req.body.vMark4;
+    //var vMark5     = req.body.vMark5;
+    //var vMark6     = req.body.vMark6;
+    //var vMark7     = req.body.vMark7;
+    //var vMark8     = req.body.vMark8;
+    //var vMark9     = req.body.vMark9;
     var radioObj   = req.body.radioObj;
     if (idGrp === '100000000000000000000001' || idObj === '100000000000000000000001') {
         res.send(new HttpError(403, "Изменение усредненых значений не возможно!"));
         return;
     }
     var prevQY     = HleFunc.prevQY(radioObj, idQuarter, idYear);
-    Mark.update(vMark, idMark, idGrp, idCri, idQuarter, idYear, idObj, radioObj, function(err, data){
+    Mark.update(vMark, vMark1, vMark2, vMark3, vMark4, vMark5, vMark6, vMark7, vMark8, vMark9,
+        idMark, idGrp, idCri, idQuarter, idYear, idObj, radioObj, function(err, data){
         if (err) {
             res.status(403).send(err);
         } else {
